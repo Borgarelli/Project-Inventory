@@ -1,0 +1,27 @@
+version: '3.3'
+
+services:
+  inventory-db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'inventory-db'
+      # So you don't have to use root, but you can if you like
+      MYSQL_USER: 'inventory-user'
+      # You can use whatever password you like
+      MYSQL_PASSWORD: 'inventory-pass'
+      # Password for root access
+      MYSQL_ROOT_PASSWORD: 'as2group'
+    ports:
+      # <Port exposed> : <MySQL Port running inside container>
+      - '3306:3306'
+    expose:
+      # Opens port 3306 on the container
+      - '3306'
+    volumes:
+      # Where our data will be persisted
+      - inventory-db:/var/lib/mysql
+
+# Names our volume
+volumes:
+  inventory-db:
