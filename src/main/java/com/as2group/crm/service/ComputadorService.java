@@ -19,24 +19,6 @@ public class ComputadorService {
 	// Constructor
 	public ComputadorService(ComputadorRepository computadorRepository) {
 		this.computadorRepository = computadorRepository;
-
-		Computador computador = new Computador();
-		computador.setPatrimonio("NTK191212");
-		computador.setSn("14719733426");
-		computador.setSetor("TI");
-		computador.setModelo("Inspiron 14R 5437");
-		computador.setMarca("Dell");
-		computador.setProcessador("i7");
-		computador.setGeração("4º Geração");
-		computador.setRAM("16Gb");
-		computador.setPlacaDeVideo(null);
-		computador.setHd(null);
-		computador.setSsd("256gb");
-		computador.setSoAtual("Ubuntu 22.04.2 LTS");
-		computador.setSoOriginal("Windows 10");
-		computador.setStatus(Computador.Status.PRA_USO);
-
-		this.computadorRepository.save(computador);
 	}
 
 	public void alterarStatus(Computador computador, Computador.Status status) {
