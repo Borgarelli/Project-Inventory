@@ -16,25 +16,25 @@ public class ComputadorFuncionario {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long id_comp_func;
 
 	@ManyToOne
-	@JoinColumn(name = "computador_id")
+	@JoinColumn(name = "id_computador")
 	private Computador computador;
 
 	@ManyToOne
-	@JoinColumn(name = "funcionario_id")
+	@JoinColumn(name = "id_funcionario")
 	private Funcionario funcionario;
 
 	private LocalDateTime recebidoEm;
 	private LocalDateTime devolvidoEm;
 
 	public Long getId() {
-		return id;
+		return id_comp_func;
 	}
 
 	public void setId(Long id) {
-		this.id = id;
+		this.id_comp_func = id;
 	}
 
 	public Computador getComputador() {

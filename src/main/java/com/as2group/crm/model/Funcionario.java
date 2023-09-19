@@ -15,7 +15,7 @@ public class Funcionario {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long id_funcionario;
 
 	@Column(nullable = false, unique = true)
 	private String nome;
@@ -26,11 +26,11 @@ public class Funcionario {
 	private LocalDate dataSaida;
 
 	public Long getId() {
-		return id;
+		return id_funcionario;
 	}
 
 	public void setId(Long id) {
-		this.id = id;
+		this.id_funcionario = id;
 	}
 
 	public String getNome() {
@@ -83,7 +83,7 @@ public class Funcionario {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
+		return Objects.hash(id_funcionario);
 	}
 
 	@Override
@@ -95,6 +95,6 @@ public class Funcionario {
 		if (getClass() != obj.getClass())
 			return false;
 		Funcionario other = (Funcionario) obj;
-		return Objects.equals(id, other.id);
+		return Objects.equals(id_funcionario, other.id_funcionario);
 	}
 }

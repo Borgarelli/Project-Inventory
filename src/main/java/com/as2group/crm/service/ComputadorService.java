@@ -114,6 +114,12 @@ public class ComputadorService {
 
 	}
 
+	// GetStatus
+	public List<Computador> listarPorStatus(Status status) {
+	    return computadorRepository.findAllByStatus(status);
+	}
+
+	
 	//GetEstoque
 	public Optional<Status> estoque() {
 		Optional<Status> encontrado = computadorRepository.findByStatus(Status.PRA_USO);
@@ -124,4 +130,5 @@ public class ComputadorService {
 		}
 	
 	}
+
 }

@@ -39,6 +39,11 @@ public class ComputadorController {
 		return computadorService.listar();
 	}
 
+	@GetMapping("/computador/status/{status}")
+	public List<Computador> listarPorStatus(@PathVariable("status") Status status) {
+	    return computadorService.listarPorStatus(status);
+	}
+	
 	@GetMapping("/computador/{id}")
 	public Computador apresentar(@PathVariable("id") Long id) {
 		return computadorService.apresentar(id);
