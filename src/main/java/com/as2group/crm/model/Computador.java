@@ -2,7 +2,6 @@ package com.as2group.crm.model;
 
 import java.util.Objects;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,9 +25,8 @@ public class Computador {
 	private String patrimonio;
 	private String Sn;
 
-	@OneToOne(cascade = {CascadeType.PERSIST})
+	@OneToOne
 	@JoinColumn(name = "id_funcionario")
-//	@Transient
 	private Funcionario funcionario;
 
 	public enum Status {
