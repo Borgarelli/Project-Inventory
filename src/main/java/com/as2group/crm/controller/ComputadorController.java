@@ -75,7 +75,7 @@ public class ComputadorController {
 
 	@PutMapping("/computador/{id}/inativar")
 	public void inativar(@PathVariable("id") Long id) {
-		computadorFuncionarioService.desvincular(id);
+		computadorFuncionarioService.desvinculo(id, id);
 		computadorService.inativar(id);
 	}
 

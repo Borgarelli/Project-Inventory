@@ -17,5 +17,6 @@ public interface ComputadorFuncionarioRepository extends JpaRepository<Computado
 	
 	List<ComputadorFuncionario> findByFuncionario(Funcionario funcionario);
 	
+	
 
 }

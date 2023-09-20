@@ -33,7 +33,7 @@ public class ComputadorFuncionarioController {
 	@ResponseStatus(HttpStatus.OK)
 	public void delete(@PathVariable("computadorId") Long computadorId,
 			@PathVariable("funcionarioId") Long funcionarioId) {
-		computadorFuncionarioService.desvincular(computadorId, funcionarioId);
+		computadorFuncionarioService.desvinculo(computadorId, funcionarioId);
 	}
 	
 	@GetMapping("/computador/{computadorId}/historico")

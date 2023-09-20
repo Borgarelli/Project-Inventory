@@ -35,19 +35,23 @@ public class ComputadorFuncionarioService {
 		return computadorFuncionarioRepository.save(relacionamento);
 	}
 
-	public void desvincular(Long computadorId, Long funcionarioId) {
-		Computador computador = computadorService.apresentar(computadorId);
-		Funcionario funcionario = funcionarioService.apresentar(funcionarioId);
+	
+	public void desvinculo(Long computadorId, Long funcionarioId) {
+	    Computador computador = computadorService.apresentar(computadorId);
+	    Funcionario funcionario = funcionarioService.apresentar(funcionarioId);
 
-		List<ComputadorFuncionario> vinculos = computadorFuncionarioRepository
-				.findByComputadorAndFuncionario(computador, funcionario);
-		for (ComputadorFuncionario computadorFuncionario : vinculos) {
-			computadorFuncionario.setDevolvidoEm(LocalDateTime.now());
-			computadorService.alterarStatus(computador, Computador.Status.PRA_USO);
-			computadorFuncionarioRepository.save(computadorFuncionario);
-		}
-
+	    List<ComputadorFuncionario> vinculos = computadorFuncionarioRepository
+	            .findByComputadorAndFuncionario(computador, funcionario);
+	    
+	    for (ComputadorFuncionario computadorFuncionario : vinculos) {
+	        if (computadorFuncionario.getDevolvidoEm() == null) {
+	            computadorFuncionario.setDevolvidoEm(LocalDateTime.now());
+	            computadorFuncionarioRepository.save(computadorFuncionario); 
+	            computadorService.alterarStatus(computador, Computador.Status.PRA_USO);
+	        }
+	    }
 	}
+
 
 	public void desvincular(Long computadorId) {
 		Computador computador = computadorService.apresentar(computadorId);

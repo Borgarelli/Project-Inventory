@@ -97,4 +97,5 @@ public class Funcionario {
 		Funcionario other = (Funcionario) obj;
 		return Objects.equals(id_funcionario, other.id_funcionario);
 	}
+
 }
