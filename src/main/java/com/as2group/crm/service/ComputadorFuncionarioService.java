@@ -30,6 +30,7 @@ public class ComputadorFuncionarioService {
 		relacionamento.setComputador(computador);
 		relacionamento.setFuncionario(funcionario);
 		relacionamento.setRecebidoEm(LocalDateTime.now());
+		computador.setFuncionario(funcionario);
 		computadorService.alterarStatus(computador, Computador.Status.EM_USO);
 
 		return computadorFuncionarioRepository.save(relacionamento);
@@ -45,6 +46,7 @@ public class ComputadorFuncionarioService {
 	    
 	    for (ComputadorFuncionario computadorFuncionario : vinculos) {
 	        if (computadorFuncionario.getDevolvidoEm() == null) {
+	        	computador.setFuncionario(null);
 	            computadorFuncionario.setDevolvidoEm(LocalDateTime.now());
 	            computadorFuncionarioRepository.save(computadorFuncionario); 
 	            computadorService.alterarStatus(computador, Computador.Status.PRA_USO);
