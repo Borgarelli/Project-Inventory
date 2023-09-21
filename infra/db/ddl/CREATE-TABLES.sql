@@ -1,15 +1,12 @@
-CREATE SEQUENCE
-nome_da_sequencia START WITH 1000 INCREMENT BY 1 NOCACHE NOCYCLE;
-
-CREATE TABLE `funcionario` (
-  `id_funcionario` int(11) NOT NULL AUTO_INCREMENT,
-  `nome` varchar(100) DEFAULT NULL,
+CREATE TABLE `employee` (
+  `id_employee` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
-  `telefone` varchar(100) DEFAULT NULL,
-  `sexo` varchar(30) DEFAULT NULL,
-  `data_entrada` datetime DEFAULT NULL,
-  `data_saida` datetime DEFAULT NULL,
-  PRIMARY KEY (`id_funcionario`)
+  `telephone` varchar(100) DEFAULT NULL,
+  `sex` varchar(30) DEFAULT NULL,
+  `entryDate` datetime DEFAULT NULL,
+  `departureDate` datetime DEFAULT NULL,
+  PRIMARY KEY (`id_employee`)
 );
 
 CREATE TABLE `computador` (
