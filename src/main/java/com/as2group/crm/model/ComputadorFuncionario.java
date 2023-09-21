@@ -20,7 +20,7 @@ public class ComputadorFuncionario {
 
 	@ManyToOne
 	@JoinColumn(name = "id_computador")
-	private Computador computador;
+	private Computer computador;
 
 	@ManyToOne
 	@JoinColumn(name = "id_funcionario")
@@ -37,11 +37,11 @@ public class ComputadorFuncionario {
 		this.id_comp_func = id;
 	}
 
-	public Computador getComputador() {
+	public Computer getComputador() {
 		return computador;
 	}
 
-	public void setComputador(Computador computador) {
+	public void setComputador(Computer computador) {
 		this.computador = computador;
 	}
 
