@@ -27,7 +27,7 @@ public class EmployeeController {
 	@Autowired
 	EmployeeService employeeService;
 
-	@GetMapping("/employee")
+	@GetMapping("/employees")
 	public List<Employee> list() {
 		return employeeService.list();
 
@@ -42,7 +42,6 @@ public class EmployeeController {
 	@PostMapping("/employee")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Employee create(@RequestBody Employee employee) {
-
 		return employeeService.create(employee);
 	}
 
