@@ -83,7 +83,7 @@ public class ComputerService {
 		found.setGraphicsCard(computer.getGraphicsCard());
 		found.setHd(computer.getHd());
 		found.setSsd(computer.getSsd());
-		found.setSoCorrent(computer.getSoCorrent());
+		found.setSoCurrent(computer.getSoCurrent());
 		found.setSoOriginal(computer.getSoOriginal());
 
 		return computerRepository.save(found);
