@@ -10,9 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.as2group.crm.model.ComputadorFuncionario;
+import com.as2group.crm.model.ComputerEmployee;
 import com.as2group.crm.model.Employee;
-import com.as2group.crm.repository.ComputadorFuncionarioRepository;
+import com.as2group.crm.repository.ComputerEmployeeRepository;
 import com.as2group.crm.repository.EmployeeRepository;
 
 
@@ -23,7 +23,7 @@ public class EmployeeService {
 	EmployeeRepository employeeRepository;
 	
 	@Autowired
-	ComputadorFuncionarioRepository computadorFuncionarioRepository;
+	ComputerEmployeeRepository computadorFuncionarioRepository;
 
 	
 	public EmployeeService(EmployeeRepository employeeRepository) {
@@ -34,7 +34,7 @@ public class EmployeeService {
 		return employeeRepository.findAll();
 	}
 
-	public Employee display(Long id) {
+	public Employee show(Long id) {
 		Optional<Employee> found = employeeRepository.findById(id);
 		if (found.isPresent()) {
 			return found.get();
@@ -50,8 +50,8 @@ public class EmployeeService {
 	}
 
 	public void delete(Long id) {
-		Employee employee = display(id);
-		List<ComputadorFuncionario> relatedRecords = computadorFuncionarioRepository.findByEmployee(employee);
+		Employee employee = show(id);
+		List<ComputerEmployee> relatedRecords = computadorFuncionarioRepository.findByEmployee(employee);
 		computadorFuncionarioRepository.deleteAll(relatedRecords);
 		employeeRepository.deleteById(id);
 	}
@@ -59,7 +59,7 @@ public class EmployeeService {
 
 	
 	public Employee edit(Employee employee, Long id) {
-		Employee found = display(id);
+		Employee found = show(id);
 		found.setEmail(employee.getEmail());
 		found.setName(employee.getName());
 		found.setSex(employee.getSex());

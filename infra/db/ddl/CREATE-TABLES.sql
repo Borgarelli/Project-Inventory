@@ -31,15 +31,15 @@ CREATE TABLE `computer` (
   CONSTRAINT `fk_id_employee` FOREIGN KEY (`id_employee`) REFERENCES `employee` (`id_employee`)
 );
 
-CREATE TABLE `computador_funcionario` (
-  `id_comp_func` int(11) NOT NULL AUTO_INCREMENT,
-  `id_computador` int(11) DEFAULT NULL,
-  `id_funcionario` int(11) DEFAULT NULL,
-  `recebido_em` datetime DEFAULT NULL,
-  `devolvido_em` datetime DEFAULT NULL,
-  PRIMARY KEY (`id_comp_func`),
-  KEY `fk_computador` (`id_computador`),
-  KEY `fk_funcionario` (`id_funcionario`),
-  CONSTRAINT `fk_computador` FOREIGN KEY (`id_computador`) REFERENCES `computador` (`id_computador`),
-  CONSTRAINT `fk_funcionario` FOREIGN KEY (`id_funcionario`) REFERENCES `funcionario` (`id_funcionario`)
+CREATE TABLE `computer_employee` (
+  `id_comp_empl` int(11) NOT NULL AUTO_INCREMENT,
+  `id_computer` int(11) DEFAULT NULL,
+  `id_employee` int(11) DEFAULT NULL,
+  `received` datetime DEFAULT NULL,
+  `returned` datetime DEFAULT NULL,
+  PRIMARY KEY (`id_comp_empl`),
+  KEY `fk_computer` (`id_computer`),
+  KEY `fk_employee` (`id_employee`),
+  CONSTRAINT `fk_computer` FOREIGN KEY (`id_computer`) REFERENCES `computer` (`id_computer`),
+  CONSTRAINT `fk_employee` FOREIGN KEY (`id_employee`) REFERENCES `employee` (`id_employee`)
 );

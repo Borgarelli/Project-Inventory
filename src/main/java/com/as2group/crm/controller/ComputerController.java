@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.as2group.crm.model.Computer;
 import com.as2group.crm.model.Computer.Status;
 import com.as2group.crm.repository.ComputerRepository;
-import com.as2group.crm.service.ComputadorFuncionarioService;
+import com.as2group.crm.service.ComputerEmployeeService;
 import com.as2group.crm.service.ComputerService;
 
 @RestController
@@ -32,7 +32,7 @@ public class ComputerController {
 	ComputerService computerService;
 
 	@Autowired
-	ComputadorFuncionarioService computadorFuncionarioService;
+	ComputerEmployeeService computerEmployeeService;
 
 	@GetMapping("/computers")
 	public List<Computer> list() {
@@ -73,11 +73,11 @@ public class ComputerController {
 				generation, ram, graphicsCard, hd, ssd, soCorrent, soOriginal);
 	}
 
-//	@PutMapping("/computers/{id}/inactivate")
-//	public void inactivate(@PathVariable("id") Long id) {
-//		computadorFuncionarioService.unlink(id, id);
-//		computerService.inactivate(id);
-//	}
+	@PutMapping("/computers/{id}/inactivate")
+	public void inactivate(@PathVariable("id") Long id) {
+		computerEmployeeService.unlink(id, id);
+		computerService.inactivate(id);
+	}
 
 	@GetMapping("computers/stock")
 	public Optional<Status> stock() {

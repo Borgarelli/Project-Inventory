@@ -15,14 +15,14 @@ public interface ComputerRepository extends JpaRepository<Computer, Long> {
 	
 	Optional<Computer> findByPatrimony(String patrimony);
 	
-	List<Computer> findByModeloAndBrand(String model, String brand);
+	List<Computer> findByModelAndBrand(String model, String brand);
 	
 	Optional<Status> findByStatus(Status status);
 
 	List<Computer> findAllByStatus(@Param("status") Status status);
 	
-	@Query("SELECT c FROM Computador c WHERE c.patrimonio = :patrimonio")
-	Optional<Computer> findByPatrimonyWithQuery(String patrimonio);
+	@Query("SELECT c FROM Computer c WHERE c.patrimony = :patrimony")
+	Optional<Computer> findByPatrimonyWithQuery(String patrimony);
 	
 	@Query("SELECT c FROM Computer c WHERE c.model = :model AND c.brand = :brand")
 	List<Computer> findByModelAndbrandWithQuery(String model, String brand);

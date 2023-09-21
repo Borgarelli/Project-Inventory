@@ -36,7 +36,7 @@ public class EmployeeController {
 	@GetMapping("/employee/{id}")
 
 	public Employee display(@PathVariable("id") Long id) {
-		return employeeService.display(id);
+		return employeeService.show(id);
 	}
 
 	@PostMapping("/employee")

@@ -23,7 +23,7 @@ public class Computer {
 
 	@Column(nullable = false, unique = true)
 	private String patrimony;
-	private String Sn;
+	private String sn;
 
 	@OneToOne
 	@JoinColumn(name = "id_employee")
@@ -37,7 +37,7 @@ public class Computer {
 	private String model;
 	private String brand;
 	private String processor;
-	@Column(name = "geracao")
+	@Column(name = "generation")
 	private String generation;
 	private String ram;
 	@Column(name = "graphics_card")
@@ -45,7 +45,7 @@ public class Computer {
 	private String hd;
 	private String ssd;
 	@Column(name = "so_current")
-	private String soCorrent;
+	private String soCurrent;
 	@Column(name = "so_original")
 	private String soOriginal;
 	private Status status;
@@ -77,13 +77,13 @@ public class Computer {
 
 
 	public String getSn() {
-		return Sn;
+		return sn;
 	}
 
 
 
 	public void setSn(String sn) {
-		Sn = sn;
+		this.sn = sn;
 	}
 
 
@@ -208,14 +208,14 @@ public class Computer {
 
 
 
-	public String getSoCorrent() {
-		return soCorrent;
+	public String getSoCurrent() {
+		return soCurrent;
 	}
 
 
 
-	public void setSoCorrent(String soCorrent) {
-		this.soCorrent = soCorrent;
+	public void setSoCurrent(String soCurrent) {
+		this.soCurrent = soCurrent;
 	}
 
 

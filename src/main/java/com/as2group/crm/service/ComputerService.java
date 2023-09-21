@@ -42,8 +42,8 @@ public class ComputerService {
 	}
 
 	// GetByPatrimonio
-	public Computer show(String patrimonio) {
-		Optional<Computer> found = computerRepository.findByPatrimony(patrimonio);
+	public Computer show(String patrimony) {
+		Optional<Computer> found = computerRepository.findByPatrimony(patrimony);
 		if (found.isPresent()) {
 			return found.get();
 		} else {
