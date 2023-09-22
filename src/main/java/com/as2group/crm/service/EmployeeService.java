@@ -49,10 +49,15 @@ public class EmployeeService {
 	}
 
 	public Employee create(Employee employee) {
-		employee.setStatus(Employee.Status.ATIVO);
-		employee.setEntryDate(LocalDate.now());
-		
-		return employeeRepository.save(employee);
+	    List<Employee> existingEmployees = employeeRepository.findByEmail(employee.getEmail());
+
+	    if (!existingEmployees.isEmpty()) {
+	        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email already exists.");
+	    }
+
+	    employee.setStatus(Employee.Status.ATIVO);
+	    employee.setEntryDate(LocalDate.now());
+	    return employeeRepository.save(employee);
 	}
 
 	public void delete(Long id) {
