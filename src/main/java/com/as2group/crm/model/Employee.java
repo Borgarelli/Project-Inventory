@@ -16,6 +16,10 @@ public class Employee {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id_employee;
+	
+	public enum Status {
+		ATIVO, INATIVO;
+	}
 
 	@Column(nullable = false, unique = true)
 	private String name;
@@ -24,6 +28,8 @@ public class Employee {
 	private String sex;
 	private LocalDate entryDate;
 	private LocalDate departureDate;
+	private Status status;
+
 
 	public Long getId() {
 		return id_employee;
@@ -63,6 +69,14 @@ public class Employee {
 
 	public void setSex(String sex) {
 		this.sex = sex;
+	}
+	
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 
 	public LocalDate getEntryDate() {

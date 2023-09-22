@@ -10,7 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.as2group.crm.model.ComputerEmployee;
+
 import com.as2group.crm.model.Employee;
 import com.as2group.crm.repository.ComputerEmployeeRepository;
 import com.as2group.crm.repository.EmployeeRepository;
@@ -30,6 +30,11 @@ public class EmployeeService {
 		this.employeeRepository = employeeRepository;
 	}
 
+	public void changeStatus(Employee employee, Employee.Status status) {
+		employee.setStatus(status);
+		this.employeeRepository.save(employee);
+	}
+	
 	public List<Employee> list() {
 		return employeeRepository.findAll();
 	}
@@ -44,6 +49,7 @@ public class EmployeeService {
 	}
 
 	public Employee create(Employee employee) {
+		employee.setStatus(Employee.Status.ATIVO);
 		employee.setEntryDate(LocalDate.now());
 		
 		return employeeRepository.save(employee);
@@ -51,11 +57,14 @@ public class EmployeeService {
 
 	public void delete(Long id) {
 		Employee employee = show(id);
-		List<ComputerEmployee> relatedRecords = computadorFuncionarioRepository.findByEmployee(employee);
-		computadorFuncionarioRepository.deleteAll(relatedRecords);
-		employeeRepository.deleteById(id);
+		changeStatus(employee, Employee.Status.INATIVO);
+		employee.setDepartureDate(LocalDate.now());
+		employeeRepository.save(employee);
 	}
 	
+	public List<Employee> listActivate() {
+	    return employeeRepository.findByStatusActivate();
+	}
 
 	
 	public Employee edit(Employee employee, Long id) {

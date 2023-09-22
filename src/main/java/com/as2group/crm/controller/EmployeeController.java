@@ -29,9 +29,10 @@ public class EmployeeController {
 
 	@GetMapping("/employees")
 	public List<Employee> list() {
-		return employeeService.list();
-
+	    return employeeService.listActivate();
 	}
+
+
 
 	@GetMapping("/employee/{id}")
 
