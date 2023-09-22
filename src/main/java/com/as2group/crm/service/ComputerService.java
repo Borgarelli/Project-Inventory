@@ -51,14 +51,19 @@ public class ComputerService {
 		}
 	}
 
-	// Post
-	public Computer create(Computer computador) {
-		Optional<Computer> found = computerRepository.findByPatrimony(computador.getPatrimony());
-		if (found.isPresent())
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Patrimonio do computador já está em uso.");
 
-		computador.setStatus(Computer.Status.PRA_USO);
-		return computerRepository.save(computador);
+	// Post
+	public Computer create(Computer computer) {
+		Optional<Computer> found = computerRepository.findByPatrimony(computer.getPatrimony());
+		if (found.isPresent()) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Computer assets are already in use.");
+		}
+		found = computerRepository.findBySn(computer.getSn());
+		if (found.isPresent()) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Serial Number already exists.");
+		}
+		computer.setStatus(Computer.Status.PRA_USO);
+		return computerRepository.save(computer);
 	}
 
 	// Delete
@@ -98,11 +103,10 @@ public class ComputerService {
 
 	// GetStatus
 	public List<Computer> listByStatus(Status status) {
-	    return computerRepository.findAllByStatus(status);
+		return computerRepository.findAllByStatus(status);
 	}
 
-	
-	//GetEstoque
+	// GetEstoque
 	public Optional<Status> stock() {
 		Optional<Status> found = computerRepository.findByStatus(Status.PRA_USO);
 		if (found.isPresent()) {
@@ -110,7 +114,7 @@ public class ComputerService {
 		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "estoque vazio");
 		}
-	
+
 	}
 
 }

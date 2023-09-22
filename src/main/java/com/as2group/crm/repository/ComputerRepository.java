@@ -15,6 +15,8 @@ public interface ComputerRepository extends JpaRepository<Computer, Long> {
 	
 	Optional<Computer> findByPatrimony(String patrimony);
 	
+	Optional<Computer> findBySn(String sn);
+	
 	List<Computer> findByModelAndBrand(String model, String brand);
 	
 	Optional<Status> findByStatus(Status status);
