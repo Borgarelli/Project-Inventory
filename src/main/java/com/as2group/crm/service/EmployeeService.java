@@ -12,6 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.as2group.crm.model.ComputerEmployee;
 import com.as2group.crm.model.Employee;
+
 import com.as2group.crm.repository.ComputerEmployeeRepository;
 import com.as2group.crm.repository.EmployeeRepository;
 
@@ -90,7 +91,19 @@ public class EmployeeService {
 	    employeeRepository.save(employee);
 	}
 
-
+	public void activate(Long id) {
+		Employee employee = show(id);
+		
+		if(employee.getStatus() == Employee.Status.INATIVO) {
+			employee.setEntryDate(LocalDate.now());
+			employee.setDepartureDate(null);
+			changeStatus(employee, Employee.Status.ATIVO);
+				
+		}
+		else {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Employee is already activate");
+		}
+	}
 	
 	//Lists
 	public List<Employee> listActivate() {

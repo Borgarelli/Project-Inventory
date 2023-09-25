@@ -38,8 +38,6 @@ public class EmployeeController {
 	public List<Employee> listInactivate(){
 		return employeeService.listInactivate();
 	}
-	
-
 
 	@GetMapping("/employee/{id}")
 
@@ -57,7 +55,12 @@ public class EmployeeController {
 	public void delete(@PathVariable("id") Long id) {
 		employeeService.delete(id);
 	}
-
+	
+	@PutMapping("/employee/{id}/activate")
+	public void activateEmployee(@PathVariable("id") Long id) {
+	    employeeService.activate(id);
+	}
+	
 	@PutMapping("/employee/{id}")
 	public Employee update(@PathVariable("id") Long id, @RequestBody Employee employee, String email, 
 			String name, String sex, String telephone) {
