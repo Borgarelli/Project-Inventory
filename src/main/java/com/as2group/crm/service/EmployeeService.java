@@ -1,7 +1,7 @@
 package com.as2group.crm.service;
 
 import java.time.LocalDate;
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,7 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-
+import com.as2group.crm.model.ComputerEmployee;
 import com.as2group.crm.model.Employee;
 import com.as2group.crm.repository.ComputerEmployeeRepository;
 import com.as2group.crm.repository.EmployeeRepository;
@@ -23,7 +23,7 @@ public class EmployeeService {
 	EmployeeRepository employeeRepository;
 	
 	@Autowired
-	ComputerEmployeeRepository computadorFuncionarioRepository;
+	ComputerEmployeeRepository computerEmployeeRepository;
 
 	//Constructor
 	public EmployeeService(EmployeeRepository employeeRepository) {
@@ -65,11 +65,32 @@ public class EmployeeService {
 
 	//Delete
 	public void delete(Long id) {
-		Employee employee = show(id);
-		changeStatus(employee, Employee.Status.INATIVO);
-		employee.setDepartureDate(LocalDate.now());
-		employeeRepository.save(employee);
+	    Employee employee = show(id);
+	    List<ComputerEmployee> linkedComputers = computerEmployeeRepository.findByEmployee(employee);
+
+	    List<Long> computersToUnlink = new ArrayList<>();
+
+	    if (!linkedComputers.isEmpty()) {
+	        for (ComputerEmployee computerEmployee : linkedComputers) {
+	            if (computerEmployee.getReturned() == null) {
+	                Long computerId = computerEmployee.getComputer().getId();
+	                computersToUnlink.add(computerId);
+	            }
+	        }
+	    }
+
+	    if (!computersToUnlink.isEmpty()) {
+	        String errorMessage = "Computers with IDs " + computersToUnlink.toString() +
+	                              " are still assigned to the employee. Unlink these computers before deactivating the employee.";
+	        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, errorMessage);
+	    }
+
+	    changeStatus(employee, Employee.Status.INATIVO);
+	    employee.setDepartureDate(LocalDate.now());
+	    employeeRepository.save(employee);
 	}
+
+
 	
 	//Lists
 	public List<Employee> listActivate() {

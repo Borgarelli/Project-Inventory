@@ -1,6 +1,6 @@
 package com.as2group.crm.controller;
 
-import java.util.Collections;
+
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,14 +39,6 @@ public class EmployeeController {
 		return employeeService.listInactivate();
 	}
 	
-//	@GetMapping("/employees/status/{status}")
-//	public List<Employee> listByStatus(@PathVariable("status") String status){
-//	    if ("INATIVO".equalsIgnoreCase(status)) {
-//	        return employeeService.listInactivate();
-//	    } else {
-//	        return Collections.emptyList(); // 
-//	    }
-//	}
 
 
 	@GetMapping("/employee/{id}")
