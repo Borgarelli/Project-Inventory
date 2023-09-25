@@ -25,7 +25,7 @@ public class EmployeeService {
 	@Autowired
 	ComputerEmployeeRepository computadorFuncionarioRepository;
 
-	
+	//Constructor
 	public EmployeeService(EmployeeRepository employeeRepository) {
 		this.employeeRepository = employeeRepository;
 	}
@@ -35,10 +35,12 @@ public class EmployeeService {
 		this.employeeRepository.save(employee);
 	}
 	
+	//List
 	public List<Employee> list() {
 		return employeeRepository.findAll();
 	}
 
+	//FindById
 	public Employee show(Long id) {
 		Optional<Employee> found = employeeRepository.findById(id);
 		if (found.isPresent()) {
@@ -48,6 +50,7 @@ public class EmployeeService {
 		}
 	}
 
+	//Create
 	public Employee create(Employee employee) {
 	    List<Employee> existingEmployees = employeeRepository.findByEmail(employee.getEmail());
 
@@ -60,6 +63,7 @@ public class EmployeeService {
 	    return employeeRepository.save(employee);
 	}
 
+	//Delete
 	public void delete(Long id) {
 		Employee employee = show(id);
 		changeStatus(employee, Employee.Status.INATIVO);
@@ -67,11 +71,16 @@ public class EmployeeService {
 		employeeRepository.save(employee);
 	}
 	
+	//Lists
 	public List<Employee> listActivate() {
 	    return employeeRepository.findByStatusActivate();
 	}
 
+	public List<Employee> listInactivate(){
+		return employeeRepository.findByStatusInactivate();
+	}
 	
+	//Put
 	public Employee edit(Employee employee, Long id) {
 		Employee found = show(id);
 		found.setEmail(employee.getEmail());
