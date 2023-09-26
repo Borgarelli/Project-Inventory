@@ -51,6 +51,16 @@ public class EmployeeService {
 		}
 	}
 
+	//FindByName
+	public List<Employee> showName(String name) {
+		return employeeRepository.findByName(name) ;
+	}
+	
+	//FindByEmail
+	public List<Employee> showEmail(String email){
+		return employeeRepository.findByEmail(email);
+	}
+	
 	//Create
 	public Employee create(Employee employee) {
 	    List<Employee> existingEmployees = employeeRepository.findByEmail(employee.getEmail());
@@ -95,6 +105,7 @@ public class EmployeeService {
 	    employeeRepository.save(employee);
 	}
 
+	//Activate
 	public void activate(Long id) {
 		Employee employee = show(id);
 		
@@ -121,6 +132,11 @@ public class EmployeeService {
 	//Put
 	public Employee edit(Employee employee, Long id) {
 		Employee found = show(id);
+		List<Employee> existingEmployee = employeeRepository.findByEmail(employee.getEmail());
+		
+		if(!existingEmployee.isEmpty()) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email is already used");
+		}
 		found.setEmail(employee.getEmail());
 		found.setName(employee.getName());
 		found.setSex(employee.getSex());

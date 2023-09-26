@@ -15,6 +15,9 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 	
 	List<Employee> findByEmail(String email);
 	
+	@Query("SELECT e FROM Employee e WHERE e.name LIKE %:name%")
+	List<Employee> findByName (String name);
+	
 	@Query("SELECT e FROM Employee e WHERE e.status = com.as2group.crm.model.Employee$Status.ATIVO")
 	List<Employee> findByStatusActivate();
 	

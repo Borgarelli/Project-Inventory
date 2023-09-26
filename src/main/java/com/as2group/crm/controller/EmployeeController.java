@@ -32,28 +32,44 @@ public class EmployeeController {
 	@Autowired
 	EmployeeService employeeService;
 
+	//GetAll
 	@GetMapping("/employees")
 	public List<Employee> list() {
 	    return employeeService.listActivate();
 	}
 
+	//GetById
+	@GetMapping("/employee/{id}")
+	public Employee display(@PathVariable("id") Long id) {
+		return employeeService.show(id);
+	}
 	
+	//GetEmployeeInactivate
 	@GetMapping("/employees/INATIVO")
 	public List<Employee> listInactivate(){
 		return employeeService.listInactivate();
 	}
 
-	@GetMapping("/employee/{id}")
-	public Employee display(@PathVariable("id") Long id) {
-		return employeeService.show(id);
+	//GetAllByName
+	@GetMapping("/employees/name/{name}")
+	public List<Employee> displayName(@PathVariable("name") String name) {
+		return employeeService.showName(name);
 	}
-
+	
+	//GetByEmail
+	@GetMapping("/employee/email/{email}")
+	public List<Employee> displayEmail(@PathVariable("email") String email){
+		return employeeService.showEmail(email);
+	}
+	
+	//Post
 	@PostMapping("/employee")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Employee create(@RequestBody Employee employee) {
 		return employeeService.create(employee);
 	}
 
+	//Delete
 	@DeleteMapping("/employee/{id}")
 	public void delete(@PathVariable("id") Long id) {
 		try{
@@ -64,6 +80,7 @@ public class EmployeeController {
 		}
 	}
 	
+	//Activate
 	@PutMapping("/employee/{id}/activate")
 	public void activateEmployee(@PathVariable("id") Long id) {
 	    try {
@@ -77,6 +94,7 @@ public class EmployeeController {
 	    }
 	}
 	
+	//Put
 	@PutMapping("/employee/{id}")
 	public Employee update(@PathVariable("id") Long id, @RequestBody Employee employee, String email, 
 			String name, String sex, String telephone) {
