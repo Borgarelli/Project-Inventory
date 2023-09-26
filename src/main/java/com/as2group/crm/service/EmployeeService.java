@@ -85,6 +85,10 @@ public class EmployeeService {
 	                              " are still assigned to the employee. Unlink these computers before deactivating the employee.";
 	        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, errorMessage);
 	    }
+	    
+	    if(employee.getStatus() == Employee.Status.INATIVO) {
+	    	throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Employee is already inactivate");
+	    }
 
 	    changeStatus(employee, Employee.Status.INATIVO);
 	    employee.setDepartureDate(LocalDate.now());

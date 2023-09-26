@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
+
+import com.as2group.crm.exceptions.EmployeeActivationException;
+import com.as2group.crm.exceptions.EmployeeNotFoundException;
 import com.as2group.crm.model.Employee;
 import com.as2group.crm.repository.EmployeeRepository;
 import com.as2group.crm.service.EmployeeService;
@@ -40,7 +44,6 @@ public class EmployeeController {
 	}
 
 	@GetMapping("/employee/{id}")
-
 	public Employee display(@PathVariable("id") Long id) {
 		return employeeService.show(id);
 	}
@@ -53,12 +56,25 @@ public class EmployeeController {
 
 	@DeleteMapping("/employee/{id}")
 	public void delete(@PathVariable("id") Long id) {
-		employeeService.delete(id);
+		try{
+			employeeService.delete(id);
+			
+		} catch (EmployeeNotFoundException e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found", e);
+		}
 	}
 	
 	@PutMapping("/employee/{id}/activate")
 	public void activateEmployee(@PathVariable("id") Long id) {
-	    employeeService.activate(id);
+	    try {
+	    	employeeService.activate(id);
+	    	
+	    } catch (EmployeeNotFoundException e) {
+	    	throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found", e);
+	    	
+	    } catch(EmployeeActivationException e) {	
+	    	throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
+	    }
 	}
 	
 	@PutMapping("/employee/{id}")
