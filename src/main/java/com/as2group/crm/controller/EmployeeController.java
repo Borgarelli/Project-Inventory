@@ -18,16 +18,12 @@ import org.springframework.web.server.ResponseStatusException;
 import com.as2group.crm.exceptions.EmployeeActivationException;
 import com.as2group.crm.exceptions.EmployeeNotFoundException;
 import com.as2group.crm.model.Employee;
-import com.as2group.crm.repository.EmployeeRepository;
 import com.as2group.crm.service.EmployeeService;
 
 
 @RestController
 @RequestMapping("/api")
 public class EmployeeController {
-
-	@Autowired
-	EmployeeRepository employeeRepository;
 
 	@Autowired
 	EmployeeService employeeService;
@@ -67,14 +63,15 @@ public class EmployeeController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public Employee create(@RequestBody Employee employee) {
 		return employeeService.create(employee);
+		
 	}
 
 	//Delete
 	@DeleteMapping("/employee/{id}")
-	public void delete(@PathVariable("id") Long id) {
+	public String delete(@PathVariable("id") Long id) {
 		try{
 			employeeService.delete(id);
-			
+			return "Employee has been deleted successfully.";
 		} catch (EmployeeNotFoundException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found", e);
 		}
@@ -92,6 +89,7 @@ public class EmployeeController {
 	    } catch(EmployeeActivationException e) {	
 	    	throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
 	    }
+	    
 	}
 	
 	//Put

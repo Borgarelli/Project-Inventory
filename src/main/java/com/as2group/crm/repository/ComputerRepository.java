@@ -29,5 +29,7 @@ public interface ComputerRepository extends JpaRepository<Computer, Long> {
 	@Query("SELECT c FROM Computer c WHERE c.model = :model AND c.brand = :brand")
 	List<Computer> findByModelAndbrandWithQuery(String model, String brand);
 	
+	@Query("SELECT c FROM Computer c WHERE c.status = com.as2group.crm.model.Computer$Status.PRA_USO ORDER BY c.id DESC")
+	List<Computer> findByStatusActivate();
 
 }

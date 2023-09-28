@@ -3,18 +3,24 @@ package com.as2group.crm.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.as2group.crm.model.Computer;
 import com.as2group.crm.model.Computer.Status;
+import com.as2group.crm.repository.ComputerEmployeeRepository;
 import com.as2group.crm.repository.ComputerRepository;
 
 @Service
 public class ComputerService {
 
+	@Autowired
 	ComputerRepository computerRepository;
+	
+	@Autowired
+	ComputerEmployeeRepository computerEmployeeRepository;
 
 	// Constructor
 	public ComputerService(ComputerRepository computadorRepository) {
@@ -97,7 +103,17 @@ public class ComputerService {
 	// PutInativar
 	public void inactivate(Long id) {
 		Computer computer = show(id);
+		
+		if(computer.getEmployee() != null) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Computer stills with employee");
+		}
+		if(computer.getStatus() == Computer.Status.INATIVO) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Computer is already inactive");
+			
+		}
+		
 		changeStatus(computer, Computer.Status.INATIVO);
+		computerRepository.save(computer);
 
 	}
 
@@ -107,14 +123,8 @@ public class ComputerService {
 	}
 
 	// GetEstoque
-	public Optional<Status> stock() {
-		Optional<Status> found = computerRepository.findByStatus(Status.PRA_USO);
-		if (found.isPresent()) {
-			return Optional.of(found.get());
-		} else {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "estoque vazio");
-		}
-
+	public List<Computer> stock(){
+		return computerRepository.findByStatusActivate();
 	}
 
 }

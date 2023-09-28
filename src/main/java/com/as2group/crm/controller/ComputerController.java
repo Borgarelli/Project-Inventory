@@ -1,7 +1,6 @@
 package com.as2group.crm.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,19 +13,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
+import com.as2group.crm.exceptions.ComputerNotFoundException;
 import com.as2group.crm.model.Computer;
 import com.as2group.crm.model.Computer.Status;
-import com.as2group.crm.repository.ComputerRepository;
 import com.as2group.crm.service.ComputerEmployeeService;
 import com.as2group.crm.service.ComputerService;
 
 @RestController
 @RequestMapping("/api")
 public class ComputerController {
-
-	@Autowired
-	ComputerRepository computerRepository;
 
 	@Autowired
 	ComputerService computerService;
@@ -74,13 +71,19 @@ public class ComputerController {
 	}
 
 	@PutMapping("/computers/{id}/inactivate")
-	public void inactivate(@PathVariable("id") Long id) {
-		computerEmployeeService.unlink(id, id);
-		computerService.inactivate(id);
+	public String inactivate(@PathVariable("id") Long id) {
+		try {
+			computerService.inactivate(id);
+			return "Computer has been deleted successfully.";
+		} catch(ComputerNotFoundException c){
+			
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Computer not found", c);
+		}
+		
 	}
 
 	@GetMapping("computers/stock")
-	public Optional<Status> stock() {
+	public List<Computer> stock() {
 		return computerService.stock();
 	}
 }
