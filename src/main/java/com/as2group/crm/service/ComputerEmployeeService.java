@@ -60,7 +60,7 @@ public class ComputerEmployeeService {
 	        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Employee is inactive");
 	    }
 
-	    if (computer.getStatus() != Computer.Status.PRA_USO) {
+	    if (computer.getStatus() != Computer.Status.EM_USO) {
 	        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Computer is not available");
 	    }
 	    

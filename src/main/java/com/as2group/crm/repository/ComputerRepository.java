@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import com.as2group.crm.model.Computer;
 import com.as2group.crm.model.Computer.Status;
 
+
 public interface ComputerRepository extends JpaRepository<Computer, Long> {
 	
 	Optional<Computer> findByPatrimony(String patrimony);
@@ -22,6 +23,7 @@ public interface ComputerRepository extends JpaRepository<Computer, Long> {
 	Optional<Status> findByStatus(Status status);
 
 	List<Computer> findAllByStatus(@Param("status") Status status);
+	
 	
 	@Query("SELECT c FROM Computer c WHERE c.patrimony = :patrimony")
 	Optional<Computer> findByPatrimonyWithQuery(String patrimony);

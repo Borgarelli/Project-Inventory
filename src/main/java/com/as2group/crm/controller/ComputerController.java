@@ -2,6 +2,7 @@ package com.as2group.crm.controller;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -36,16 +37,16 @@ public class ComputerController {
 		return computerService.list();
 	}
 
+	@GetMapping("/computers/{id}")
+	public Computer show(@PathVariable("id") Long id) {
+		return computerService.show(id);
+	}
+	
 	@GetMapping("/computers/status/{status}")
 	public List<Computer> listByStatus(@PathVariable("status") Status status) {
 	    return computerService.listByStatus(status);
 	}
 	
-	@GetMapping("/computers/{id}")
-	public Computer show(@PathVariable("id") Long id) {
-		return computerService.show(id);
-	}
-
 	@GetMapping("/computers/patrimony/{patrimony}")
 	public Computer show(@PathVariable("patrimony") String patrimony) {
 		return computerService.show(patrimony);

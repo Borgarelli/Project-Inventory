@@ -1,5 +1,6 @@
 package com.as2group.crm.service;
 
+
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +14,7 @@ import com.as2group.crm.model.Computer.Status;
 import com.as2group.crm.repository.ComputerEmployeeRepository;
 import com.as2group.crm.repository.ComputerRepository;
 
+
 @Service
 public class ComputerService {
 
@@ -21,7 +23,7 @@ public class ComputerService {
 	
 	@Autowired
 	ComputerEmployeeRepository computerEmployeeRepository;
-
+	
 	// Constructor
 	public ComputerService(ComputerRepository computadorRepository) {
 		this.computerRepository = computadorRepository;
@@ -55,8 +57,7 @@ public class ComputerService {
 		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Computer not found");
 		}
-	}
-
+	}	
 
 	// Post
 	public Computer create(Computer computer) {
