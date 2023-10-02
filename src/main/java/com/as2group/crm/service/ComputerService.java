@@ -2,11 +2,9 @@ package com.as2group.crm.service;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
 import com.as2group.crm.model.Computer;
 import com.as2group.crm.model.Computer.Status;
 import com.as2group.crm.repository.ComputerRepository;
@@ -17,8 +15,8 @@ public class ComputerService {
 	ComputerRepository computerRepository;
 
 	// Constructor
-	public ComputerService(ComputerRepository computadorRepository) {
-		this.computerRepository = computadorRepository;
+	public ComputerService(ComputerRepository computerRepository) {
+		this.computerRepository = computerRepository;
 	}
 
 	public void changeStatus(Computer computer, Computer.Status status) {
@@ -51,7 +49,6 @@ public class ComputerService {
 		}
 	}
 
-
 	// Post
 	public Computer create(Computer computer) {
 		Optional<Computer> found = computerRepository.findByPatrimony(computer.getPatrimony());
@@ -82,15 +79,8 @@ public class ComputerService {
 		found.setSector(computer.getSector());
 		found.setModel(computer.getModel());
 		found.setBrand(computer.getBrand());
-		found.setProcessor(computer.getProcessor());
-		found.setGeneration(computer.getGeneration());
-		found.setRam(computer.getRam());
-		found.setGraphicsCard(computer.getGraphicsCard());
-		found.setHd(computer.getHd());
-		found.setSsd(computer.getSsd());
 		found.setSoCurrent(computer.getSoCurrent());
 		found.setSoOriginal(computer.getSoOriginal());
-
 		return computerRepository.save(found);
 	}
 

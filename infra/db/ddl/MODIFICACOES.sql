@@ -1,1 +1,2 @@
-
+alter table components
+drop column id_component_type
