@@ -35,13 +35,13 @@ public class EmployeeController {
 	}
 
 	//GetById
-	@GetMapping("/employee/{id}")
+	@GetMapping("/employees/{id}")
 	public Employee display(@PathVariable("id") Long id) {
 		return employeeService.show(id);
 	}
 	
 	//GetEmployeeInactivate
-	@GetMapping("/employees/INATIVO")
+	@GetMapping("/employeess/INATIVO")
 	public List<Employee> listInactivate(){
 		return employeeService.listInactivate();
 	}
@@ -53,13 +53,13 @@ public class EmployeeController {
 	}
 	
 	//GetByEmail
-	@GetMapping("/employee/email/{email}")
+	@GetMapping("/employees/email/{email}")
 	public List<Employee> displayEmail(@PathVariable("email") String email){
 		return employeeService.showEmail(email);
 	}
 	
 	//Post
-	@PostMapping("/employee")
+	@PostMapping("/employees")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Employee create(@RequestBody Employee employee) {
 		return employeeService.create(employee);
@@ -67,7 +67,7 @@ public class EmployeeController {
 	}
 
 	//Delete
-	@DeleteMapping("/employee/{id}")
+	@DeleteMapping("/employees/{id}")
 	public String delete(@PathVariable("id") Long id) {
 		try{
 			employeeService.delete(id);
@@ -78,11 +78,11 @@ public class EmployeeController {
 	}
 	
 	//Activate
-	@PutMapping("/employee/{id}/activate")
-	public void activateEmployee(@PathVariable("id") Long id) {
+	@PutMapping("/employees/{id}/activate")
+	public String activateEmployee(@PathVariable("id") Long id) {
 	    try {
 	    	employeeService.activate(id);
-	    	
+	    	return "Employee has been activate successfully.";
 	    } catch (EmployeeNotFoundException e) {
 	    	throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found", e);
 	    	
@@ -93,7 +93,7 @@ public class EmployeeController {
 	}
 	
 	//Put
-	@PutMapping("/employee/{id}")
+	@PutMapping("/employees/{id}")
 	public Employee update(@PathVariable("id") Long id, @RequestBody Employee employee, String email, 
 			String name, String sex, String telephone) {
 		return employeeService.edit(employee, id);

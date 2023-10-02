@@ -117,6 +117,16 @@ public class ComputerService {
 		computerRepository.save(computer);
 
 	}
+	
+	public void activate(Long id) {
+		Computer computer = show(id);
+		if(computer.getStatus() == Computer.Status.INATIVO) {
+			changeStatus(computer, Computer.Status.PRA_USO);
+		}
+		else {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Computer is already active");
+		}
+	}
 
 	// GetStatus
 	public List<Computer> listByStatus(Status status) {
@@ -127,5 +137,6 @@ public class ComputerService {
 	public List<Computer> stock(){
 		return computerRepository.findByStatusActivate();
 	}
+	
 
 }

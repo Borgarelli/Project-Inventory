@@ -51,6 +51,7 @@ public class ComputerController {
 	public Computer show(@PathVariable("patrimony") String patrimony) {
 		return computerService.show(patrimony);
 	}
+	
 
 	@PostMapping("/computers")
 	@ResponseStatus(HttpStatus.CREATED)
@@ -81,6 +82,18 @@ public class ComputerController {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Computer not found", c);
 		}
 		
+	}
+	
+	@PutMapping("/computers/{id}/activate")
+	public String activate(@PathVariable("id") Long id) {
+		try {
+			computerService.activate(id);
+			return "Computer has been activate succesfully.";
+			
+		}catch (ComputerNotFoundException c){
+			
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Computer not found", c);
+		}
 	}
 
 	@GetMapping("computers/stock")
