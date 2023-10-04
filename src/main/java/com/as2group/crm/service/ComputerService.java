@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
 import com.as2group.crm.model.Computer;
 import com.as2group.crm.model.Computer.Status;
 import com.as2group.crm.repository.ComputerEmployeeRepository;
@@ -25,8 +25,8 @@ public class ComputerService {
 	ComputerEmployeeRepository computerEmployeeRepository;
 	
 	// Constructor
-	public ComputerService(ComputerRepository computadorRepository) {
-		this.computerRepository = computadorRepository;
+	public ComputerService(ComputerRepository computerRepository) {
+		this.computerRepository = computerRepository;
 	}
 
 	public void changeStatus(Computer computer, Computer.Status status) {
@@ -57,7 +57,7 @@ public class ComputerService {
 		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Computer not found");
 		}
-	}	
+	}
 
 	// Post
 	public Computer create(Computer computer) {
@@ -73,6 +73,16 @@ public class ComputerService {
 		return computerRepository.save(computer);
 	}
 
+    public Computer update(Computer computer) {
+
+        if (computer.getId() == null) {
+            throw new IllegalArgumentException("Computer ID cannot be null for update");
+        }
+
+
+        return computerRepository.save(computer);
+    }
+	
 	// Delete
 	public void delete(Long id) {
 		computerRepository.deleteById(id);
@@ -89,15 +99,8 @@ public class ComputerService {
 		found.setSector(computer.getSector());
 		found.setModel(computer.getModel());
 		found.setBrand(computer.getBrand());
-		found.setProcessor(computer.getProcessor());
-		found.setGeneration(computer.getGeneration());
-		found.setRam(computer.getRam());
-		found.setGraphicsCard(computer.getGraphicsCard());
-		found.setHd(computer.getHd());
-		found.setSsd(computer.getSsd());
 		found.setSoCurrent(computer.getSoCurrent());
 		found.setSoOriginal(computer.getSoOriginal());
-
 		return computerRepository.save(found);
 	}
 

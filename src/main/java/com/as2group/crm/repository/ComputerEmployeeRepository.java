@@ -14,7 +14,7 @@ public interface ComputerEmployeeRepository extends JpaRepository<ComputerEmploy
 	
 	List<ComputerEmployee> findByComputerAndEmployee(Computer computer, Employee employee);
 	
-	List<ComputerEmployee> findByComputer(Computer computador);
+	List<ComputerEmployee> findByComputer(Computer computer);
 	
 	List<ComputerEmployee> findByEmployee(Employee employee);
 	
