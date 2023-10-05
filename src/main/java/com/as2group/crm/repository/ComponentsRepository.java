@@ -3,8 +3,6 @@ package com.as2group.crm.repository;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import com.as2group.crm.enumeration.ComponentType;
 import com.as2group.crm.model.Components;
 import com.as2group.crm.model.Components.Status;
 import jakarta.transaction.Transactional;
