@@ -1,5 +1,7 @@
 package com.as2group.crm.controller;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import org.springframework.web.server.ResponseStatusException;
 
+import com.as2group.crm.dto.ComputerRequest;
+import com.as2group.crm.dto.ComputerResponse;
+import com.as2group.crm.dto.ComputerStatusResponse;
+import com.as2group.crm.enumeration.ComputerStatus;
 import com.as2group.crm.exceptions.ComputerNotFoundException;
-
-
+import com.as2group.crm.mapper.ComputerMapper;
+import com.as2group.crm.mapper.ComputerStatusMapper;
 import com.as2group.crm.model.Computer;
 import com.as2group.crm.model.Computer.Status;
 import com.as2group.crm.service.ComputerEmployeeService;
@@ -33,6 +39,12 @@ public class ComputerController {
 
 	@Autowired
 	ComputerEmployeeService computerEmployeeService;
+	
+	@Autowired
+	ComputerStatusMapper computerStatusMapper;
+	
+	@Autowired
+	ComputerMapper computerMapper;
 
 	@GetMapping("/computers")
 	public List<Computer> list() {
@@ -44,6 +56,13 @@ public class ComputerController {
 		return computerService.show(id);
 	}
 	
+	
+	
+	@GetMapping("/computers/status")
+	public List<ComputerStatusResponse> getStatusList(){
+		return computerStatusMapper.map(Arrays.asList(ComputerStatus.values()));
+	}
+
 	@GetMapping("/computers/status/{status}")
 	public List<Computer> listByStatus(@PathVariable("status") Status status) {
 		return computerService.listByStatus(status);
@@ -58,8 +77,8 @@ public class ComputerController {
 
 	@PostMapping("/computers")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Computer create(@RequestBody Computer computer) {
-		return computerService.create(computer);
+	public ComputerResponse create(@RequestBody ComputerRequest computerRequest) {
+		return computerMapper.map(computerService.create(computerMapper.map(computerRequest)));
 	}
 
 	@DeleteMapping("/computers/{id}")

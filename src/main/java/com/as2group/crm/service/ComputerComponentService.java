@@ -44,9 +44,9 @@ public class ComputerComponentService {
         relationship.setComponent(component);
         relationship.setComputer(computer);
         relationship.setReceived(LocalDateTime.now());
-        computer.getComputerComponents().add(0, component);
+        component.setComputer(computer);
+        computer.getComputerComponents().add(component);
         computer.setModificationDate(LocalDate.now());
-        
         componentService.changeStatus(component, Components.Status.EM_USO);
 
         return computerComponentRepository.save(relationship);
@@ -67,6 +67,7 @@ public class ComputerComponentService {
     		if(computerComponent.getReturned() == null) {
     			computer.getComputerComponents().remove(component);
     			computer.setModificationDate(LocalDate.now());
+    			component.setComputer(null);
     			computerComponent.setReturned(LocalDateTime.now());
     			computerComponentRepository.save(computerComponent);
     			componentService.changeStatus(component, Components.Status.PRA_USO);

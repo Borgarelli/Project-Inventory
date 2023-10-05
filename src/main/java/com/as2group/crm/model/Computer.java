@@ -50,6 +50,8 @@ public class Computer {
 	@Column(name = "so_original")
 	private String soOriginal;
 	private Status status;
+	
+	@Column(name = "entry_date")
 	private LocalDate entryDate;
 	private LocalDate departureDate;
 	private LocalDate modificationDate;

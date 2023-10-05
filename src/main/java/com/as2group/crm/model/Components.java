@@ -43,10 +43,10 @@ public class Components {
 
 	private Status status;
 	
-//    @Enumerated(EnumType.STRING) // Mapeia o enum ComponentType diretamente
+//	@Enumerated(EnumType.STRING)
 //    @Column(name = "component_type")
-//    private ComponentType componentType;
-//	
+//    private ComponentType type;
+////	
 	private String specifications;
 
 	public Long getId() {
@@ -65,6 +65,7 @@ public class Components {
 		this.patrimony = patrimony;
 	}
 
+	@JsonIgnore
 	public Computer getComputer() {
 		return computer;
 	}
@@ -91,11 +92,11 @@ public class Components {
 
 
 //	public ComponentType getComponentType() {
-//		return componentType;
+//		return type;
 //	}
 //
 //	public void setComponentType(ComponentType componentType) {
-//		this.componentType = componentType;
+//		this.type = componentType;
 //	}
 
 	@Override
