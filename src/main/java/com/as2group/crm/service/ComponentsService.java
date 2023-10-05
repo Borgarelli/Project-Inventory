@@ -2,6 +2,8 @@ package com.as2group.crm.service;
 
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -15,6 +17,7 @@ import com.as2group.crm.repository.ComponentsRepository;
 @Service
 public class ComponentsService {
 
+	@Autowired
 	ComponentsRepository componentsRepository;
 
 	// Constructor
@@ -77,8 +80,19 @@ public class ComponentsService {
 	}
 
 	// DeleteById
-	public void delete(Long id) {
-		componentsRepository.deleteById(id);
+	public void inactivate(Long id) {
+		Components component = show(id);
+		
+		if(component.getComputer() != null) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Components stills in computer");
+		}
+		
+		if(component.getStatus() == Components.Status.INATIVO) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Component is already inactive");
+		}
+		
+		changeStatus(component, Components.Status.INATIVO);
+		componentsRepository.save(component);
 	}
 
 	// DeleteByPatrimonio

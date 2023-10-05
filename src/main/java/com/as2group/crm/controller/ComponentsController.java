@@ -58,7 +58,7 @@ public class ComponentsController {
 
 	@DeleteMapping("/components/{id}")
 	public void delete(@PathVariable("id") Long id) {
-		componentsService.delete(id);
+		componentsService.inactivate(id);
 	}
 //	
 //	@DeleteMapping("/components/{patrimony}")

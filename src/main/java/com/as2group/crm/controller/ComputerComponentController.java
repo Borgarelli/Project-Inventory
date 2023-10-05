@@ -2,6 +2,7 @@ package com.as2group.crm.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,5 +26,11 @@ public class ComputerComponentController {
 		return computerComponentService.link(computerId, componentId);
 	}
 	
+	@DeleteMapping("/computers/{computerId}/components/{componentId}")
+	@ResponseStatus(HttpStatus.OK)
+	public void delete(@PathVariable("computerId") Long computerId,
+			@PathVariable("componentId") Long componentId) {
+	computerComponentService.unlink(computerId, componentId);
+	}
 
 }

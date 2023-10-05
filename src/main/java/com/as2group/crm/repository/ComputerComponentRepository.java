@@ -12,5 +12,7 @@ public interface ComputerComponentRepository extends JpaRepository<ComputerCompo
 
 	List<ComputerComponent> findByComputer(Computer computer);
 	
+	List<ComputerComponent> findByComputerAndComponent(Computer computer, Components component);
+	
 	List<ComputerComponent> findByComponent(Components component);
 }

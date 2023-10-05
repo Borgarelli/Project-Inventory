@@ -1,6 +1,7 @@
 package com.as2group.crm.service;
 
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -70,6 +71,7 @@ public class ComputerService {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Serial Number already exists.");
 		}
 		computer.setStatus(Computer.Status.PRA_USO);
+		computer.setEntryDate(LocalDate.now());
 		return computerRepository.save(computer);
 	}
 
@@ -117,6 +119,7 @@ public class ComputerService {
 		}
 		
 		changeStatus(computer, Computer.Status.INATIVO);
+		computer.setDepartureDate(LocalDate.now());
 		computerRepository.save(computer);
 
 	}
@@ -125,6 +128,8 @@ public class ComputerService {
 		Computer computer = show(id);
 		if(computer.getStatus() == Computer.Status.INATIVO) {
 			changeStatus(computer, Computer.Status.PRA_USO);
+			computer.setEntryDate(LocalDate.now());
+			computer.setDepartureDate(null);
 		}
 		else {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Computer is already active");
