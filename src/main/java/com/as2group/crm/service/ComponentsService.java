@@ -2,12 +2,10 @@ package com.as2group.crm.service;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import com.as2group.crm.enumeration.ComponentType;
 import com.as2group.crm.model.Components;
 import com.as2group.crm.model.Components.Status;
 import com.as2group.crm.repository.ComponentsRepository;
