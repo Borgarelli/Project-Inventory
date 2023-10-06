@@ -16,7 +16,7 @@ public class ComputerMapper {
 		return computer;
 	}
 	
-	public ComputerResponse map(Computer computer) {
-		return new ComputerResponse(computer.getId(), null, null, null, null, null, null, null, null, null, null, null, null);
-	}
+//	public ComputerResponse map(Computer computer) {
+//		return new ComputerResponse(computer.getId(), computer.getStatus(), computer.getPatrimony(), computer.getSn(), computer.getEmployee(), computer.getModel(), computer.getBrand(), computer.getSoCurrent(), computer.getSoOriginal(), computer.getEntryDate(), computer.getDepartureDate(), computer.getModificationDate(), computer.getComputerComponents());
+//	}
 }

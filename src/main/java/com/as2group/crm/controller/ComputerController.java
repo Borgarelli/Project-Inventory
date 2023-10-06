@@ -75,11 +75,11 @@ public class ComputerController {
 	}
 	
 
-	@PostMapping("/computers")
-	@ResponseStatus(HttpStatus.CREATED)
-	public ComputerResponse create(@RequestBody ComputerRequest computerRequest) {
-		return computerMapper.map(computerService.create(computerMapper.map(computerRequest)));
-	}
+//	@PostMapping("/computers")
+//	@ResponseStatus(HttpStatus.CREATED)
+//	public ComputerResponse create(@RequestBody ComputerRequest computerRequest) {
+//		return computerMapper.map(computerService.create(computerMapper.map(computerRequest)));
+//	}
 
 	@DeleteMapping("/computers/{id}")
 	public void delete(@PathVariable("id") Long id) {

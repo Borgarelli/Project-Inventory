@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.as2group.crm.model.Components;
+import com.as2group.crm.model.Computer.Status;
 import com.as2group.crm.model.Employee;
 
 public record ComputerResponse(
@@ -22,5 +23,7 @@ LocalDate modificationDate,
 List<Components> computerComponents
 )
 {
+
+
 
 }
