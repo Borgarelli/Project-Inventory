@@ -1,7 +1,9 @@
 package com.as2group.crm.enumeration;
 
 public enum ComputerStatus {
-	INATIVO("Computer is inactive"), PRA_USO("Computer is ready to use"), EM_USO("Computer in use");
+	INATIVO("Computer is inactive"),
+	PRA_USO("Computer is ready to use"),
+	EM_USO("Computer in use");
 	
 	private String description;
 	

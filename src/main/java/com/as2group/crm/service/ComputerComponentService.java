@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.as2group.crm.enumeration.ComputerStatus;
 import com.as2group.crm.model.Components;
 import com.as2group.crm.model.Computer;
 import com.as2group.crm.model.ComputerComponent;
@@ -32,7 +33,7 @@ public class ComputerComponentService {
         Components component = componentService.show(componentId);
 
 
-        if (computer.getStatus() == Computer.Status.INATIVO) {
+        if (computer.getStatus() == ComputerStatus.INATIVO) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Computer is not available");
         }
 

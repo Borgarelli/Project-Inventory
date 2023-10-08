@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.as2group.crm.enumeration.ComputerStatus;
 import com.as2group.crm.model.Computer;
 import com.as2group.crm.model.ComputerEmployee;
 import com.as2group.crm.model.Employee;
@@ -33,7 +34,7 @@ public class ComputerEmployeeService {
 	        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Employee is inactive");
 	    }
 
-	    if (computer.getStatus() != Computer.Status.PRA_USO) {
+	    if (computer.getStatus() != ComputerStatus.PRA_USO) {
 	        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Computer is not available");
 	    }
 
@@ -42,7 +43,7 @@ public class ComputerEmployeeService {
 	    relationship.setEmployee(employee);
 	    relationship.setReceived(LocalDateTime.now());
 	    computer.setEmployee(employee);
-	    computerService.changeStatus(computer, Computer.Status.EM_USO);
+	    computerService.changeStatus(computer, ComputerStatus.EM_USO);
 
 	    return computerEmployeeRepository.save(relationship);
 	}
@@ -60,7 +61,7 @@ public class ComputerEmployeeService {
 	        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Employee is inactive");
 	    }
 
-	    if (computer.getStatus() != Computer.Status.EM_USO) {
+	    if (computer.getStatus() != ComputerStatus.EM_USO) {
 	        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Computer is not available");
 	    }
 	    
@@ -69,7 +70,7 @@ public class ComputerEmployeeService {
 	        	computer.setEmployee(null);
 	        	computerEmployee.setReturned(LocalDateTime.now());
 	            computerEmployeeRepository.save(computerEmployee); 
-	            computerService.changeStatus(computer, Computer.Status.PRA_USO);
+	            computerService.changeStatus(computer, ComputerStatus.PRA_USO);
 	        }
 	    }
 	}

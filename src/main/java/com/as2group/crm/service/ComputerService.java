@@ -10,8 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import com.as2group.crm.enumeration.ComputerStatus;
 import com.as2group.crm.model.Computer;
-import com.as2group.crm.model.Computer.Status;
 import com.as2group.crm.repository.ComputerEmployeeRepository;
 import com.as2group.crm.repository.ComputerRepository;
 
@@ -30,7 +31,7 @@ public class ComputerService {
 		this.computerRepository = computerRepository;
 	}
 
-	public void changeStatus(Computer computer, Computer.Status status) {
+	public void changeStatus(Computer computer, ComputerStatus status) {
 		computer.setStatus(status);
 		this.computerRepository.save(computer);
 	}
@@ -70,7 +71,7 @@ public class ComputerService {
 		if (found.isPresent()) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Serial Number already exists.");
 		}
-		computer.setStatus(Computer.Status.PRA_USO);
+		computer.setStatus(ComputerStatus.PRA_USO);
 		computer.setEntryDate(LocalDate.now());
 		return computerRepository.save(computer);
 	}
@@ -113,12 +114,12 @@ public class ComputerService {
 		if(computer.getEmployee() != null) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Computer stills with employee");
 		}
-		if(computer.getStatus() == Computer.Status.INATIVO) {
+		if(computer.getStatus() == ComputerStatus.INATIVO) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Computer is already inactive");
 			
 		}
 		
-		changeStatus(computer, Computer.Status.INATIVO);
+		changeStatus(computer, ComputerStatus.INATIVO);
 		computer.setDepartureDate(LocalDate.now());
 		computerRepository.save(computer);
 
@@ -126,8 +127,8 @@ public class ComputerService {
 	
 	public void activate(Long id) {
 		Computer computer = show(id);
-		if(computer.getStatus() == Computer.Status.INATIVO) {
-			changeStatus(computer, Computer.Status.PRA_USO);
+		if(computer.getStatus() == ComputerStatus.INATIVO) {
+			changeStatus(computer, ComputerStatus.PRA_USO);
 			computer.setEntryDate(LocalDate.now());
 			computer.setDepartureDate(null);
 		}
@@ -137,7 +138,7 @@ public class ComputerService {
 	}
 
 	// GetStatus
-	public List<Computer> listByStatus(Status status) {
+	public List<Computer> listByStatus(ComputerStatus status) {
 		return computerRepository.findAllByStatus(status);
 	}
 

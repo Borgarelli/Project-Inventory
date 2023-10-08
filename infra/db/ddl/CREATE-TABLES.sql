@@ -1,3 +1,6 @@
+USE `inventory-db`;
+
+
 CREATE TABLE `employee` (
   `id_employee` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) DEFAULT NULL,
@@ -40,8 +43,9 @@ CREATE TABLE `components` (
   `id_computer` int(11) DEFAULT NULL,
   `id_component_type` int(11) DEFAULT NULL,
   `specifications` varchar(100),
+  `patrimony` varchar(50) DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id_components`),
+  PRIMARY KEY (`id_component`),
   KEY `fk_computer` (`id_computer`),
   KEY `fk_component_type` (`id_component_type`),
   CONSTRAINT `fk_id_computer` FOREIGN KEY (`id_computer`) REFERENCES `computer` (`id_computer`),
@@ -69,8 +73,8 @@ CREATE TABLE `computer_components` (
   `returned` datetime DEFAULT NULL,
   PRIMARY KEY (`id_comp_compo`),
   KEY `fk_cc_computer` (`id_computer`),
-  KEY `fk_cc_component` (`id_employee`),
+  KEY `fk_cc_component` (`id_component`),
   CONSTRAINT `fk_cc_computerr` FOREIGN KEY (`id_computer`) REFERENCES `computer` (`id_computer`),
-  CONSTRAINT `fk_cc_component` FOREIGN KEY (`id_component`) REFERENCES `employee` (`id_component`)
+  CONSTRAINT `fk_cc_component` FOREIGN KEY (`id_component`) REFERENCES `components` (`id_component`)
 );
 

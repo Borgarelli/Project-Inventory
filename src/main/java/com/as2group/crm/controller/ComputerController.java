@@ -26,7 +26,7 @@ import com.as2group.crm.exceptions.ComputerNotFoundException;
 import com.as2group.crm.mapper.ComputerMapper;
 import com.as2group.crm.mapper.ComputerStatusMapper;
 import com.as2group.crm.model.Computer;
-import com.as2group.crm.model.Computer.Status;
+
 import com.as2group.crm.service.ComputerEmployeeService;
 import com.as2group.crm.service.ComputerService;
 
@@ -47,15 +47,15 @@ public class ComputerController {
 	ComputerMapper computerMapper;
 
 	@GetMapping("/computers")
-	public List<Computer> list() {
-		return computerService.list();
+	public List<ComputerResponse> list() {
+		return computerMapper.map(computerService.list());
+
 	}
 
 	@GetMapping("/computers/{id}")
-	public Computer showId(@PathVariable("id") Long id) {
-		return computerService.show(id);
+	public ComputerResponse showId(@PathVariable("id") Long id) {
+		return computerMapper.map(computerService.show(id));
 	}
-	
 	
 	
 	@GetMapping("/computers/status")
@@ -64,7 +64,7 @@ public class ComputerController {
 	}
 
 	@GetMapping("/computers/status/{status}")
-	public List<Computer> listByStatus(@PathVariable("status") Status status) {
+	public List<Computer> listByStatus(@PathVariable("status") ComputerStatus status) {
 		return computerService.listByStatus(status);
 	}
 	
@@ -75,11 +75,11 @@ public class ComputerController {
 	}
 	
 
-//	@PostMapping("/computers")
-//	@ResponseStatus(HttpStatus.CREATED)
-//	public ComputerResponse create(@RequestBody ComputerRequest computerRequest) {
-//		return computerMapper.map(computerService.create(computerMapper.map(computerRequest)));
-//	}
+	@PostMapping("/computers")
+	@ResponseStatus(HttpStatus.CREATED)
+	public ComputerResponse create(@RequestBody ComputerRequest computerRequest) {
+		return computerMapper.map(computerService.create(computerMapper.map(computerRequest)));
+	}
 
 	@DeleteMapping("/computers/{id}")
 	public void delete(@PathVariable("id") Long id) {

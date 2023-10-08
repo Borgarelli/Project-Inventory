@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.as2group.crm.enumeration.ComputerStatus;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -38,9 +40,7 @@ public class Computer {
 	private List<Components> computerWithComponents = new ArrayList<>();
 	
 
-	public enum Status {
-		EM_USO, PRA_USO, INATIVO;
-	}
+ 
 
 	private String sector;
 	private String model;
@@ -49,7 +49,7 @@ public class Computer {
 	private String soCurrent;
 	@Column(name = "so_original")
 	private String soOriginal;
-	private Status status;
+	private ComputerStatus status;
 	
 	@Column(name = "entry_date")
 	private LocalDate entryDate;
@@ -138,11 +138,11 @@ public class Computer {
 		this.soOriginal = soOriginal;
 	}
 
-	public Status getStatus() {
+	public ComputerStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(Status status) {
+	public void setStatus(ComputerStatus status) {
 		this.status = status;
 	}
 	

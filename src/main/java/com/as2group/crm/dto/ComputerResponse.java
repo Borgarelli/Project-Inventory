@@ -3,13 +3,13 @@ package com.as2group.crm.dto;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.as2group.crm.enumeration.ComputerStatus;
 import com.as2group.crm.model.Components;
-import com.as2group.crm.model.Computer.Status;
 import com.as2group.crm.model.Employee;
 
 public record ComputerResponse(
 Long id,
-ComputerStatusResponse status,
+ComputerStatus status,
 String patrimony,
 String sn,
 Employee employee,

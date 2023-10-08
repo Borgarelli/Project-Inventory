@@ -14,10 +14,10 @@ services:
       MYSQL_ROOT_PASSWORD: 'as2group'
     ports:
       # <Port exposed> : <MySQL Port running inside container>
-      - '3306:3306'
+      - '3308:3306'
     expose:
       # Opens port 3306 on the container
-      - '3306'
+      - '3308'
     volumes:
       # Where our data will be persisted
       - inventory-db:/var/lib/mysql
