@@ -1,15 +1,45 @@
 # Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+Welcome to my project, a robust inventory management system built on Spring Boot 3 and powered by Docker containerization. Our project addresses the critical needs of managing computer assets, tracking components, and overseeing employee interactions efficiently.
 
 # Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+
+Welcome to the Inventory Management System powered by Spring Boot 3 and Docker. This guide will walk you through the steps to set up and run the application efficiently.
+
+Prerequisites
+
+Before you begin, ensure that you have the following technologies installed on your system:
+
+### Java Development Kit (JDK): 
+You need Java 8 or later installed. You can download it from the official Oracle website or use an OpenJDK distribution.
+
+### Maven: 
+Maven is used for building and managing the project. You can download it from the official Apache Maven website and follow the installation instructions.
+
+### Docker: 
+To run the application within a Docker container, you must have Docker installed. You can download Docker for your specific platform from the Docker website.
 
 # Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+
+### Clone the Repository
+
+```kotlin
+git clone https://github.com/Borgarelli/Project-Inventory.git
+```
+
+### Build the Docker-Compose on Terminal:
+```kotlin
+docker-compose -f mysql-docker-compose.yml up -d
+```
+
+### Build the Project:
+```kotlin
+mvn clean install
+```
+
+### Start the Application:
+```kotlin
+mvn spring-boot:run
+```
 
 # Contribute
 TODO: Explain how other users and developers can contribute to make your code better. 
