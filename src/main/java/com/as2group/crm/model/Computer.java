@@ -38,9 +38,6 @@ public class Computer {
 
 	@OneToMany(mappedBy = "computer", fetch = FetchType.EAGER)
 	private List<Components> computerWithComponents = new ArrayList<>();
-	
-
- 
 
 	private String sector;
 	private String model;
