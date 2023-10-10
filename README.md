@@ -18,6 +18,9 @@ Maven is used for building and managing the project. You can download it from th
 ### Docker: 
 To run the application within a Docker container, you must have Docker installed. You can download Docker for your specific platform from the Docker website.
 
+### MySql Postgres
+To up a database and run the application, is necessary to install this SGBD. You can download a mysql workbench for free on Postgres Documentation.
+
 # Build and Test
 
 ### Clone the Repository
