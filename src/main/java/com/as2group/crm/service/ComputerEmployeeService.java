@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.as2group.crm.enumeration.ComputerStatus;
+import com.as2group.crm.enumeration.EmployeeStatus;
 import com.as2group.crm.model.Computer;
 import com.as2group.crm.model.ComputerEmployee;
 import com.as2group.crm.model.Employee;
@@ -30,7 +31,7 @@ public class ComputerEmployeeService {
 	    Computer computer = computerService.show(computerId);
 	    Employee employee = employeeService.show(employeeId);
 
-	    if (employee.getStatus() != Employee.Status.ATIVO) {
+	    if (employee.getStatus() != EmployeeStatus.ATIVO) {
 	        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Employee is inactive");
 	    }
 
@@ -57,7 +58,7 @@ public class ComputerEmployeeService {
 	    List<ComputerEmployee> link = computerEmployeeRepository
 	            .findByComputerAndEmployee(computer, employee);
 	    
-	    if (employee.getStatus() == Employee.Status.INATIVO) {
+	    if (employee.getStatus() == EmployeeStatus.INATIVO) {
 	        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Employee is inactive");
 	    }
 

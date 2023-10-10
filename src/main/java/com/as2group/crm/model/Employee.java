@@ -2,6 +2,9 @@ package com.as2group.crm.model;
 
 import java.time.LocalDate;
 import java.util.Objects;
+
+import com.as2group.crm.enumeration.EmployeeStatus;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,7 +34,7 @@ public class Employee {
 	private String sex;
 	private LocalDate entryDate;
 	private LocalDate departureDate;
-	private Status status;
+	private EmployeeStatus status;
 
 
 	public Long getId() {
@@ -74,11 +77,11 @@ public class Employee {
 		this.sex = sex;
 	}
 	
-	public Status getStatus() {
+	public EmployeeStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(Status status) {
+	public void setStatus(EmployeeStatus status) {
 		this.status = status;
 	}
 

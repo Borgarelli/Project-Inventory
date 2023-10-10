@@ -18,10 +18,10 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 	@Query("SELECT e FROM Employee e WHERE e.name LIKE %:name%")
 	List<Employee> findByName (String name);
 	
-	@Query("SELECT e FROM Employee e WHERE e.status = com.as2group.crm.model.Employee$Status.ATIVO")
+	@Query("SELECT e FROM Employee e WHERE e.status = com.as2group.crm.enumeration.EmployeeStatus.ATIVO")
 	List<Employee> findByStatusActivate();
 	
-	@Query("SELECT e FROM Employee e WHERE e.status = com.as2group.crm.model.Employee$Status.INATIVO")
+	@Query("SELECT e FROM Employee e WHERE e.status = com.as2group.crm.enumeration.EmployeeStatus.INATIVO")
 	List<Employee> findByStatusInactivate();
 
 

@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.as2group.crm.enumeration.EmployeeStatus;
 import com.as2group.crm.model.ComputerEmployee;
 import com.as2group.crm.model.Employee;
 
@@ -31,7 +32,7 @@ public class EmployeeService {
 		this.employeeRepository = employeeRepository;
 	}
 
-	public void changeStatus(Employee employee, Employee.Status status) {
+	public void changeStatus(Employee employee, EmployeeStatus status) {
 		employee.setStatus(status);
 		this.employeeRepository.save(employee);
 	}
@@ -69,7 +70,7 @@ public class EmployeeService {
 	        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email already exists.");
 	    }
 
-	    employee.setStatus(Employee.Status.ATIVO);
+	    employee.setStatus(EmployeeStatus.ATIVO);
 	    employee.setEntryDate(LocalDate.now());
 	    return employeeRepository.save(employee);
 	}
@@ -96,11 +97,11 @@ public class EmployeeService {
 	        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, errorMessage);
 	    }
 	    
-	    if(employee.getStatus() == Employee.Status.INATIVO) {
+	    if(employee.getStatus() == EmployeeStatus.INATIVO) {
 	    	throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Employee is already inactivate");
 	    }
 
-	    changeStatus(employee, Employee.Status.INATIVO);
+	    changeStatus(employee, EmployeeStatus.INATIVO);
 	    employee.setDepartureDate(LocalDate.now());
 	    employeeRepository.save(employee);
 	}
@@ -109,10 +110,10 @@ public class EmployeeService {
 	public void activate(Long id) {
 		Employee employee = show(id);
 		
-		if(employee.getStatus() == Employee.Status.INATIVO) {
+		if(employee.getStatus() == EmployeeStatus.INATIVO) {
 			employee.setEntryDate(LocalDate.now());
 			employee.setDepartureDate(null);
-			changeStatus(employee, Employee.Status.ATIVO);
+			changeStatus(employee, EmployeeStatus.ATIVO);
 				
 		}
 		else {
