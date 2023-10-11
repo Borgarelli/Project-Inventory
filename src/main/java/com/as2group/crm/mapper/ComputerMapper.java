@@ -62,7 +62,7 @@ public class ComputerMapper {
 	    List<ComputerResponse> response = new ArrayList<>();
 	    for (Computer computer : computers) {
 	        EmployeeResponse employee = null;
-	        List<ComponentsResponse> component = this.componentMapper.map(computer.getComputerComponents()); // Inicialize a lista fora do bloco condicional
+	        List<ComponentsResponse> component = this.componentMapper.map(computer.getComputerComponents());
 
 	        if (computer.getEmployee() != null) {
 	            employee = this.employeeMapper.map(computer.getEmployee());
