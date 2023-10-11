@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.as2group.crm.dto.ComponentsRequest;
+import com.as2group.crm.dto.ComponentsResponse;
+import com.as2group.crm.mapper.ComponentsMapper;
 import com.as2group.crm.model.Components;
 import com.as2group.crm.model.Components.Status;
 import com.as2group.crm.service.ComponentsService;
@@ -24,19 +27,22 @@ public class ComponentsController {
 	@Autowired
 	ComponentsService componentsService;
 
+	@Autowired
+	ComponentsMapper componentsMapper;
+
 	@GetMapping("/components")
-	public List<Components> list() {
-		return componentsService.list();
+	public List<ComponentsResponse> list() {
+		return componentsMapper.map(componentsService.list());
 	}
 
 	@GetMapping("/components/status/{status}")
-	public List<Components> listByStatus(@PathVariable("status") Status status) {
-		return componentsService.listByStatus(status);
+	public List<ComponentsResponse> listByStatus(@PathVariable("status") Status status) {
+		return componentsMapper.map(componentsService.listByStatus(status));
 	}
 	
 	@GetMapping("/components/{id}")
-	public Components show(@PathVariable("id") Long id) {
-		return componentsService.show(id);
+	public ComponentsResponse show(@PathVariable("id") Long id) {
+		return componentsMapper.map(componentsService.show(id));
 	}
 //
 	@GetMapping("/components/patrimony/{patrimony}")
@@ -52,8 +58,8 @@ public class ComponentsController {
 
 	@PostMapping("/components")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Components create(@RequestBody Components components) {
-		return componentsService.create(components);
+	public ComponentsResponse create(@RequestBody ComponentsRequest componentsRequest) {
+		return componentsMapper.map(componentsService.create(componentsMapper.map(componentsRequest)));
 	}
 
 	@DeleteMapping("/components/{id}")
