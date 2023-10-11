@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.as2group.crm.dto.EmployeeRequest;
 import com.as2group.crm.dto.EmployeeResponse;
 import com.as2group.crm.exceptions.EmployeeActivationException;
 import com.as2group.crm.exceptions.EmployeeNotFoundException;
@@ -41,33 +42,33 @@ public class EmployeeController {
 
 	//GetById
 	@GetMapping("/employees/{id}")
-	public Employee display(@PathVariable("id") Long id) {
-		return employeeService.show(id);
+	public EmployeeResponse display(@PathVariable("id") Long id) {
+		return employeeMapper.map(employeeService.show(id));
 	}
 	
 	//GetEmployeeInactivate
-	@GetMapping("/employeess/INATIVO")
-	public List<Employee> listInactivate(){
-		return employeeService.listInactivate();
+	@GetMapping("/employees/INATIVO")
+	public List<EmployeeResponse> listInactivate(){
+		return employeeMapper.map(employeeService.listInactivate());
 	}
 
 	//GetAllByName
 	@GetMapping("/employees/name/{name}")
-	public List<Employee> displayName(@PathVariable("name") String name) {
-		return employeeService.showName(name);
+	public List<EmployeeResponse> displayName(@PathVariable("name") String name) {
+		return employeeMapper.map(employeeService.showName(name));
 	}
 	
 	//GetByEmail
 	@GetMapping("/employees/email/{email}")
-	public List<Employee> displayEmail(@PathVariable("email") String email){
-		return employeeService.showEmail(email);
+	public List<EmployeeResponse> displayEmail(@PathVariable("email") String email){
+		return employeeMapper.map(employeeService.showEmail(email));
 	}
 	
 	//Post
 	@PostMapping("/employees")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Employee create(@RequestBody Employee employee) {
-		return employeeService.create(employee);
+	public EmployeeResponse create(@RequestBody EmployeeRequest employeeRequest) {
+		return employeeMapper.map(employeeService.create(employeeMapper.map(employeeRequest)));
 		
 	}
 

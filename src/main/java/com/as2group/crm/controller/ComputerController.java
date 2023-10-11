@@ -19,11 +19,11 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.as2group.crm.dto.ComputerRequest;
 import com.as2group.crm.dto.ComputerResponse;
-import com.as2group.crm.dto.ComputerStatusResponse;
+
 import com.as2group.crm.enumeration.ComputerStatus;
 import com.as2group.crm.exceptions.ComputerNotFoundException;
 import com.as2group.crm.mapper.ComputerMapper;
-import com.as2group.crm.mapper.ComputerStatusMapper;
+
 import com.as2group.crm.model.Computer;
 
 import com.as2group.crm.service.ComputerEmployeeService;
@@ -38,10 +38,7 @@ public class ComputerController {
 
 	@Autowired
 	ComputerEmployeeService computerEmployeeService;
-	
-	@Autowired
-	ComputerStatusMapper computerStatusMapper;
-	
+		
 	@Autowired
 	ComputerMapper computerMapper;
 
@@ -57,14 +54,14 @@ public class ComputerController {
 	}
 	
 	
-	@GetMapping("/computers/status")
-	public List<ComputerStatusResponse> getStatusList(){
-		return computerStatusMapper.map(Arrays.asList(ComputerStatus.values()));
-	}
+	// @GetMapping("/computers/status")
+	// public List<ComputerStatusResponse> getStatusList(){
+	// 	return computerStatusMapper.map(Arrays.asList(ComputerStatus.values()));
+	// }
 
 	@GetMapping("/computers/status/{status}")
-	public List<Computer> listByStatus(@PathVariable("status") ComputerStatus status) {
-		return computerService.listByStatus(status);
+	public List<ComputerResponse> listByStatus(@PathVariable("status") ComputerStatus status) {
+		return computerMapper.map(computerService.listByStatus(status));
 	}
 	
 

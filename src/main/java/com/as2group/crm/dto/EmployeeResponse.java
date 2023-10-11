@@ -1,9 +1,12 @@
 package com.as2group.crm.dto;
+import com.as2group.crm.enumeration.EmployeeStatus;
 
 public record EmployeeResponse (
     String name,
     String email,
-    String sex)
+    EmployeeStatus status,
+    String sex
+    )
     {
     
 }

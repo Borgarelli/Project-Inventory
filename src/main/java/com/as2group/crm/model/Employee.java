@@ -20,9 +20,6 @@ public class Employee {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id_employee;
 	
-	public enum Status {
-		ATIVO, INATIVO;
-	}
 
 	@Column(nullable = false, unique = true)
 	private String name;
