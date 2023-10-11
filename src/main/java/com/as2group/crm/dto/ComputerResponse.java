@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.as2group.crm.enumeration.ComputerStatus;
-import com.as2group.crm.model.Components;
+
 
 public record ComputerResponse(
 Long id,
@@ -19,7 +19,7 @@ String soOriginal,
 LocalDate entryDate,
 LocalDate departureDate,
 LocalDate modificationDate,
-List<Components> computerComponents
+List<ComponentsResponse> computerComponents
 )
 {
 
