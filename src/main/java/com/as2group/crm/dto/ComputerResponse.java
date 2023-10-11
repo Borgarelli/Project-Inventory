@@ -5,14 +5,13 @@ import java.util.List;
 
 import com.as2group.crm.enumeration.ComputerStatus;
 import com.as2group.crm.model.Components;
-import com.as2group.crm.model.Employee;
 
 public record ComputerResponse(
 Long id,
 ComputerStatus status,
 String patrimony,
 String sn,
-Employee employee,
+EmployeeResponse employee,
 String model,
 String brand,
 String soCurrent,

@@ -3,15 +3,20 @@ package com.as2group.crm.mapper;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.as2group.crm.dto.ComputerRequest;
 import com.as2group.crm.dto.ComputerResponse;
+import com.as2group.crm.dto.EmployeeResponse;
 import com.as2group.crm.model.Computer;
 
 
 @Component
 public class ComputerMapper {
+	
+	@Autowired
+	EmployeeMapper employeeMapper;
 
 	public Computer map(ComputerRequest computerRequest) {
 		Computer computer = new Computer();
@@ -25,14 +30,50 @@ public class ComputerMapper {
 	}
 	
 	public ComputerResponse map(Computer computer) {
-		return new ComputerResponse(computer.getId(),computer.getStatus(), computer.getPatrimony(), computer.getSn(), computer.getEmployee(), computer.getModel(), computer.getBrand(), computer.getSoCurrent(), computer.getSoOriginal(), computer.getEntryDate(), computer.getDepartureDate(), computer.getModificationDate(), computer.getComputerComponents());
+		EmployeeResponse employee = null;
+	    if (computer.getEmployee() != null) {
+	        employee = this.employeeMapper.map(computer.getEmployee());
+	    }
+	    return new ComputerResponse(
+	        computer.getId(),
+	        computer.getStatus(),
+	        computer.getPatrimony(),
+	        computer.getSn(),
+	        employee,
+	        computer.getModel(),
+	        computer.getBrand(),
+	        computer.getSoCurrent(),
+	        computer.getSoOriginal(),
+	        computer.getEntryDate(),
+	        computer.getDepartureDate(),
+	        computer.getModificationDate(),
+	        computer.getComputerComponents()
+	    );
 		
 	}
 	
 	public List<ComputerResponse> map(List<Computer> computers){
 		List<ComputerResponse> response = new ArrayList<>();
 		for(Computer computer : computers) {
-			response.add( new ComputerResponse(computer.getId(),computer.getStatus(), computer.getPatrimony(), computer.getSn(), computer.getEmployee(), computer.getModel(), computer.getBrand(), computer.getSoCurrent(), computer.getSoOriginal(), computer.getEntryDate(), computer.getDepartureDate(), computer.getModificationDate(), computer.getComputerComponents())); 
+			EmployeeResponse employee = null;
+			if (computer.getEmployee() != null) {
+				employee = this.employeeMapper.map(computer.getEmployee());
+			}
+			response.add(new ComputerResponse(
+				computer.getId(),
+				computer.getStatus(),
+				computer.getPatrimony(),
+				computer.getSn(),
+				employee,
+				computer.getModel(),
+				computer.getBrand(),
+				computer.getSoCurrent(),
+				computer.getSoOriginal(),
+				computer.getEntryDate(),
+				computer.getDepartureDate(),
+				computer.getModificationDate(),
+				computer.getComputerComponents()
+			)); 
 		}
 		return response;
 	}

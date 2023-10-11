@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.as2group.crm.dto.EmployeeResponse;
 import com.as2group.crm.exceptions.EmployeeActivationException;
 import com.as2group.crm.exceptions.EmployeeNotFoundException;
+import com.as2group.crm.mapper.EmployeeMapper;
 import com.as2group.crm.model.Employee;
 import com.as2group.crm.service.EmployeeService;
 
@@ -27,11 +29,14 @@ public class EmployeeController {
 
 	@Autowired
 	EmployeeService employeeService;
+	
+	@Autowired
+	EmployeeMapper employeeMapper;
 
 	//GetAll
 	@GetMapping("/employees")
-	public List<Employee> list() {
-	    return employeeService.listActivate();
+	public List<EmployeeResponse> list() {
+	    return employeeMapper.map(employeeService.listActivate());
 	}
 
 	//GetById
