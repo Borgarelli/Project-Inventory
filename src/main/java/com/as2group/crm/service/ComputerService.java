@@ -92,9 +92,7 @@ public class ComputerService {
 	}
 
 	// Put
-	public Computer edit(Computer computer, Long id, Long patrimony, String sn, String employee, String sector,
-			String model, String brand, String processor, String generation, String ram, String graphicsCard, String hd,
-			String ssd, String soCorrent, String soOriginal) {
+	public Computer edit(Long id, Computer computer) {
 		Computer found = show(id);
 		found.setPatrimony(computer.getPatrimony());
 		found.setSn(computer.getSn());

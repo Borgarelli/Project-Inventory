@@ -52,12 +52,6 @@ public class ComputerController {
 	public ComputerResponse showId(@PathVariable("id") Long id) {
 		return computerMapper.map(computerService.show(id));
 	}
-	
-	
-	// @GetMapping("/computers/status")
-	// public List<ComputerStatusResponse> getStatusList(){
-	// 	return computerStatusMapper.map(Arrays.asList(ComputerStatus.values()));
-	// }
 
 	@GetMapping("/computers/status/{status}")
 	public List<ComputerResponse> listByStatus(@PathVariable("status") ComputerStatus status) {
@@ -66,8 +60,8 @@ public class ComputerController {
 	
 
 	@GetMapping("/computers/patrimony/{patrimony}")
-	public Computer show(@PathVariable("patrimony") String patrimony) {
-		return computerService.show(patrimony);
+	public ComputerResponse show(@PathVariable("patrimony") String patrimony) {
+		return computerMapper.map(computerService.show(patrimony));
 	}
 	
 
@@ -83,11 +77,8 @@ public class ComputerController {
 	}
 
 	@PutMapping("/computers/{id}")
-	public Computer update(@PathVariable("id") Long id, @RequestBody Computer computer, Long patrimony, String sn,
-			String employee, String sector, String model, String brand, String processor, String generation, String ram,
-			String graphicsCard, String hd, String ssd, String soCorrent, String soOriginal) {
-		return computerService.edit(computer, id, patrimony, sn, employee, sector, model, brand, processor, generation,
-				ram, graphicsCard, hd, ssd, soCorrent, soOriginal);
+	public ComputerResponse update(@PathVariable("id") Long id, @RequestBody ComputerRequest computerRequest) {
+		return computerMapper.map(computerService.edit(id, computerMapper.map(computerRequest)));
 	}
 
 	@PutMapping("/computers/{id}/inactivate")
