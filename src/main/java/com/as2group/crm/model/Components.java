@@ -2,7 +2,7 @@ package com.as2group.crm.model;
 
 import java.util.Objects;
 
-
+import com.as2group.crm.enumeration.ComponentsStatus;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -34,11 +34,7 @@ public class Components {
 	@JoinColumn(name = "id_computer")
 	private Computer computer;
 
-	public enum Status {
-		EM_USO, PRA_USO, INATIVO;
-	}
-
-	private Status status;
+	private ComponentsStatus status;
 	
 //	@Enumerated(EnumType.STRING)
 //    @Column(name = "component_type")
@@ -70,11 +66,11 @@ public class Components {
 		this.computer = computer;
 	}
 
-	public Status getStatus() {
+	public ComponentsStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(Status status) {
+	public void setStatus(ComponentsStatus status) {
 		this.status = status;
 	}
 	

@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.as2group.crm.enumeration.ComponentsStatus;
 import com.as2group.crm.enumeration.ComputerStatus;
 import com.as2group.crm.model.Components;
 import com.as2group.crm.model.Computer;
@@ -37,7 +38,7 @@ public class ComputerComponentService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Computer is not available");
         }
 
-        if (component.getStatus() != Components.Status.PRA_USO) {
+        if (component.getStatus() != ComponentsStatus.PRA_USO) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Component is not available");
         }
 
@@ -48,7 +49,7 @@ public class ComputerComponentService {
         component.setComputer(computer);
         computer.getComputerComponents().add(component);
         computer.setModificationDate(LocalDate.now());
-        componentService.changeStatus(component, Components.Status.EM_USO);
+        componentService.changeStatus(component, ComponentsStatus.EM_USO);
 
         return computerComponentRepository.save(relationship);
     }
@@ -60,7 +61,7 @@ public class ComputerComponentService {
     	
     	List<ComputerComponent> link = computerComponentRepository.findByComputerAndComponent(computer, component);
     	
-    	if (component.getStatus() == Components.Status.INATIVO) {
+    	if (component.getStatus() == ComponentsStatus.INATIVO) {
     		throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Component is inactive");
     	}
     	
@@ -71,7 +72,7 @@ public class ComputerComponentService {
     			component.setComputer(null);
     			computerComponent.setReturned(LocalDateTime.now());
     			computerComponentRepository.save(computerComponent);
-    			componentService.changeStatus(component, Components.Status.PRA_USO);
+    			componentService.changeStatus(component, ComponentsStatus.PRA_USO);
     		}
     	}
     }
