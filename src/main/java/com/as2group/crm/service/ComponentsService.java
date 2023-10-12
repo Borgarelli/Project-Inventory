@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import com.as2group.crm.enumeration.ComponentsStatus;
 import com.as2group.crm.model.Components;
-import com.as2group.crm.model.Components.Status;
+
 import com.as2group.crm.repository.ComponentsRepository;
 
 //import ch.qos.logback.core.subst.Token.Type;
@@ -23,7 +25,7 @@ public class ComponentsService {
 		this.componentsRepository = componentsRepository;
 	}
 
-	public void changeStatus(Components Components, Status status) {
+	public void changeStatus(Components Components, ComponentsStatus status) {
 		Components.setStatus(status);
 		this.componentsRepository.save(Components);
 	}
@@ -54,7 +56,7 @@ public class ComponentsService {
 	}
 
 	// GetByStatus
-	public List<Components> listByStatus(Status status) {
+	public List<Components> listByStatus(ComponentsStatus status) {
 		return componentsRepository.findAllByStatus(status);
 	}
 
@@ -73,7 +75,7 @@ public class ComponentsService {
 		if (found.isPresent()) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Serial Number already exists.");
 		}
-		components.setStatus(Components.Status.PRA_USO);
+		components.setStatus(ComponentsStatus.PRA_USO);
 		return componentsRepository.save(components);
 	}
 
@@ -85,11 +87,11 @@ public class ComponentsService {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Components stills in computer");
 		}
 		
-		if(component.getStatus() == Components.Status.INATIVO) {
+		if(component.getStatus() == ComponentsStatus.INATIVO) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Component is already inactive");
 		}
 		
-		changeStatus(component, Components.Status.INATIVO);
+		changeStatus(component, ComponentsStatus.INATIVO);
 		componentsRepository.save(component);
 	}
 
@@ -120,8 +122,8 @@ public class ComponentsService {
 //	}
 
 	// GetStock
-	public Optional<Status> stockByStatus() {
-		Optional<Status> found = componentsRepository.findByStatus(Status.PRA_USO);
+	public Optional<ComponentsStatus> stockByStatus() {
+		Optional<ComponentsStatus> found = componentsRepository.findByStatus(ComponentsStatus.PRA_USO);
 		if (found.isPresent()) {
 			return Optional.of(found.get());
 		} else {

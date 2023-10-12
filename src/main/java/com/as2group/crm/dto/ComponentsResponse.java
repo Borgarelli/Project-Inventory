@@ -1,5 +1,8 @@
 package com.as2group.crm.dto;
 
-public record ComponentsResponse (String patrimony, String specifications){
+public record ComponentsResponse (
+    Long id, 
+    String patrimony, 
+    String specifications) {
     
 }

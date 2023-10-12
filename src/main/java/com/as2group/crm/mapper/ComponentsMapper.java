@@ -22,13 +22,13 @@ public class ComponentsMapper {
     }
 
     public ComponentsResponse map(Components component) {
-        return new ComponentsResponse(component.getPatrimony(), component.getSpecifications());
+        return new ComponentsResponse(component.getId(), component.getPatrimony(), component.getSpecifications());
     }
 
     public List<ComponentsResponse> map(List<Components> components){
         List<ComponentsResponse> response = new ArrayList<>();
         for(Components component : components) {
-            response.add(new ComponentsResponse(component.getPatrimony(), component.getSpecifications()));
+            response.add(new ComponentsResponse(component.getId(), component.getPatrimony(), component.getSpecifications()));
         }
         return response;
     }
