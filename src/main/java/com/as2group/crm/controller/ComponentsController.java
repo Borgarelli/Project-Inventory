@@ -85,10 +85,10 @@ public class ComponentsController {
 //		componentsService.inactivate(id);
 //	}
 
-//	@GetMapping("components/stock")
-//	public Optional<Status> stockByStatus() {
-//		return componentsService.stockByStatus();
-//	}
+	@GetMapping("components/stock")
+	public List<ComponentsResponse> stockByStatus() {
+		return componentsMapper.map(componentsService.stock());
+	}
 //	
 //	@GetMapping("components/type")
 //	public Optional<ComponentType> stockstockByType() {

@@ -100,44 +100,9 @@ public class ComponentsService {
 		componentsRepository.deleteByPatrimony(patrimony);
 	}
 
-	// Put
-//	public Components edit(Components Components, Long id, Long Patrimonio, String processor, String generation,
-//			String ram, String graphicsCard, String hd, String ssd) {
-//		Components found = show(id);
-//		found.setProcessor(Components.getProcessor());
-//		found.setGeneration(Components.getGeneration());
-//		found.setRam(Components.getRam());
-//		found.setGraphicsCard(Components.getGraphicsCard());
-//		found.setHd(Components.getHd());
-//		found.setSsd(Components.getSsd());
-//		found.setPatrimony(Components.getPatrimony());
-//		return componentsRepository.save(found);
-//	}
-
-//	// PutInativar
-//	public void inactivate(Long id) {
-//		Components components = show(id);
-//		changeStatus(components, Components.Status.INATIVO);
-//
-//	}
-
-	// GetStock
-	public Optional<ComponentsStatus> stockByStatus() {
-		Optional<ComponentsStatus> found = componentsRepository.findByStatus(ComponentsStatus.PRA_USO);
-		if (found.isPresent()) {
-			return Optional.of(found.get());
-		} else {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "estoque vazio");
-		}
+	//stock
+	public List<Components>stock() {
+		return componentsRepository.findByStatusActive();
 	}
 
-	// GetStock
-//	public Optional<ComponentType> stockByType() {
-//		Optional<ComponentType> found = componentsRepository.findByType(ComponentType.valueOf(null));
-//		if (found.isPresent()) {
-//			return Optional.of(found.get());
-//		} else {
-//			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "estoque vazio");
-//		}
-//	}
 }

@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public record ComputerEmployeeResponse (
     Long id_comp_empl, 
-    ComputerResponse computer, 
+    EmployeeResponse employee, 
     LocalDateTime received, 
     LocalDateTime returned ) {
     

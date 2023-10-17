@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.as2group.crm.dto.ComputerEmployeeResponse;
+import com.as2group.crm.mapper.ComputerEmployeeMapper;
 import com.as2group.crm.model.ComputerEmployee;
 import com.as2group.crm.service.ComputerEmployeeService;
 
@@ -21,6 +23,9 @@ public class ComputerEmployeeController {
 
 	@Autowired
 	private ComputerEmployeeService computerEmployeeService;
+
+	@Autowired
+	private ComputerEmployeeMapper computerEmployeeMapper;
 
 	@PostMapping("/computers/{computerId}/employees/{employeeId}")
 	@ResponseStatus(HttpStatus.CREATED)
@@ -37,8 +42,8 @@ public class ComputerEmployeeController {
 	}
 	
 	@GetMapping("/computers/{computerId}/historic")
-	public List<ComputerEmployee> historicComputer(@PathVariable("computerId") Long computerId) { 
-		return computerEmployeeService.historicComputer(computerId); 
+	public List<ComputerEmployeeResponse> historicComputer(@PathVariable("computerId") Long computerId) { 
+		return computerEmployeeMapper.map(computerEmployeeService.historicComputer(computerId)); 
 	}
 	
 	@GetMapping("/employees/{employeeId}/historic")
