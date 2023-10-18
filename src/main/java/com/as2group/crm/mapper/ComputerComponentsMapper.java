@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.as2group.crm.dto.ComputerComponentsRequest;
 import com.as2group.crm.dto.ComputerComponentsResponse;
-import com.as2group.crm.dto.ComputerResponse;
+
+import com.as2group.crm.dto.ComputerSimpleResponse;
 import com.as2group.crm.model.ComputerComponent;
 
+@Component
 public class ComputerComponentsMapper {
 
     @Autowired
@@ -26,7 +29,7 @@ public class ComputerComponentsMapper {
         List<ComputerComponentsResponse> response = new ArrayList<>();
         for(ComputerComponent computerComponent : computerComponents) {
 
-            ComputerResponse computer = this.computerMapper.map(computerComponent.getComputer());
+            ComputerSimpleResponse computer = this.computerMapper.mapSimple(computerComponent.getComputer());
 
             response.add(new ComputerComponentsResponse(computer, computerComponent.getReceived(), computerComponent.getReturned()));
         }

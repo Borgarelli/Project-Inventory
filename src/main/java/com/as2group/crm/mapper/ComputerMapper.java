@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import com.as2group.crm.dto.ComponentsResponse;
 import com.as2group.crm.dto.ComputerRequest;
 import com.as2group.crm.dto.ComputerResponse;
+import com.as2group.crm.dto.ComputerSimpleResponse;
 import com.as2group.crm.dto.EmployeeResponse;
 import com.as2group.crm.model.Computer;
 
@@ -87,6 +88,16 @@ public class ComputerMapper {
 	    return response;
 	}
 
+	public ComputerSimpleResponse mapSimple(Computer computer) {
+		return new ComputerSimpleResponse(computer.getId(), computer.getPatrimony(), computer.getSn());
+	}
 
+	public List<ComputerSimpleResponse> mapSimple(List<Computer> computers) {
+		List<ComputerSimpleResponse> response = new ArrayList<>();
+		for(Computer computer : computers) {
+			response.add( new ComputerSimpleResponse(computer.getId(), computer.getPatrimony(), computer.getSn()) );
+		}
+		return response;
+	}
 
 }
