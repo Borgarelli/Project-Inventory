@@ -19,12 +19,11 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.as2group.crm.dto.ComputerRequest;
 import com.as2group.crm.dto.ComputerResponse;
-
+import com.as2group.crm.dto.ComputerSimpleResponse;
 import com.as2group.crm.enumeration.ComputerStatus;
 import com.as2group.crm.exceptions.ComputerNotFoundException;
 import com.as2group.crm.mapper.ComputerMapper;
 
-import com.as2group.crm.model.Computer;
 
 import com.as2group.crm.service.ComputerEmployeeService;
 import com.as2group.crm.service.ComputerService;
@@ -106,7 +105,7 @@ public class ComputerController {
 	}
 
 	@GetMapping("computers/stock")
-	public List<Computer> stock() {
-		return computerService.stock();
+	public List<ComputerSimpleResponse> stock() {
+		return computerMapper.mapSimple(computerService.stock());
 	}
 }
