@@ -1,6 +1,7 @@
 package com.as2group.crm.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import static org.mockito.ArgumentMatchers.any;
 
 import java.time.LocalDate;
@@ -55,7 +56,12 @@ public class ComputerTest {
     }
 
     @Test
-    public void findComputerById(){
+    public void findPatrimonyByIdOkTest(){
         assertEquals("NTK191220", computerService.show(1L).getPatrimony());
+    }
+
+    @Test
+    public void findSnByIdOkTest(){
+        assertEquals("14719733426", computerService.show(1L).getSn());
     }
 }

@@ -28,7 +28,7 @@ public class Employee {
 	private String email;
 	
 	private String telephone;
-	private String sex;
+	private String gender;
 	private LocalDate entryDate;
 	private LocalDate departureDate;
 	private EmployeeStatus status;
@@ -66,12 +66,12 @@ public class Employee {
 		this.telephone = telephone;
 	}
 
-	public String getSex() {
-		return sex;
+	public String getGender() {
+		return gender;
 	}
 
-	public void setSex(String sex) {
-		this.sex = sex;
+	public void setSex(String gender) {
+		this.gender = gender;
 	}
 	
 	public EmployeeStatus getStatus() {

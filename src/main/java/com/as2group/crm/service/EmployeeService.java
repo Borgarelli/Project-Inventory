@@ -140,7 +140,7 @@ public class EmployeeService {
 		}
 		found.setEmail(employee.getEmail());
 		found.setName(employee.getName());
-		found.setSex(employee.getSex());
+		found.setSex(employee.getGender());
 		found.setTelephone(employee.getTelephone());
 
 		return employeeRepository.save(found);

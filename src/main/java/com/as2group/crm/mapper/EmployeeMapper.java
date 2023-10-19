@@ -21,13 +21,13 @@ public class EmployeeMapper {
     }
 
     public EmployeeResponse map(Employee employee) {
-        return new EmployeeResponse(employee.getId(), employee.getName(), employee.getEmail(), employee.getSex());
+        return new EmployeeResponse(employee.getId(), employee.getName(), employee.getEmail(), employee.getGender());
     }
 
     public List<EmployeeResponse> map(List<Employee> employees) {
         List<EmployeeResponse> response = new ArrayList<>();
         for(Employee employee : employees){
-            response.add(new EmployeeResponse(employee.getId(), employee.getName(), employee.getEmail(), employee.getSex()));
+            response.add(new EmployeeResponse(employee.getId(), employee.getName(), employee.getEmail(), employee.getGender()));
         }
         return response;
     }
