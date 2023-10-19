@@ -10,7 +10,7 @@ Prerequisites
 Before you begin, ensure that you have the following technologies installed on your system:
 
 ### Java Development Kit (JDK): 
-You need Java 8 or later installed. You can download it from the official Oracle website or use an OpenJDK distribution.
+You need Java 17 or later installed. You can download it from the official Oracle website or use an OpenJDK distribution.
 
 ### Maven: 
 Maven is used for building and managing the project. You can download it from the official Apache Maven website and follow the installation instructions.
@@ -18,8 +18,8 @@ Maven is used for building and managing the project. You can download it from th
 ### Docker: 
 To run the application within a Docker container, you must have Docker installed. You can download Docker for your specific platform from the Docker website.
 
-### MySql Postgres
-To up a database and run the application, is necessary to install this SGBD. You can download a mysql workbench for free on Postgres Documentation.
+### MySql WorkBench
+To up a database and run the application, is necessary to install this SGBD. You can download a mysql workbench for free on Documentation.
 
 # Build and Test
 
