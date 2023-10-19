@@ -67,10 +67,20 @@ public class ComputerService {
 		if (found.isPresent()) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Computer assets are already in use.");
 		}
+
+		if(computer.getPatrimony() == null || computer.getPatrimony().isEmpty()) {
+			throw new IllegalArgumentException("Patrimony is not possible to be null");
+		}
+
 		found = computerRepository.findBySn(computer.getSn());
 		if (found.isPresent()) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Serial Number already exists.");
 		}
+
+		if(computer.getSn() == null || computer.getSn().isEmpty()) {
+			throw new IllegalArgumentException("SerialNumber is not possible to be null");
+		}
+		
 		computer.setStatus(ComputerStatus.PRA_USO);
 		computer.setEntryDate(LocalDate.now());
 		return computerRepository.save(computer);

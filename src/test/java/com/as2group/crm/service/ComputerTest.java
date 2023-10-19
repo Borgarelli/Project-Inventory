@@ -1,7 +1,8 @@
 package com.as2group.crm.service;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 
 import java.time.LocalDate;
@@ -56,7 +57,67 @@ public class ComputerTest {
     }
 
     @Test
-    public void findPatrimonyByIdOkTest(){
+    public void createComputerTestOk() {
+        Computer computer = new Computer();
+        computer.setId(1L);
+        computer.setStatus(ComputerStatus.PRA_USO);
+        computer.setPatrimony("NTK191220");
+        computer.setSn("14719733426");
+        computer.setModel("Inspiron 14R 5437");
+        computer.setBrand("Dell");
+        computer.setSoCurrent("Ubuntu 22.04.2 LTS");
+        computer.setSoOriginal("Windows 10");
+        computer.setEntryDate(LocalDate.now());
+        computer.setDepartureDate(null);
+        computer.setModificationDate(null);
+        computer.setComputerComponents(null);
+        assertDoesNotThrow(() -> {
+            computerService.create(computer);
+        });
+    }
+
+    @Test
+    public void createComputerPatrimonyNullNOkTest() {
+        Computer computer = new Computer();
+        computer.setId(1L);
+        computer.setStatus(ComputerStatus.PRA_USO);
+        computer.setPatrimony("NTK191220");
+        computer.setSn("");
+        computer.setModel("Inspiron 14R 5437");
+        computer.setBrand("Dell");
+        computer.setSoCurrent("Ubuntu 22.04.2 LTS");
+        computer.setSoOriginal("Windows 10");
+        computer.setEntryDate(LocalDate.now());
+        computer.setDepartureDate(null);
+        computer.setModificationDate(null);
+        computer.setComputerComponents(null);
+        assertThrows(IllegalArgumentException.class, () -> {
+            computerService.create(computer);
+        });
+    }
+
+        @Test
+    public void createComputerSnNullNOkTest() {
+        Computer computer = new Computer();
+        computer.setId(1L);
+        computer.setStatus(ComputerStatus.PRA_USO);
+        computer.setPatrimony("");
+        computer.setSn("14719733426");
+        computer.setModel("Inspiron 14R 5437");
+        computer.setBrand("Dell");
+        computer.setSoCurrent("Ubuntu 22.04.2 LTS");
+        computer.setSoOriginal("Windows 10");
+        computer.setEntryDate(LocalDate.now());
+        computer.setDepartureDate(null);
+        computer.setModificationDate(null);
+        computer.setComputerComponents(null);
+        assertThrows(IllegalArgumentException.class, () -> {
+            computerService.create(computer);
+        });
+    }
+
+    @Test
+    public void findPatrimonyByIdOkTest() {
         assertEquals("NTK191220", computerService.show(1L).getPatrimony());
     }
 
