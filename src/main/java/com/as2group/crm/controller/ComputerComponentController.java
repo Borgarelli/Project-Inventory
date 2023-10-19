@@ -43,7 +43,7 @@ public class ComputerComponentController {
 
 	@GetMapping("/components/{componentId}/historic")
 	public List<ComputerComponentsResponse> historicComponent(@PathVariable("componentId") long componentId) {
-		return computerComponentsMapper.map(computerComponentService.historiComponent(componentId));
+		return computerComponentsMapper.map(computerComponentService.historicComponent(componentId));
 
 	}
 }

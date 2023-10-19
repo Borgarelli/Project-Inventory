@@ -77,7 +77,8 @@ public class ComputerComponentService {
     	}
     }
 
-	public List<ComputerComponent> historiComponent(Long Idcomponent) {
+	//HistoricComponent
+	public List<ComputerComponent> historicComponent(Long Idcomponent) {
 		Components component = componentService.show(Idcomponent);
 		return computerComponentRepository.findByComponent(component);
 	}

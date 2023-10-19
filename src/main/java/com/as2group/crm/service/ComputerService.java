@@ -86,15 +86,15 @@ public class ComputerService {
 		return computerRepository.save(computer);
 	}
 
-    public Computer update(Computer computer) {
+    // public Computer update(Computer computer) {
 
-        if (computer.getId() == null) {
-            throw new IllegalArgumentException("Computer ID cannot be null for update");
-        }
+    //     if (computer.getId() == null) {
+    //         throw new IllegalArgumentException("Computer ID cannot be null for update");
+    //     }
 
 
-        return computerRepository.save(computer);
-    }
+    //     return computerRepository.save(computer);
+    // }
 	
 	// Delete
 	public void delete(Long id) {
@@ -115,7 +115,7 @@ public class ComputerService {
 		return computerRepository.save(found);
 	}
 
-	// PutInativar
+	// Inactivate
 	public void inactivate(Long id) {
 		Computer computer = show(id);
 		
@@ -133,6 +133,7 @@ public class ComputerService {
 
 	}
 	
+	//ActivateComputer
 	public void activate(Long id) {
 		Computer computer = show(id);
 		if(computer.getStatus() == ComputerStatus.INATIVO) {
