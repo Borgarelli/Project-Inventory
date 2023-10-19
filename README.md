@@ -44,6 +44,11 @@ mvn clean install
 mvn spring-boot:run
 ```
 
+### Run the Tests
+```kotlin
+mvn clean test
+```
+
 # Contribute
 TODO: Explain how other users and developers can contribute to make your code better. 
 
