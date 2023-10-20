@@ -31,11 +31,11 @@ public class ComputerEmployeeService {
 	    Computer computer = computerService.show(computerId);
 	    Employee employee = employeeService.show(employeeId);
 
-	    if (employee.getStatus() != EmployeeStatus.ATIVO) {
+	    if (employee.getStatus() == EmployeeStatus.ATIVO) {
 	        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Employee is inactive");
 	    }
 
-	    if (computer.getStatus() != ComputerStatus.PRA_USO) {
+	    if (computer.getStatus() == ComputerStatus.INATIVO || computer.getStatus() == ComputerStatus.EM_USO) {
 	        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Computer is not available");
 	    }
 

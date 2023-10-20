@@ -42,9 +42,6 @@ public class ComputerTest {
         computer.setSoCurrent("Ubuntu 22.04.2 LTS");
         computer.setSoOriginal("Windows 10");
         computer.setEntryDate(LocalDate.now());
-        computer.setDepartureDate(null);
-        computer.setModificationDate(null);
-        computer.setComputerComponents(null);
         List<Computer> computers = new ArrayList<>();
         computers.add(computer);
         Optional<Computer> computerOp = Optional.of(computer);

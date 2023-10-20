@@ -101,7 +101,7 @@ public class EmployeeController {
 	//Put
 	@PutMapping("/employees/{id}")
 	public Employee update(@PathVariable("id") Long id, @RequestBody Employee employee, String email, 
-			String name, String sex, String telephone) {
+			String name, String gender, String telephone) {
 		return employeeService.edit(employee, id);
 	}
 

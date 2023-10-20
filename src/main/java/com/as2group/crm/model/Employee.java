@@ -70,7 +70,7 @@ public class Employee {
 		return gender;
 	}
 
-	public void setSex(String gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 	
