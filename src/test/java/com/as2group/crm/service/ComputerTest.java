@@ -16,6 +16,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.as2group.crm.enumeration.ComputerStatus;
 import com.as2group.crm.model.Computer;
@@ -113,6 +114,12 @@ public class ComputerTest {
         });
     }
 
+    @Test
+    public void findByIdNokTest() {
+        assertThrows(ResponseStatusException.class, () -> {
+            computerService.show(2L);
+        });
+    }
     @Test
     public void findPatrimonyByIdOkTest() {
         assertEquals("NTK191220", computerService.show(1L).getPatrimony());

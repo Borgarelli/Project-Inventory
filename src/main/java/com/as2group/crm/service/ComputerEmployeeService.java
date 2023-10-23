@@ -2,6 +2,7 @@ package com.as2group.crm.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -62,9 +63,13 @@ public class ComputerEmployeeService {
 	        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Employee is inactive");
 	    }
 
-	    if (computer.getStatus() != ComputerStatus.EM_USO) {
+	    if (computer.getStatus() == ComputerStatus.INATIVO) {
 	        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Computer is not available");
 	    }
+
+		if (computer.getStatus() == ComputerStatus.PRA_USO) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Computer is not linked with employee");
+		}
 	    
 	    for (ComputerEmployee computerEmployee : link) {
 	        if (computerEmployee.getReturned() == null) {
@@ -85,5 +90,14 @@ public class ComputerEmployeeService {
 		Employee employee = employeeService.show(employeeId);
 		return computerEmployeeRepository.findByEmployee(employee);
 	}
+
+	public ComputerEmployee findById(Long id_comp_empl) {
+		Optional<ComputerEmployee> found = computerEmployeeRepository.findById(id_comp_empl);
+		if (found.isPresent()) {
+			return found.get();
+		} else {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Computer not found");
+		}
+		}
 
 }
