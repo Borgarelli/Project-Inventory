@@ -57,21 +57,27 @@ public class ComputerEmployeeTest {
 		employee.setGender("Masculino");
 		employee.setStatus(EmployeeStatus.ATIVO);
 		employee.setEntryDate(LocalDate.now());
-		
-		Computer computer = new Computer();
-		computer.setId(1L);
-		computer.setPatrimony("NTK19188");
-		computer.setSn("14719733488");
-		computer.setSector("IT");
-		computer.setModel("Inspiron 14R 5437");
-		computer.setBrand("Dell");
-		computer.setSoCurrent("Ubuntu 22.04.2 LTS");
-		computer.setSoOriginal("Windows 10");
-		computer.setStatus(ComputerStatus.PRA_USO);
-		computer.setEntryDate(LocalDate.now());
 
+		Employee employeeInactive = new Employee();
+		employeeInactive.setId(2L);
+		employeeInactive.setName("Kauã Borgarelli");
+		employeeInactive.setEmail("kaua1as74@group");
+		employeeInactive.setTelephone("12992002060");
+		employeeInactive.setGender("Masculino");
+		employeeInactive.setStatus(EmployeeStatus.INATIVO);
+		employeeInactive.setEntryDate(LocalDate.now());
+
+		Employee employee2 = new Employee();
+		employee2.setId(3L);
+		employee2.setName("Kauã Borgarelli");
+		employee2.setEmail("kaua1as74@group");
+		employee2.setTelephone("12992002060");
+		employee2.setGender("Masculino");
+		employee2.setStatus(EmployeeStatus.ATIVO);
+		employee2.setEntryDate(LocalDate.now());
+		
 		Computer computerReadyToUse = new Computer();
-		computerReadyToUse.setId(2L);
+		computerReadyToUse.setId(1L);
 		computerReadyToUse.setPatrimony("NTK19188");
 		computerReadyToUse.setSn("14719733488");
 		computerReadyToUse.setSector("IT");
@@ -79,14 +85,26 @@ public class ComputerEmployeeTest {
 		computerReadyToUse.setBrand("Dell");
 		computerReadyToUse.setSoCurrent("Ubuntu 22.04.2 LTS");
 		computerReadyToUse.setSoOriginal("Windows 10");
-		computerReadyToUse.setEmployee(employee);
-		computerReadyToUse.setStatus(ComputerStatus.EM_USO);
+		computerReadyToUse.setStatus(ComputerStatus.PRA_USO);
 		computerReadyToUse.setEntryDate(LocalDate.now());
+
+		Computer computerInUse = new Computer();
+		computerInUse.setId(2L);
+		computerInUse.setPatrimony("NTK19188");
+		computerInUse.setSn("14719733488");
+		computerInUse.setSector("IT");
+		computerInUse.setModel("Inspiron 14R 5437");
+		computerInUse.setBrand("Dell");
+		computerInUse.setSoCurrent("Ubuntu 22.04.2 LTS");
+		computerInUse.setSoOriginal("Windows 10");
+		computerInUse.setStatus(ComputerStatus.EM_USO);
+		computerInUse.setEmployee(employee);
+		computerInUse.setEntryDate(LocalDate.now());
 
 		Computer computerInactive = new Computer();
 		computerInactive.setId(3L);
-		computerInactive.setPatrimony("NTK19187");
-		computerInactive.setSn("14719733487");
+		computerInactive.setPatrimony("NTK19188");
+		computerInactive.setSn("14719733488");
 		computerInactive.setSector("IT");
 		computerInactive.setModel("Inspiron 14R 5437");
 		computerInactive.setBrand("Dell");
@@ -97,23 +115,36 @@ public class ComputerEmployeeTest {
 		
 		ComputerEmployee computerEmployee = new ComputerEmployee();
 		computerEmployee.setId_comp_empl(1L);
-		computerEmployee.setComputer(computerReadyToUse);
+		computerEmployee.setComputer(computerInUse);
 		computerEmployee.setEmployee(employee);
 		computerEmployee.setReceived(LocalDateTime.now());
+
+		ComputerEmployee computerEmployeeDiferent = new ComputerEmployee();
+		computerEmployeeDiferent.setId_comp_empl(2L);
+		computerEmployeeDiferent.setComputer(computerInUse);
+		computerEmployeeDiferent.setEmployee(employee2);
+		computerEmployeeDiferent.setReceived(LocalDateTime.now());
 		
 		Mockito.when(computerEmployeeRepository.findById(1L)).thenReturn(Optional.of(computerEmployee));
-		Mockito.when(computerRepository.findById(1L)).thenReturn(Optional.of(computer));		
-		Mockito.when(computerRepository.findById(2L)).thenReturn(Optional.of(computerReadyToUse));
+		Mockito.when(computerEmployeeRepository.findById(2L)).thenReturn(Optional.of(computerEmployeeDiferent));
 
-		Mockito.when(computerRepository.save(any())).thenReturn(computer);
+		Mockito.when(computerRepository.findById(1L)).thenReturn(Optional.of(computerReadyToUse));		
+		Mockito.when(computerRepository.findById(2L)).thenReturn(Optional.of(computerInUse));
+		Mockito.when(computerRepository.findById(3L)).thenReturn(Optional.of(computerInactive));
 
-		Mockito.when(employeeRepository.findById(1L)).thenReturn(Optional.of(employee));
+		Mockito.when(computerRepository.save(any())).thenReturn(computerReadyToUse);
+
+		Mockito.when(employeeRepository.findById(1L)).thenReturn(Optional.of(employee));		
+		Mockito.when(employeeRepository.findById(2L)).thenReturn(Optional.of(employeeInactive));
+		Mockito.when(employeeRepository.findById(3L)).thenReturn(Optional.of(employee2));
 		
 
 		Mockito.when(computerEmployeeRepository.save(any())).thenReturn(computerEmployee);
 		Mockito.when(computerEmployeeRepository.findByComputer(any())).thenReturn(
 				List.of(new ComputerEmployee()));
-	    Mockito.when(computerEmployeeRepository.findByComputerAndEmployee(computerReadyToUse, employee))
+		Mockito.when(computerEmployeeRepository.findByEmployee(any())).thenReturn(
+				List.of(new ComputerEmployee()));
+	    Mockito.when(computerEmployeeRepository.findByComputerAndEmployee(computerInUse, employee))
         .thenReturn(List.of(computerEmployee));
 	}
 	
@@ -121,7 +152,6 @@ public class ComputerEmployeeTest {
 	@Test
 	public void newComputerEmployeeOkTest() {
 		Employee employee = new Employee();
-		employee.setId(1L);
 		employee.setName("Kauã Borgarelli");
 		employee.setEmail("kaua1as74@group");
 		employee.setTelephone("12992002060");
@@ -130,7 +160,6 @@ public class ComputerEmployeeTest {
 		employee.setEntryDate(LocalDate.now());
 		
 		Computer computer = new Computer();
-		computer.setId(1L);
 		computer.setPatrimony("NTK19199");
 		computer.setSn("14719733499");
 		computer.setSector("IT");
@@ -140,46 +169,33 @@ public class ComputerEmployeeTest {
 		computer.setSoOriginal("Windows 10");
 		computer.setStatus(ComputerStatus.PRA_USO);
 		computer.setEntryDate(LocalDate.now());
-
-		Mockito.when(employeeRepository.findById(1L)).thenReturn(Optional.of(employee));
-		Mockito.when(computerRepository.findById(1L)).thenReturn(Optional.of(computer));
 		
 		ComputerEmployee computerEmployee = new ComputerEmployee();
 		computerEmployee.setComputer(computer);
 		computerEmployee.setEmployee(employee);
 		computerEmployee.setReceived(LocalDateTime.now());
+
+		Mockito.when(computerRepository.findById(1L)).thenReturn(Optional.of(computer));
+		Mockito.when(employeeRepository.findById(1L)).thenReturn(Optional.of(employee));
 		
 		assertDoesNotThrow(() -> {
-			computerEmployeeService.link(computer.getId(), employee.getId());
+			computerEmployeeService.link(1L, 1L);
 		});
 		
 	}
 	
+	//Link Test
 	@Test
-	public void unlinkComputerEmployeeOkTest() {
+	public void linkComputerOnEmployeeOkTest() {
 		assertDoesNotThrow(() -> {
-			computerEmployeeService.unlink(2L,1L);
-		});		
+			computerEmployeeService.link(1L, 1L);
+		});
 	}
-	
+
 	@Test
-	public void unlinkComputerReadyUseEmployeeNokTest() {
-		Employee employee = computerEmployeeService.findById(1L).getEmployee();
-
-		Computer computer = new Computer();
-		computer.setId(1L);
-		computer.setPatrimony("NTK19199");
-		computer.setSn("14719733499");
-		computer.setSector("IT");
-		computer.setModel("Inspiron 14R 5437");
-		computer.setBrand("Dell");
-		computer.setSoCurrent("Ubuntu 22.04.2 LTS");
-		computer.setSoOriginal("Windows 10");
-		computer.setStatus(ComputerStatus.PRA_USO);
-		computer.setEntryDate(LocalDate.now());
-
+	public void linkComputerEmployeeInactiveNOkTest() {
 		assertThrows(ResponseStatusException.class, () -> {
-			computerEmployeeService.unlink(computer.getId(), employee.getId());
+			computerEmployeeService.link(1L, 2L);
 		});
 	}
 
@@ -194,16 +210,9 @@ public class ComputerEmployeeTest {
 		employee.setStatus(EmployeeStatus.ATIVO);
 		employee.setEntryDate(LocalDate.now());
 
-		Computer computer = computerEmployeeService.findById(1L).getComputer();
-
-		ComputerEmployee computerEmployee = new ComputerEmployee();
-		computerEmployee.setId_comp_empl(1L);
-		computerEmployee.setComputer(computer);
-		computerEmployee.setEmployee(employee);
-		computerEmployee.setReceived(LocalDateTime.now());
-
+		Mockito.when(employeeRepository.findById(1L)).thenReturn(Optional.of(employee));
 		assertThrows(ResponseStatusException.class, () -> {
-			computerEmployeeService.link(computer.getId(), employee.getId());
+			computerEmployeeService.link(2L, 1L);
 		});
 
 	}
@@ -211,16 +220,72 @@ public class ComputerEmployeeTest {
 	@Test
 	public void linkComputerInactiveNOkTest() {
 		assertThrows(ResponseStatusException.class, () -> {
-			computerEmployeeService.link(2L, 1L);
+			computerEmployeeService.link(3L, 1L);
+		});
+	}
+
+	@Test
+	public void linkComputerNullNOk() {
+		assertThrows(ResponseStatusException.class, () -> {
+			computerEmployeeService.link(null, 1L);
+		});
+	}
+	@Test
+	public void linkEmployeeNullNOk() {
+		assertThrows(ResponseStatusException.class, () -> {
+			computerEmployeeService.link(1L, null);
+		});
+	}
+
+	//Unlink Tests
+	@Test
+	public void unlinkComputerEmployeeOkTest() {
+		assertDoesNotThrow(() -> {
+			computerEmployeeService.unlink(2L,1L);
+		});		
+	}
+
+	@Test
+	public void unlinkComputerEmployeeDifferentNOkTest() {
+		assertThrows(ResponseStatusException.class, () -> {
+			computerEmployeeService.unlink(2L, 3L);
 		});
 	}
 	
+	@Test
+	public void unlinkComputerReadyUseEmployeeNokTest() {
+		assertThrows(ResponseStatusException.class, () -> {
+			computerEmployeeService.unlink(1L, 1L);
+		});
+	}
+
+	@Test
+	public void unlinkComputerNullNOkTest() {
+		assertThrows(ResponseStatusException.class, () -> {
+			computerEmployeeService.unlink(null, 1L);
+		});
+	}
+
+	@Test
+	public void unlinkEmployeeNullNOkTest() {
+		assertThrows(ResponseStatusException.class, () -> {
+			computerEmployeeService.unlink(2L, null);
+		});
+	}
+
+	//Get Tests
 	@Test
 	public void historicComputerOkTest() {
 	    List<ComputerEmployee> computerEmployees = computerEmployeeService.historicComputer(1L);
 	    assertEquals(1, computerEmployees.size());
 	}
 	
+	@Test
+	public void historicEmployeeOkTest() {
+		List<ComputerEmployee> computerEmployees = computerEmployeeService.historicEmployee(1L);
+		assertEquals(1, computerEmployees.size());
+	}
+
 	@Test
 	public void findComputerByIdOkTest() {
 		assertEquals(2L, computerEmployeeService.findById(1L).getComputer().getId());
@@ -229,7 +294,7 @@ public class ComputerEmployeeTest {
 	@Test
 	public void findByIdNOkTest() {
 		assertThrows(ResponseStatusException.class, () -> {
-			computerEmployeeService.findById(2L).getComputer().getId();
+			computerEmployeeService.findById(3L);
 		});
 	}
 	
@@ -241,7 +306,7 @@ public class ComputerEmployeeTest {
 	@Test
 	public void findByEmployeeIdNokTest() {
 		assertThrows(ResponseStatusException.class, () -> {
-			computerEmployeeService.findById(2L).getEmployee().getId();
+			computerEmployeeService.findById(3L).getEmployee().getId();
 		});
 	}
 
