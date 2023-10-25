@@ -32,7 +32,7 @@ public class ComputerEmployeeService {
 	    Computer computer = computerService.show(computerId);
 	    Employee employee = employeeService.show(employeeId);
 
-	    if (employee.getStatus() == EmployeeStatus.ATIVO) {
+	    if (employee.getStatus() == EmployeeStatus.INATIVO) {
 	        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Employee is inactive");
 	    }
 
