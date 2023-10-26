@@ -36,9 +36,13 @@ public class ComputerEmployeeService {
 	        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Employee is inactive");
 	    }
 
-	    if (computer.getStatus() == ComputerStatus.INATIVO || computer.getStatus() == ComputerStatus.EM_USO) {
-	        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Computer is not available");
+	    if (computer.getStatus() == ComputerStatus.INATIVO) {
+	        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Computer is inactive");
 	    }
+
+		if (computer.getStatus() == ComputerStatus.EM_USO) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Computer is already linked a employee");
+		}
 
 	    ComputerEmployee relationship = new ComputerEmployee();
 	    relationship.setComputer(computer);
@@ -53,32 +57,34 @@ public class ComputerEmployeeService {
 
 	
 	public void unlink(Long computerId, Long employeeId) {
-	    Computer computer = computerService.show(computerId);
-	    Employee employee = employeeService.show(employeeId);
-
-	    List<ComputerEmployee> link = computerEmployeeRepository
-	            .findByComputerAndEmployee(computer, employee);
-	    
-	    if (employee.getStatus() == EmployeeStatus.INATIVO) {
-	        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Employee is inactive");
-	    }
-
-	    if (computer.getStatus() == ComputerStatus.INATIVO) {
-	        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Computer is not available");
-	    }
-
-		if (computer.getStatus() == ComputerStatus.PRA_USO) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Computer is not linked with employee");
+		Computer computer = computerService.show(computerId);
+		Employee employee = employeeService.show(employeeId);
+	
+	
+		List<ComputerEmployee> link = computerEmployeeRepository.findByComputerAndEmployee(computer, employee);
+		
+		if (link.isEmpty()) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Employee is not linked to this computer");
+		}		
+		for (ComputerEmployee computerEmployee : link) {
+			if (computerEmployee.getReturned() == null) {
+				computer.setEmployee(null);
+				computerEmployee.setReturned(LocalDateTime.now());
+				computerEmployeeRepository.save(computerEmployee); 
+				computerService.changeStatus(computer, ComputerStatus.PRA_USO);
+			}
 		}
-	    
-	    for (ComputerEmployee computerEmployee : link) {
-	        if (computerEmployee.getReturned() == null) {
-	        	computer.setEmployee(null);
-	        	computerEmployee.setReturned(LocalDateTime.now());
-	            computerEmployeeRepository.save(computerEmployee); 
-	            computerService.changeStatus(computer, ComputerStatus.PRA_USO);
-	        }
-	    }
+	}
+	
+	
+//	 GetById
+	public ComputerEmployee findById(Long id) {
+		Optional<ComputerEmployee> found = computerEmployeeRepository.findById(id);
+		if (found.isPresent()) {
+			return found.get();
+		} else {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Computer not found");
+		}
 	}
 
 	public List<ComputerEmployee> historicComputer(Long computerId) {
@@ -90,14 +96,5 @@ public class ComputerEmployeeService {
 		Employee employee = employeeService.show(employeeId);
 		return computerEmployeeRepository.findByEmployee(employee);
 	}
-
-	public ComputerEmployee findById(Long id_comp_empl) {
-		Optional<ComputerEmployee> found = computerEmployeeRepository.findById(id_comp_empl);
-		if (found.isPresent()) {
-			return found.get();
-		} else {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Computer not found");
-		}
-		}
 
 }
