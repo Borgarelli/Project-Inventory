@@ -67,46 +67,56 @@ public class ComputerService {
 		if (found.isPresent()) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Computer assets are already in use.");
 		}
-
+		
 		if(computer.getPatrimony() == null || computer.getPatrimony().isEmpty()) {
 			throw new IllegalArgumentException("Patrimony is not possible to be null");
 		}
-
+		
 		found = computerRepository.findBySn(computer.getSn());
 		if (found.isPresent()) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Serial Number already exists.");
 		}
-
+		
 		if(computer.getSn() == null || computer.getSn().isEmpty()) {
-			throw new IllegalArgumentException("SerialNumber is not possible to be null");
+			throw new IllegalArgumentException("Serial number is not possible to be null");
 		}
 		
 		computer.setStatus(ComputerStatus.PRA_USO);
 		computer.setEntryDate(LocalDate.now());
 		return computerRepository.save(computer);
 	}
-
-    // public Computer update(Computer computer) {
-
-    //     if (computer.getId() == null) {
-    //         throw new IllegalArgumentException("Computer ID cannot be null for update");
-    //     }
-
-
-    //     return computerRepository.save(computer);
-    // }
 	
 	// Delete
 	public void delete(Long id) {
+		show(id);
 		computerRepository.deleteById(id);
+		
 	}
 
 	// Put
 	public Computer edit(Long id, Computer computer) {
 		Computer found = show(id);
+		Optional<Computer> AlreadyUsedPatrimony = computerRepository.findByPatrimony(computer.getPatrimony());
+		Optional<Computer> AlreadyUsedSn = computerRepository.findBySn(computer.getSn());
+
+		if(AlreadyUsedPatrimony.isPresent()){
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Patrimony already in use");
+		}
+
+		if(computer.getPatrimony() == null || computer.getPatrimony().isEmpty()){
+			throw new IllegalArgumentException("Patrimony is not possible to be null");
+		}
+
+		if(AlreadyUsedSn.isPresent()) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Serial number Already in use");
+		}
+
+		if(computer.getSn() == null || computer.getSn().isEmpty()) {
+			throw new IllegalArgumentException("Serial number canot be null");
+		}
+
 		found.setPatrimony(computer.getPatrimony());
 		found.setSn(computer.getSn());
-		found.setEmployee(computer.getEmployee());
 		found.setSector(computer.getSector());
 		found.setModel(computer.getModel());
 		found.setBrand(computer.getBrand());
@@ -115,7 +125,7 @@ public class ComputerService {
 		return computerRepository.save(found);
 	}
 
-	// Inactivate
+	// PutInativar
 	public void inactivate(Long id) {
 		Computer computer = show(id);
 		
@@ -133,7 +143,6 @@ public class ComputerService {
 
 	}
 	
-	//ActivateComputer
 	public void activate(Long id) {
 		Computer computer = show(id);
 		if(computer.getStatus() == ComputerStatus.INATIVO) {
