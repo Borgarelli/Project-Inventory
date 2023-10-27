@@ -42,6 +42,9 @@ public class Components {
 ////	
 	private String specifications;
 
+	private String Sn;
+
+
 	public Long getId() {
 		return id;
 	}
@@ -69,6 +72,15 @@ public class Components {
 	public ComponentsStatus getStatus() {
 		return status;
 	}
+
+	public String getSn() {
+		return Sn;
+	}
+
+	public void setSn(String sn) {
+		Sn = sn;
+	}
+
 
 	public void setStatus(ComponentsStatus status) {
 		this.status = status;

@@ -18,17 +18,18 @@ public class ComponentsMapper {
         Components components = new Components();
         components.setPatrimony(componentsRequest.patrimony());
         components.setSpecifications(componentsRequest.specifications());
+        components.setSn(componentsRequest.sn());
         return components;
     }
 
     public ComponentsResponse map(Components component) {
-        return new ComponentsResponse(component.getId(), component.getPatrimony(), component.getSpecifications());
+        return new ComponentsResponse(component.getId(), component.getPatrimony(), component.getSpecifications(), component.getSn());
     }
 
     public List<ComponentsResponse> map(List<Components> components){
         List<ComponentsResponse> response = new ArrayList<>();
         for(Components component : components) {
-            response.add(new ComponentsResponse(component.getId(), component.getPatrimony(), component.getSpecifications()));
+            response.add(new ComponentsResponse(component.getId(), component.getPatrimony(), component.getSpecifications(), component.getSn()));
         }
         return response;
     }
