@@ -190,7 +190,7 @@ public class ComputerComponentsTest {
         Mockito.when(componentsRepository.findById(1L)).thenReturn(Optional.of(component));
 
         assertDoesNotThrow(() -> {
-            computerComponentService.link(2L, 1L);
+            computerComponentService.link(1L, 1L);
         });
     }
     @Test
