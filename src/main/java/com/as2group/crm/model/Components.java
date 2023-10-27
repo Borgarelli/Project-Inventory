@@ -3,6 +3,7 @@ package com.as2group.crm.model;
 import java.util.Objects;
 
 import com.as2group.crm.enumeration.ComponentsStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -28,7 +29,7 @@ public class Components {
 
 	@Column(nullable = false, unique = true)
 	private String patrimony;
-
+	private String sn;
 
 	@ManyToOne
 	@JoinColumn(name = "id_computer")
@@ -41,9 +42,6 @@ public class Components {
 //    private ComponentType type;
 ////	
 	private String specifications;
-
-	private String Sn;
-
 
 	public Long getId() {
 		return id;
@@ -61,6 +59,7 @@ public class Components {
 		this.patrimony = patrimony;
 	}
 
+	@JsonIgnore
 	public Computer getComputer() {
 		return computer;
 	}
@@ -72,15 +71,6 @@ public class Components {
 	public ComponentsStatus getStatus() {
 		return status;
 	}
-
-	public String getSn() {
-		return Sn;
-	}
-
-	public void setSn(String sn) {
-		Sn = sn;
-	}
-
 
 	public void setStatus(ComponentsStatus status) {
 		this.status = status;
@@ -94,6 +84,14 @@ public class Components {
 		this.specifications = specifications;
 	}
 
+	
+	public String getSn() {
+		return sn;
+	}
+
+	public void setSn(String sn) {
+		this.sn = sn;
+	}
 
 //	public ComponentType getComponentType() {
 //		return type;

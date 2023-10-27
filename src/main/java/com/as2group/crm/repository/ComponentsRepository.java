@@ -15,22 +15,16 @@ public interface ComponentsRepository extends JpaRepository<Components, Long> {
 
 	Optional<Components> findByPatrimony(String patrimony);
 
-//	List<Components> findByModelAndBrand(String model, String brand);
+	Optional<Components> findBySn(String sn);
 
-//	Optional<Components> findBySn(String sn);
-
-	Optional<ComponentsStatus> findByStatus(ComponentsStatus status);
-	
-//	Optional<ComponentType> findByType(ComponentType componentType);
+	Optional<ComponentsStatus> findByStatus(ComponentsStatus status);	
 
 	@Transactional
 	void deleteByPatrimony(String patrimony);
-
 	List<Components> findAllByStatus(@Param("status") ComponentsStatus status);
 	
-
 	@Query("SELECT c FROM Components c WHERE c.status = com.as2group.crm.enumeration.ComponentsStatus.PRA_USO")
-	List<Components> findByStatusActive();
+	List<Components> findByStatusActivate();
 
 
 }

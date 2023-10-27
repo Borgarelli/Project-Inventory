@@ -3,6 +3,7 @@ package com.as2group.crm.service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -61,10 +62,10 @@ public class ComputerComponentService {
     	
     	List<ComputerComponent> link = computerComponentRepository.findByComputerAndComponent(computer, component);
     	
-    	if (component.getStatus() == ComponentsStatus.INATIVO) {
-    		throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Component is inactive");
-    	}
-    	
+		if (link.isEmpty()) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Component is not linked to this computer");
+		}
+		    	
     	for(ComputerComponent computerComponent : link) {
     		if(computerComponent.getReturned() == null) {
     			computer.getComputerComponents().remove(component);
@@ -77,10 +78,20 @@ public class ComputerComponentService {
     	}
     }
 
-	//HistoricComponent
-	public List<ComputerComponent> historicComponent(Long Idcomponent) {
-		Components component = componentService.show(Idcomponent);
-		return computerComponentRepository.findByComponent(component);
+	public ComputerComponent findById(Long id){
+		Optional<ComputerComponent> found = computerComponentRepository.findById(id);
+		if(found.isPresent()){
+			return found.get();
+		}
+		else {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "register not found");
+		}
 	}
+    
+    //historic
+    public List<ComputerComponent> historicComponent(Long id_component){
+    	Components component = componentService.show(id_component);
+    	return computerComponentRepository.findByComponent(component);
+    }
 
 }

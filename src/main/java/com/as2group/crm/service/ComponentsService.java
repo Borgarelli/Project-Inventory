@@ -9,10 +9,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.as2group.crm.enumeration.ComponentsStatus;
 import com.as2group.crm.model.Components;
-
 import com.as2group.crm.repository.ComponentsRepository;
-
-//import ch.qos.logback.core.subst.Token.Type;
 
 @Service
 public class ComponentsService {
@@ -60,10 +57,6 @@ public class ComponentsService {
 		return componentsRepository.findAllByStatus(status);
 	}
 
-//	// GetByType
-//	public List<Components> listByType(ComponentType componentType) {
-//		return componentsRepository.findAllByType(componentType);
-//	}
 
 	// Post
 	public Components create(Components components) {
@@ -100,9 +93,51 @@ public class ComponentsService {
 		componentsRepository.deleteByPatrimony(patrimony);
 	}
 
-	//stock
-	public List<Components>stock() {
-		return componentsRepository.findByStatusActive();
+	//Activate
+	public void activate(Long id) {
+		Components component = show(id);
+		if(component.getStatus() == ComponentsStatus.INATIVO){
+			changeStatus(component, ComponentsStatus.PRA_USO);
+		}
+		else {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Component is already active");
+		}
 	}
+
+	//Put
+	public Components edit(Long id, Components component) {
+		Components found = show(id);
+		Optional<Components> AlreadyUsedPatrimony = componentsRepository.findByPatrimony(component.getPatrimony());
+		Optional<Components> AlreadyUsedSn = componentsRepository.findBySn(component.getPatrimony());
+
+		if(AlreadyUsedPatrimony.isPresent()) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This patrimony is already exist");
+		}
+
+		if(component.getPatrimony() == null || component.getPatrimony().isEmpty()){
+			throw new IllegalArgumentException("Patrimony is not possible to be null");
+		}
+
+		if(AlreadyUsedSn.isPresent()) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This serial num already exist");
+		}
+
+		if(component.getSn() == null || component.getSn().isEmpty()){
+			throw new IllegalArgumentException("Serial number is not possible to be null");
+		}
+
+		found.setPatrimony(component.getPatrimony());
+		found.setSn(component.getSn());
+		found.setSpecifications(component.getSpecifications());
+		return componentsRepository.save(found);
+	}
+
+
+
+	// GetStock
+	public List<Components> stock(){
+		return componentsRepository.findByStatusActivate();
+	}
+
 
 }
