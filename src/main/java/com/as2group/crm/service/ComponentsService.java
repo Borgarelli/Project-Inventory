@@ -62,11 +62,20 @@ public class ComponentsService {
 	public Components create(Components components) {
 		Optional<Components> found = componentsRepository.findByPatrimony(components.getPatrimony());
 		if (found.isPresent()) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Components assets are already in use.");
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Computer assets are already in use.");
 		}
-		found = componentsRepository.findByPatrimony(components.getPatrimony());
+		
+		if(components.getPatrimony() == null || components.getPatrimony().isEmpty()) {
+			throw new IllegalArgumentException("Patrimony is not possible to be null");
+		}
+		
+		found = componentsRepository.findBySn(components.getSn());
 		if (found.isPresent()) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Serial Number already exists.");
+		}
+		
+		if(components.getSn() == null || components.getSn().isEmpty()) {
+			throw new IllegalArgumentException("Serial number is not possible to be null");
 		}
 		components.setStatus(ComponentsStatus.PRA_USO);
 		return componentsRepository.save(components);

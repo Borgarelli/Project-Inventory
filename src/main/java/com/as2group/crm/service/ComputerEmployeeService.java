@@ -73,6 +73,9 @@ public class ComputerEmployeeService {
 				computerEmployeeRepository.save(computerEmployee); 
 				computerService.changeStatus(computer, ComputerStatus.PRA_USO);
 			}
+			else {
+				throw new IllegalArgumentException("Computer already returned");
+			}
 		}
 	}
 	

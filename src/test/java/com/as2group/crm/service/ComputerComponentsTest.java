@@ -1,11 +1,14 @@
 package com.as2group.crm.service;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -26,6 +29,7 @@ import com.as2group.crm.model.ComputerComponent;
 import com.as2group.crm.repository.ComponentsRepository;
 import com.as2group.crm.repository.ComputerComponentRepository;
 import com.as2group.crm.repository.ComputerRepository;
+
 
 @SpringBootTest
 public class ComputerComponentsTest {
@@ -117,7 +121,7 @@ public class ComputerComponentsTest {
         computerComponentDifferent.setReceived(LocalDateTime.now());
 
         Mockito.when(computerComponentRepository.findById(1L)).thenReturn(Optional.of(computerComponent));
-        Mockito.when(computerComponentRepository.findById(2L)).thenReturn(Optional.of(computerComponentDifferent));
+        // Mockito.when(computerComponentRepository.findById(2L)).thenReturn(Optional.of(computerComponentDifferent));
 
         Mockito.when(computerRepository.findById(1L)).thenReturn(Optional.of(computer));
         Mockito.when(computerRepository.findById(2L)).thenReturn(Optional.of(computerInactive));
@@ -193,6 +197,7 @@ public class ComputerComponentsTest {
             computerComponentService.link(1L, 1L);
         });
     }
+
     @Test
     public void linkComponentComputerInactiveNOkTest() {
         assertThrows(ResponseStatusException.class, () -> {
@@ -243,7 +248,82 @@ public class ComputerComponentsTest {
         });
     }
 
+    @Test
+    public void unlinkComponentReturnedNOkTest() {
+        Components component = new Components();
+        component.setId(1L);
+        component.setPatrimony("NTK191253");
+        component.setSn("14719733453");
+        component.setSpecifications("green");
 
+        Computer computer = new Computer();
+        computer.setId(1L);
+        computer.setPatrimony("NTK19188");
+        computer.setSn("14719733488");
+        computer.setSector("IT");
+        computer.setModel("Inspiron 14R 5437");
+        computer.setBrand("Dell");
+        computer.setSoCurrent("Ubuntu 22.04.2 LTS");
+        computer.setSoOriginal("Windows 10");
+        computer.setStatus(ComputerStatus.PRA_USO);
+        computer.setEntryDate(LocalDate.now());
 
+        ComputerComponent computerComponent = new ComputerComponent();
+        computerComponent.setId_comp_compo(1L);
+        computerComponent.setComponent(component);
+        computerComponent.setComputer(computer);
+        computerComponent.setReceived(LocalDateTime.now());
+        computerComponent.setReturned(LocalDateTime.now());
+
+        Mockito.when(componentsRepository.findById(1L)).thenReturn(Optional.of(component));
+        Mockito.when(computerRepository.findById(1L)).thenReturn(Optional.of(computer));
+        Mockito.when(computerComponentRepository.findByComputerAndComponent(computer, component)).thenReturn(List.of(computerComponent));
+
+        assertThrows(IllegalArgumentException.class, () -> {
+                computerComponentService.unlink(1L, 1L);
+        });
+    }
+
+    //Get Tests
+    @Test
+    public void findByIdOkTest() {
+        assertDoesNotThrow(() -> {
+            computerComponentService.findById(1L);
+        });
+    }
+
+    @Test
+    public void findByIdNOkTest() {
+        assertThrows(ResponseStatusException.class, () -> {
+            computerComponentService.findById(3L);
+        });
+    }
+
+    @Test
+    public void findComponentByIdOkTest() {
+        assertEquals(2L, computerComponentService.findById(1L).getComponent().getId());
+    }
+
+    @Test
+    public void findComponentByIdNOkTest() {
+        assertNotEquals(1L, computerComponentService.findById(1L).getComponent().getId());
+    }
+
+    @Test
+    public void findComputerByIdOkTest() {
+        assertEquals(1L, computerComponentService.findById(1L).getComputer().getId());
+    }
+
+    @Test
+    public void findComputerByIdNOkTest() {
+        assertNotEquals(2L, computerComponentService.findById(1L).getComputer().getId());
+    }
+    
+
+    @Test
+    public void historicComponentOkTest() {
+        List<ComputerComponent> computerComponents = computerComponentService.historicComponent(2L);
+        assertEquals(1, computerComponents.size());
+    }
     
 }

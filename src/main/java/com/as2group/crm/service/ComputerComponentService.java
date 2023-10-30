@@ -75,6 +75,9 @@ public class ComputerComponentService {
     			computerComponentRepository.save(computerComponent);
     			componentService.changeStatus(component, ComponentsStatus.PRA_USO);
     		}
+			else {
+				throw new IllegalArgumentException("Component already returned");
+			}
     	}
     }
 

@@ -273,6 +273,41 @@ public class ComputerEmployeeTest {
 		});
 	}
 
+	@Test
+	public void unlinkComputerReturnedNOkTest() {
+		Employee employee = new Employee();
+		employee.setName("Kauã Borgarelli");
+		employee.setEmail("kaua1as74@group");
+		employee.setTelephone("12992002060");
+		employee.setGender("Masculino");
+		employee.setStatus(EmployeeStatus.ATIVO);
+		employee.setEntryDate(LocalDate.now());
+		
+		Computer computer = new Computer();
+		computer.setPatrimony("NTK19199");
+		computer.setSn("14719733499");
+		computer.setSector("IT");
+		computer.setModel("Inspiron 14R 5437");
+		computer.setBrand("Dell");
+		computer.setSoCurrent("Ubuntu 22.04.2 LTS");
+		computer.setSoOriginal("Windows 10");
+		computer.setStatus(ComputerStatus.PRA_USO);
+		computer.setEntryDate(LocalDate.now());
+		
+		ComputerEmployee computerEmployee = new ComputerEmployee();
+		computerEmployee.setComputer(computer);
+		computerEmployee.setEmployee(employee);
+		computerEmployee.setReceived(LocalDateTime.now());
+		computerEmployee.setReturned(LocalDateTime.now());
+
+		Mockito.when(computerRepository.findById(1L)).thenReturn(Optional.of(computer));
+		Mockito.when(employeeRepository.findById(1L)).thenReturn(Optional.of(employee));
+		Mockito.when(computerEmployeeRepository.findByComputerAndEmployee(computer, employee)).thenReturn(List.of(computerEmployee));
+
+		assertThrows(IllegalArgumentException.class, () -> {
+			computerEmployeeService.unlink(1L, 1L);
+		});
+	}
 	//Get Tests
 	@Test
 	public void historicComputerOkTest() {
