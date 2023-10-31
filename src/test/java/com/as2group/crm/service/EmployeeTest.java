@@ -58,17 +58,17 @@ public class EmployeeTest {
 		employeeInactive.setStatus(EmployeeStatus.INATIVO);
 		employeeInactive.setEntryDate(LocalDate.now());
 
-		Employee employee2 = new Employee();
-		employee2.setId(3L);
-		employee2.setName("Kauã Borgarelli");
-		employee2.setEmail("kaua1as74@group");
-		employee2.setTelephone("12992002060");
-		employee2.setGender("Masculino");
-		employee2.setStatus(EmployeeStatus.ATIVO);
-		employee2.setEntryDate(LocalDate.now());
+		Employee employeeWithComputer = new Employee();
+		employeeWithComputer.setId(3L);
+		employeeWithComputer.setName("Kauã Borgarelli");
+		employeeWithComputer.setEmail("kaua1as74@group");
+		employeeWithComputer.setTelephone("12992002060");
+		employeeWithComputer.setGender("Masculino");
+		employeeWithComputer.setStatus(EmployeeStatus.ATIVO);
+		employeeWithComputer.setEntryDate(LocalDate.now());
 
         Computer computer = new Computer();
-		computer.setId(1L);
+		computer.setId(2L);
 		computer.setPatrimony("NTK19188");
 		computer.setSn("14719733488");
 		computer.setSector("IT");
@@ -77,22 +77,22 @@ public class EmployeeTest {
 		computer.setSoCurrent("Ubuntu 22.04.2 LTS");
 		computer.setSoOriginal("Windows 10");
 		computer.setStatus(ComputerStatus.EM_USO);
-		computer.setEmployee(employee);
+		computer.setEmployee(employeeWithComputer);
 		computer.setEntryDate(LocalDate.now());
 
         ComputerEmployee computerEmployee = new ComputerEmployee();
 		computerEmployee.setId_comp_empl(1L);
 		computerEmployee.setComputer(computer);
-		computerEmployee.setEmployee(employee);
+		computerEmployee.setEmployee(employeeWithComputer);
 		computerEmployee.setReceived(LocalDateTime.now());
 
         Mockito.when(employeeRepository.findById(1L)).thenReturn(Optional.of(employee));
         Mockito.when(employeeRepository.findById(2L)).thenReturn(Optional.of(employeeInactive));
-        Mockito.when(employeeRepository.findById(3L)).thenReturn(Optional.of(employee2));
+        Mockito.when(employeeRepository.findById(3L)).thenReturn(Optional.of(employeeWithComputer));
 
         Mockito.when(employeeRepository.findByEmail("kaua1as74@group")).thenReturn(Optional.of(employee));
 
-        Mockito.when(computerEmployeeRepository.findByEmployee(any())).thenReturn(List.of(computerEmployee));
+        Mockito.when(computerEmployeeRepository.findByEmployee(employeeWithComputer)).thenReturn(List.of(computerEmployee));
         
     }
 
@@ -213,6 +213,34 @@ public class EmployeeTest {
 
         assertThrows(IllegalArgumentException.class, () -> {
             employeeService.edit(employee, 1L);
+        });
+    }
+
+    @Test
+    public void desactivateEmployeeOkTest() {
+        assertDoesNotThrow(() -> {
+            employeeService.delete(1L);
+        });
+    }
+
+    @Test
+    public void desactivateEmployeeWithComputerNOkTest() {
+        assertThrows(ResponseStatusException.class, () -> {
+            employeeService.delete(3L);
+        });
+    }
+
+    @Test
+    public void desactivateEmployeeInactiveNOkTest() {
+        assertThrows(ResponseStatusException.class, () -> {
+            employeeService.delete(2L);
+        });
+    }
+
+    @Test
+    public void desactivateEmployeeInvalidNOkTest() {
+        assertThrows(ResponseStatusException.class, () -> {
+            employeeService.delete(4L);
         });
     }
 }
