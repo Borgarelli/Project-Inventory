@@ -1,6 +1,7 @@
 package com.as2group.crm.service;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.time.LocalDate;
@@ -87,7 +88,9 @@ public class ComponentsTest {
         Mockito.when(componentsRepository.findAllByStatus(ComponentsStatus.PRA_USO)).thenReturn(Collections.singletonList(componentReadyToUse));
         Mockito.when(componentsRepository.findAllByStatus(ComponentsStatus.EM_USO)).thenReturn(Collections.singletonList(componentInUse));
         Mockito.when(componentsRepository.findAllByStatus(ComponentsStatus.INATIVO)).thenReturn(Collections.singletonList(componentInactive));
-        Mockito.when(componentsRepository.findAll()).thenReturn(components);
+        Mockito.when(componentsRepository.findByStatusActivate()).thenReturn(components);
+
+        Mockito.when(componentsRepository.findAll()).thenReturn(Collections.singletonList(componentReadyToUse));
     }
 
     @Test
@@ -175,4 +178,226 @@ public class ComponentsTest {
     }
 
 
+    //Edit tests
+    @Test
+    public void editComponentOkTest() {
+        Components component = new Components();
+        component.setPatrimony("NTK191260");
+        component.setSn("14719733460");
+        component.setSpecifications("red");
+        
+        assertDoesNotThrow(() -> {
+            componentsService.edit(1L, component);
+        });
+    }
+
+    @Test
+    public void editComponentNullNOkTest() {
+        Components component = new Components();
+        component.setPatrimony("NTK191260");
+        component.setSn("14719733453");
+        component.setSpecifications("green");
+
+        assertThrows(ResponseStatusException.class, () -> {
+            componentsService.edit(null, component);
+        });
+    }
+
+    @Test
+    public void editComponentInvalidNOkTest() {
+        Components component = new Components();
+        component.setPatrimony("NTK191260");
+        component.setSn("14719733460");
+        component.setSpecifications("green");
+
+        assertThrows(ResponseStatusException.class, () -> {
+            componentsService.edit(4L, component);
+        });
+    }
+
+    @Test
+    public void editComponentPatrimonyUniqueNOkTest() {
+        Components component = new Components();
+        component.setPatrimony("NTK191253");
+        component.setSn("14719733460");
+        component.setSpecifications("green");
+
+        assertThrows(ResponseStatusException.class, () -> {
+            componentsService.edit(1L, component);
+        });
+    }
+
+    @Test
+    public void editComponentPatrimonyNullNOkTest() {
+        Components component = new Components();
+        component.setPatrimony(null);
+        component.setSn("14719733460");
+        component.setSpecifications("green");
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            componentsService.edit(1L, component);
+        });
+    }
+
+    @Test
+    public void editComponentPatrimonyEmptyNOkTest() {
+        Components component = new Components();
+        component.setPatrimony("");
+        component.setSn("14719733460");
+        component.setSpecifications("green");
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            componentsService.edit(1L, component);
+        });
+    }
+
+    @Test
+    public void editComponentSnUniqueNOkTest() {
+        Components component = new Components();
+        component.setPatrimony("NTK191260");
+        component.setSn("14719733453");
+        component.setSpecifications("green");
+
+        assertThrows(ResponseStatusException.class, () -> {
+            componentsService.edit(1L, component);
+        });
+    }
+
+    @Test
+    public void editComponentSnNullNOkTest() {
+        Components component = new Components();
+        component.setPatrimony("NTK191260");
+        component.setSn(null);
+        component.setSpecifications("green");
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            componentsService.edit(1L, component);
+        });
+    }
+
+    @Test
+    public void editComponentsSnEmptyNOkTest() {
+        Components component = new Components();
+        component.setPatrimony("NTK191260");
+        component.setSn("");
+        component.setSpecifications("green");
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            componentsService.edit(1L, component);
+        });
+    }
+
+    //Inactivate tests
+    @Test
+    public void inactivateComponentOkTest() {
+        assertDoesNotThrow(() -> {
+            componentsService.inactivate(1L);
+        });
+    }
+
+    @Test
+    public void inactivateComponentInvalidNOkTest() {
+        assertThrows(ResponseStatusException.class, () -> {
+            componentsService.inactivate(4L);
+        });
+    }
+
+    @Test
+    public void inactivateComponentNullNOkTest() {
+        assertThrows(ResponseStatusException.class, () -> {
+            componentsService.inactivate(null);
+        });
+    }
+
+    @Test
+    public void inactivateComponentInUseNOkTest() {
+        assertThrows(ResponseStatusException.class, () -> {
+            componentsService.inactivate(2L);
+        });
+    }
+
+    @Test
+    public void inactivateComponentInactiveNOkTest() {
+        assertThrows(ResponseStatusException.class, () -> {
+            componentsService.inactivate(3L);
+        });
+    }
+
+    //ActivateTests
+    @Test
+    public void activateComponentOkTest() {
+        assertDoesNotThrow(() -> {
+            componentsService.activate(3L);
+        });
+    }
+
+    @Test
+    public void activateComponentActiveNOkTest() {
+        assertThrows(ResponseStatusException.class, () -> {
+            componentsService.activate(1L);
+        });
+    }
+
+    @Test
+    public void activateComponentInvalidNOkTest() {
+            assertThrows(ResponseStatusException.class, () -> {
+            componentsService.activate(4L);
+        });
+    }
+
+    @Test
+    public void activateComponentNullNOkTest() {
+            assertThrows(ResponseStatusException.class, () -> {
+            componentsService.activate(null);
+        });
+    }
+
+    //Get tests
+    @Test
+    public void getAllComponentsOkTest() {
+        assertEquals(1, componentsService.list().size());
+    }
+
+    @Test
+    public void findByIdOkTest() {
+        assertDoesNotThrow(() -> {
+            componentsService.show(1L);
+        });
+    }
+
+    @Test
+    public void findByIdNOkTest() {
+        assertThrows(ResponseStatusException.class, () -> {
+            componentsService.show(4L);
+        });
+    }
+
+    @Test
+    public void findPatrimonyOkTest(){
+        assertDoesNotThrow(() -> {
+            componentsService.show("NTK191253");
+        });
+    }
+
+    @Test
+    public void findPatrimonyNOkTest() {
+        assertThrows(ResponseStatusException.class, () -> {
+            componentsService.show("NTK191257");
+        });
+    }
+
+    @Test
+    public void findPatrimonyInMockOkTest() {
+        assertEquals("NTK191253", componentsService.show(1L).getPatrimony());
+    }
+
+    @Test
+    public void findByStatusOkTest() {
+        assertEquals(1, componentsService.listByStatus(ComponentsStatus.PRA_USO).size());
+    }
+
+    @Test
+    public void stockOkTest() {
+        assertEquals(1, componentsService.stock().size());
+    }
 }

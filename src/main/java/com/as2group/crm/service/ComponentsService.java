@@ -97,11 +97,6 @@ public class ComponentsService {
 		componentsRepository.save(component);
 	}
 
-	// DeleteByPatrimonio
-	public void delete(String patrimony) {
-		componentsRepository.deleteByPatrimony(patrimony);
-	}
-
 	//Activate
 	public void activate(Long id) {
 		Components component = show(id);
@@ -117,7 +112,7 @@ public class ComponentsService {
 	public Components edit(Long id, Components component) {
 		Components found = show(id);
 		Optional<Components> AlreadyUsedPatrimony = componentsRepository.findByPatrimony(component.getPatrimony());
-		Optional<Components> AlreadyUsedSn = componentsRepository.findBySn(component.getPatrimony());
+		Optional<Components> AlreadyUsedSn = componentsRepository.findBySn(component.getSn());
 
 		if(AlreadyUsedPatrimony.isPresent()) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This patrimony is already exist");
