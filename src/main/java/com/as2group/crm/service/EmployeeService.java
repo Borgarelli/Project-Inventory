@@ -58,13 +58,18 @@ public class EmployeeService {
 	}
 	
 	//FindByEmail
-	public List<Employee> showEmail(String email){
-		return employeeRepository.findByEmail(email);
+	public Employee showEmail(String email){
+		Optional<Employee> found = employeeRepository.findByEmail(email);
+		if(found.isPresent()) {
+			return found.get();
+		} else {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found");
+		}
 	}
 	
 	//Create
 	public Employee create(Employee employee) {
-	    List<Employee> existingEmployees = employeeRepository.findByEmail(employee.getEmail());
+	    Optional<Employee> existingEmployees = employeeRepository.findByEmail(employee.getEmail());
 
 	    if (!existingEmployees.isEmpty()) {
 	        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email already exists.");
@@ -133,7 +138,7 @@ public class EmployeeService {
 	//Put
 	public Employee edit(Employee employee, Long id) {
 		Employee found = show(id);
-		List<Employee> existingEmployee = employeeRepository.findByEmail(employee.getEmail());
+		Optional<Employee> existingEmployee = employeeRepository.findByEmail(employee.getEmail());
 		
 		if(!existingEmployee.isEmpty()) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email is already used");
