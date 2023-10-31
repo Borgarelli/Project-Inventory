@@ -75,6 +75,10 @@ public class EmployeeService {
 	        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email already exists.");
 	    }
 
+		if(employee.getEmail() == null || employee.getEmail().isEmpty()) {
+			throw new IllegalArgumentException("Email is not possible to be null");
+		}
+
 	    employee.setStatus(EmployeeStatus.ATIVO);
 	    employee.setEntryDate(LocalDate.now());
 	    return employeeRepository.save(employee);
@@ -140,8 +144,12 @@ public class EmployeeService {
 		Employee found = show(id);
 		Optional<Employee> existingEmployee = employeeRepository.findByEmail(employee.getEmail());
 		
-		if(!existingEmployee.isEmpty()) {
+		if(existingEmployee.isPresent()) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email is already used");
+		}
+
+		if(employee.getEmail() == null || employee.getEmail().isEmpty()) {
+			throw new IllegalArgumentException("Email is not possible to be null");
 		}
 		found.setEmail(employee.getEmail());
 		found.setName(employee.getName());

@@ -1,12 +1,21 @@
 package com.as2group.crm.service;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.as2group.crm.enumeration.ComputerStatus;
 import com.as2group.crm.enumeration.EmployeeStatus;
@@ -77,5 +86,133 @@ public class EmployeeTest {
 		computerEmployee.setEmployee(employee);
 		computerEmployee.setReceived(LocalDateTime.now());
 
+        Mockito.when(employeeRepository.findById(1L)).thenReturn(Optional.of(employee));
+        Mockito.when(employeeRepository.findById(2L)).thenReturn(Optional.of(employeeInactive));
+        Mockito.when(employeeRepository.findById(3L)).thenReturn(Optional.of(employee2));
+
+        Mockito.when(employeeRepository.findByEmail("kaua1as74@group")).thenReturn(Optional.of(employee));
+
+        Mockito.when(computerEmployeeRepository.findByEmployee(any())).thenReturn(List.of(computerEmployee));
+        
+    }
+
+    @Test
+    public void createEmployeeOkTest() {
+        Employee employee = new Employee();
+		employee.setName("Kauã Borgarelli");
+		employee.setEmail("kauaas2@group");
+		employee.setTelephone("12992002060");
+		employee.setGender("Masculino");
+		employee.setStatus(EmployeeStatus.ATIVO);
+		employee.setEntryDate(LocalDate.now());
+
+        assertDoesNotThrow(() -> {
+            employeeService.create(employee);
+        });
+    }
+
+    @Test
+    public void createEmployeeUniqueEmailNOkTest() {
+        Employee employee = new Employee();
+		employee.setName("Kauã Borgarelli");
+		employee.setEmail("kaua1as74@group");
+		employee.setTelephone("12992002060");
+		employee.setGender("Masculino");
+		employee.setStatus(EmployeeStatus.ATIVO);
+		employee.setEntryDate(LocalDate.now());
+
+        assertThrows(ResponseStatusException.class, () -> {
+            employeeService.create(employee);
+        });
+    }
+
+    @Test
+    public void createEmployeeNullNOkTest() {
+        Employee employee = new Employee();
+		employee.setName("Kauã Borgarelli");
+		employee.setEmail(null);
+		employee.setTelephone("12992002060");
+		employee.setGender("Masculino");
+		employee.setStatus(EmployeeStatus.ATIVO);
+		employee.setEntryDate(LocalDate.now());
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            employeeService.create(employee);
+        });
+    }
+
+    @Test
+    public void createEmployeeEmptyNOkTest() {
+        Employee employee = new Employee();
+		employee.setName("Kauã Borgarelli");
+		employee.setEmail("");
+		employee.setTelephone("12992002060");
+		employee.setGender("Masculino");
+		employee.setStatus(EmployeeStatus.ATIVO);
+		employee.setEntryDate(LocalDate.now());
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            employeeService.create(employee);
+        });
+    }
+
+    @Test
+    public void editEmployeeOkTest() {
+        Employee employee = new Employee();
+		employee.setName("Kauã Borgarelli");
+		employee.setEmail("kauaas2@group");
+		employee.setTelephone("12992002060");
+		employee.setGender("Masculino");
+		employee.setStatus(EmployeeStatus.ATIVO);
+		employee.setEntryDate(LocalDate.now());
+
+        assertDoesNotThrow(() -> {
+            employeeService.edit(employee, 1L);
+        });
+    }
+
+    @Test
+    public void editEmployeeEmailUniqueNOkTest() {
+        Employee employee = new Employee();
+		employee.setName("Kauã Borgarelli");
+		employee.setEmail("kaua1as74@group");
+		employee.setTelephone("12992002060");
+		employee.setGender("Masculino");
+		employee.setStatus(EmployeeStatus.ATIVO);
+		employee.setEntryDate(LocalDate.now());
+
+        assertThrows(ResponseStatusException.class, () -> {
+            employeeService.edit(employee, 1L);
+        });
+    }
+
+    @Test
+    public void editEmployeeEmailNullNOkTest() {
+        Employee employee = new Employee();
+		employee.setName("Kauã Borgarelli");
+		employee.setEmail(null);
+		employee.setTelephone("12992002060");
+		employee.setGender("Masculino");
+		employee.setStatus(EmployeeStatus.ATIVO);
+		employee.setEntryDate(LocalDate.now());
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            employeeService.edit(employee, 1L);
+        });
+    }
+
+    @Test
+    public void editEmployeeEmailEmptyNOkTest() {
+        Employee employee = new Employee();
+		employee.setName("Kauã Borgarelli");
+		employee.setEmail("");
+		employee.setTelephone("12992002060");
+		employee.setGender("Masculino");
+		employee.setStatus(EmployeeStatus.ATIVO);
+		employee.setEntryDate(LocalDate.now());
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            employeeService.edit(employee, 1L);
+        });
     }
 }
