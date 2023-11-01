@@ -280,4 +280,18 @@ public class EmployeeTest {
 			employeeService.delete(1L);
 		});
 	}
+
+    @Test
+    public void findByIdOkTest() {
+        assertDoesNotThrow(() -> {
+            employeeService.show(1L);
+        });
+    }
+
+    @Test
+    public void findByIdNokTest(){
+        assertThrows(ResponseStatusException.class, () -> {
+            employeeService.show(4L);
+        });
+    }
 }
