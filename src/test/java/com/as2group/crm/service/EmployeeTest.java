@@ -2,7 +2,6 @@ package com.as2group.crm.service;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -243,4 +242,42 @@ public class EmployeeTest {
             employeeService.delete(4L);
         });
     }
+
+    @Test
+	public void deleteEmployeeComputerReturnNOkTest() {
+		Employee employee = new Employee();
+		employee.setId(1l);
+		employee.setName("Kauã Borgarelli");
+		employee.setEmail("kaua1as74@group");
+		employee.setTelephone("12992002060");
+		employee.setGender("Masculino");
+		employee.setStatus(EmployeeStatus.ATIVO);
+		employee.setEntryDate(LocalDate.now());
+		
+		Computer computer = new Computer();
+		computer.setId(1L);
+		computer.setPatrimony("NTK19199");
+		computer.setSn("14719733499");
+		computer.setSector("IT");
+		computer.setModel("Inspiron 14R 5437");
+		computer.setBrand("Dell");
+		computer.setSoCurrent("Ubuntu 22.04.2 LTS");
+		computer.setSoOriginal("Windows 10");
+		computer.setStatus(ComputerStatus.PRA_USO);
+		computer.setEntryDate(LocalDate.now());
+		
+		ComputerEmployee computerEmployee = new ComputerEmployee();
+		computerEmployee.setId_comp_empl(1L);
+		computerEmployee.setComputer(computer);
+		computerEmployee.setEmployee(employee);
+		computerEmployee.setReceived(LocalDateTime.now());
+		computerEmployee.setReturned(LocalDateTime.now());
+
+		Mockito.when(employeeRepository.findById(1L)).thenReturn(Optional.of(employee));
+		Mockito.when(computerEmployeeRepository.findByEmployee(employee)).thenReturn(List.of(computerEmployee));
+		
+		assertThrows(IllegalArgumentException.class, () -> {
+			employeeService.delete(1L);
+		});
+	}
 }

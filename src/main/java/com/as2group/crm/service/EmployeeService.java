@@ -97,6 +97,9 @@ public class EmployeeService {
 	                Long computerId = computerEmployee.getComputer().getId();
 	                computersToUnlink.add(computerId);
 	            }
+				else {
+					throw new IllegalArgumentException("Computer already returned");
+				}
 	        }
 	    }
 
@@ -151,6 +154,7 @@ public class EmployeeService {
 		if(employee.getEmail() == null || employee.getEmail().isEmpty()) {
 			throw new IllegalArgumentException("Email is not possible to be null");
 		}
+		
 		found.setEmail(employee.getEmail());
 		found.setName(employee.getName());
 		found.setGender(employee.getGender());
