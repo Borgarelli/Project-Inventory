@@ -60,7 +60,7 @@ public class EmployeeController {
 	
 	//GetByEmail
 	@GetMapping("/employees/email/{email}")
-	public List<EmployeeResponse> displayEmail(@PathVariable("email") String email){
+	public EmployeeResponse displayEmail(@PathVariable("email") String email){
 		return employeeMapper.map(employeeService.showEmail(email));
 	}
 	
