@@ -1,10 +1,13 @@
 package com.as2group.crm.service;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -79,6 +82,11 @@ public class EmployeeTest {
 		computer.setEmployee(employeeWithComputer);
 		computer.setEntryDate(LocalDate.now());
 
+		List<Employee> employees = new ArrayList<>();
+		employees.add(employee);
+		employees.add(employeeInactive);
+		employees.add(employeeWithComputer);
+
         ComputerEmployee computerEmployee = new ComputerEmployee();
 		computerEmployee.setId_comp_empl(1L);
 		computerEmployee.setComputer(computer);
@@ -93,6 +101,9 @@ public class EmployeeTest {
 
         Mockito.when(computerEmployeeRepository.findByEmployee(employeeWithComputer)).thenReturn(List.of(computerEmployee));
         
+		Mockito.when(employeeRepository.findAll()).thenReturn(employees);
+		
+		Mockito.when(employeeRepository.findByName("Kauã")).thenReturn(employees);
     }
 
     @Test
@@ -281,6 +292,23 @@ public class EmployeeTest {
 		});
 	}
 
+	//Activate Tests
+	@Test
+	public void activateEmployeeOkTest() {
+		assertDoesNotThrow(() -> {
+			employeeService.activate(2L);
+		});
+	}
+
+	@Test
+	public void activateEmployeeNoOkTest() {
+		assertThrows(ResponseStatusException.class, () -> {
+			employeeService.activate(3L);
+		});
+	}
+
+	//Get tests
+
     @Test
     public void findByIdOkTest() {
         assertDoesNotThrow(() -> {
@@ -294,4 +322,35 @@ public class EmployeeTest {
             employeeService.show(4L);
         });
     }
+
+	@Test
+	public void AllEmployeeOkTest() {
+		assertEquals(3, employeeService.list().size());
+	}
+
+	@Test
+	public void findByNameOkTest() {
+		assertEquals(3, employeeService.showName("Kauã").size());
+	}
+
+	@Test
+	public void findByNameNoOkTest() {
+		assertThrows(ResponseStatusException.class, () -> {
+			employeeService.showName("João Gabriel");
+		});
+	}
+
+	@Test
+	public void findByEmailOkTeste() {
+		assertDoesNotThrow(() -> {
+			employeeService.showEmail("kaua1as74@group");
+		});
+	}
+
+	@Test
+	public void findByEmailNoOkTeste() {
+		assertThrows(ResponseStatusException.class, () -> {
+			employeeService.showEmail("test@test.com");
+		});
+	}
 }

@@ -54,7 +54,13 @@ public class EmployeeService {
 
 	//FindByName
 	public List<Employee> showName(String name) {
-		return employeeRepository.findByName(name) ;
+		List<Employee> found = employeeRepository.findByName(name);
+		if (found.isEmpty()) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found");
+
+		}
+		return found;
+
 	}
 	
 	//FindByEmail
