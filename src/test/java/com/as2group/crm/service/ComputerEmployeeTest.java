@@ -177,7 +177,8 @@ public class ComputerEmployeeTest {
 
 		Mockito.when(computerRepository.findById(1L)).thenReturn(Optional.of(computer));
 		Mockito.when(employeeRepository.findById(1L)).thenReturn(Optional.of(employee));
-		
+		Mockito.when(computerEmployeeRepository.save(any())).thenReturn(computerEmployee);
+
 		assertDoesNotThrow(() -> {
 			computerEmployeeService.link(1L, 1L);
 		});

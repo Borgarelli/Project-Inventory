@@ -168,6 +168,7 @@ public class ComputerComponentsTest {
 
         Mockito.when(componentsRepository.findById(1L)).thenReturn(Optional.of(component));
         Mockito.when(computerRepository.findById(1L)).thenReturn(Optional.of(computer));
+        Mockito.when(computerComponentRepository.save(any())).thenReturn(computerComponent);
 
         assertDoesNotThrow(() -> {
             computerComponentService.link(1L, 1L);

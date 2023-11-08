@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
+import static org.mockito.ArgumentMatchers.any;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -125,6 +125,9 @@ public class ComputerTest {
 		computer.setBrand("Dell");
 		computer.setSoCurrent("Ubuntu 22.04.2 LTS");
 		computer.setSoOriginal("Windows 10");
+
+		Mockito.when(computerRepository.save(any())).thenReturn(computer);
+
 		assertDoesNotThrow(() -> {
 			computerService.create(computer);
 		});

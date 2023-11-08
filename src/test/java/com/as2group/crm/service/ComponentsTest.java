@@ -3,6 +3,7 @@ package com.as2group.crm.service;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -99,6 +100,8 @@ public class ComponentsTest {
         component.setPatrimony("NTK191260");
         component.setSn("14719733460");
         component.setSpecifications("green");
+
+        Mockito.when(componentsRepository.save(any())).thenReturn(component);
 
         assertDoesNotThrow(() -> {
             componentsService.create(component);

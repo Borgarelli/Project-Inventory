@@ -3,7 +3,7 @@ package com.as2group.crm.service;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
+import static org.mockito.ArgumentMatchers.any;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -119,6 +119,8 @@ public class EmployeeTest {
 		employee.setGender("Masculino");
 		employee.setStatus(EmployeeStatus.ATIVO);
 		employee.setEntryDate(LocalDate.now());
+
+		Mockito.when(employeeRepository.save(any())).thenReturn(employee);
 
         assertDoesNotThrow(() -> {
             employeeService.create(employee);
