@@ -47,7 +47,7 @@ public class EmployeeController {
 	}
 	
 	//GetEmployeeInactivate
-	@GetMapping("/employees/INATIVO")
+	@GetMapping("/employees/inactive")
 	public List<EmployeeResponse> listInactivate(){
 		return employeeMapper.map(employeeService.listInactivate());
 	}
