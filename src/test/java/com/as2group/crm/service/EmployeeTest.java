@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -100,6 +101,9 @@ public class EmployeeTest {
         Mockito.when(employeeRepository.findByEmail("kaua1as74@group")).thenReturn(Optional.of(employee));
 
         Mockito.when(computerEmployeeRepository.findByEmployee(employeeWithComputer)).thenReturn(List.of(computerEmployee));
+
+		Mockito.when(employeeRepository.findByStatusActivate()).thenReturn(Collections.singletonList(employee));
+		Mockito.when(employeeRepository.findByStatusInactivate()).thenReturn(Collections.singletonList(employeeInactive));
         
 		Mockito.when(employeeRepository.findAll()).thenReturn(employees);
 		
@@ -326,6 +330,16 @@ public class EmployeeTest {
 	@Test
 	public void AllEmployeeOkTest() {
 		assertEquals(3, employeeService.list().size());
+	}
+
+	@Test
+	public void AllActivatesEmployee() {
+		assertEquals(1, employeeService.listActivate().size());
+	}
+
+	@Test
+	public void AllInactivatesEmployee() {
+		assertEquals(1, employeeService.listInactivate().size());
 	}
 
 	@Test
