@@ -15,13 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import org.springframework.web.server.ResponseStatusException;
 
 import com.as2group.crm.dto.ComputerRequest;
 import com.as2group.crm.dto.ComputerResponse;
 import com.as2group.crm.dto.ComputerSimpleResponse;
 import com.as2group.crm.enumeration.ComputerStatus;
-import com.as2group.crm.exceptions.ComputerNotFoundException;
 import com.as2group.crm.mapper.ComputerMapper;
 
 
@@ -82,26 +80,15 @@ public class ComputerController {
 
 	@PutMapping("/computers/{id}/inactivate")
 	public String inactivate(@PathVariable("id") Long id) {
-		try {
-			computerService.inactivate(id);
-			return "Computer has been deleted successfully.";
-		} catch(ComputerNotFoundException c){
-			
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Computer not found", c);
-		}
+		computerService.inactivate(id);
+		return "Computer has been deleted successfully.";
 		
 	}
 	
 	@PutMapping("/computers/{id}/activate")
 	public String activate(@PathVariable("id") Long id) {
-		try {
-			computerService.activate(id);
-			return "Computer has been activate succesfully.";
-			
-		}catch (ComputerNotFoundException c){
-			
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Computer not found", c);
-		}
+		computerService.activate(id);
+		return "Computer has been activate succesfully.";
 	}
 
 	@GetMapping("computers/stock")
