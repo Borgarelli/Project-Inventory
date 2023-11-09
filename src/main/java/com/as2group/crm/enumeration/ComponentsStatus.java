@@ -1,10 +1,10 @@
 package com.as2group.crm.enumeration;
 
 public enum ComponentsStatus {
-    PRA_USO("Component is ready to use"),
-    EM_USO("Component is already on a computer"),
-    INATIVO("Component is inactive");
-
+	INATIVO("Component is inactive"),
+	PRA_USO("Component is ready to use"),
+	EM_USO("Component is already in a computer");
+    
     private String description;
 
     private ComponentsStatus(String description){

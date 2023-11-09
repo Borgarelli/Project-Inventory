@@ -20,7 +20,6 @@ import com.as2group.crm.dto.ComponentsResponse;
 
 import com.as2group.crm.enumeration.ComponentsStatus;
 import com.as2group.crm.mapper.ComponentsMapper;
-import com.as2group.crm.model.Components;
 import com.as2group.crm.service.ComponentsService;
 import com.as2group.crm.service.ComputerComponentService;
 
@@ -43,8 +42,8 @@ public class ComponentsController {
 	}
 
 	@GetMapping("/components/status/{status}")
-	public List<Components> listByStatus(@PathVariable("status") ComponentsStatus status) {
-		return componentsService.listByStatus(status);
+	public List<ComponentsResponse> listByStatus(@PathVariable("status") ComponentsStatus status) {
+		return componentMapper.map(componentsService.listByStatus(status));
 	}
 	
 	@GetMapping("/components/{id}")
