@@ -163,4 +163,12 @@ public class ComponentsControllerTest {
         .andExpect(status().isOk());
     }
 
+    @Test
+    public void activateComponentActiveNOkTest() throws Exception {
+        mvc.perform(put("/api/components/{id}/activate", 1L)
+        .contentType(MediaType.APPLICATION_JSON)
+        .accept(MediaType.APPLICATION_JSON))
+        .andDo(print())
+        .andExpect(status().isBadRequest());
+    }
 }
