@@ -64,7 +64,7 @@ public class EmployeeControllerTest {
         .accept(MediaType.APPLICATION_JSON))
         .andDo(print())
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$", hasSize(2)));
+        .andExpect(jsonPath("$", hasSize(3)));
     }
 
     @Test
@@ -82,7 +82,7 @@ public class EmployeeControllerTest {
         .accept(MediaType.APPLICATION_JSON))
         .andDo(print())
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$", hasSize(3)));
+        .andExpect(jsonPath("$", hasSize(4)));
     }
     
     @Test    
@@ -120,7 +120,7 @@ public class EmployeeControllerTest {
 
     @Test
     public void inactivateEmployeeNotFoundNOkTest() throws Exception {
-        mvc.perform(delete("/api/employees/{id}", 4L)
+        mvc.perform(delete("/api/employees/{id}", 5L)
         .accept(MediaType.APPLICATION_JSON))
         .andDo(print())
         .andExpect(status().isNotFound());
@@ -144,7 +144,7 @@ public class EmployeeControllerTest {
 
     @Test
     public void activateEmployeeNotFoundNOkTest() throws Exception {
-        mvc.perform(put("/api/employees/{id}/activate", 4L)
+        mvc.perform(put("/api/employees/{id}/activate", 5L)
         .accept(MediaType.APPLICATION_JSON))
         .andDo(print())
         .andExpect(status().isNotFound());
@@ -172,7 +172,7 @@ public class EmployeeControllerTest {
 
     @Test
     public void editEmployeeNotFoundNOkTest() throws Exception {
-        mvc.perform(put("/api/employees/{id}", 4L)
+        mvc.perform(put("/api/employees/{id}", 5L)
         .content("{\"name\":\"Kauã Borgarelli\",\"email\":\"kauatavares@as2group.com.br\",\"telephone\":\"1234567890\",\"gender\":\"Masculino\"}")
         .contentType(MediaType.APPLICATION_JSON)
         .accept(MediaType.APPLICATION_JSON))

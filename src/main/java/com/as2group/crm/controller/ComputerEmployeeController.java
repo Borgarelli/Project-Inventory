@@ -41,6 +41,12 @@ public class ComputerEmployeeController {
 		computerEmployeeService.unlink(computerId, employeeId);
 	}
 	
+	@GetMapping("/computers/{computerEmployeeId}/employees")
+	@ResponseStatus(HttpStatus.ACCEPTED)
+	public ComputerEmployeeResponse getById(@PathVariable("computerEmployeeId") Long computerEmployeeId) {
+		return computerEmployeeMapper.map(computerEmployeeService.findById(computerEmployeeId));
+	}
+
 	@GetMapping("/computers/{computerId}/historic")
 	public List<ComputerEmployeeResponse> historicComputer(@PathVariable("computerId") Long computerId) { 
 		return computerEmployeeMapper.map(computerEmployeeService.historicComputer(computerId)); 
