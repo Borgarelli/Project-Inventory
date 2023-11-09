@@ -33,7 +33,16 @@ public class ComputerEmployeeControllerTest {
 
     @Test
     public void linkComputerInactiveOnEmployeeNOkTest() throws Exception {
-        mvc.perform(post("/api/computers/{computerId}/employees/{employeeId}", 2L,1L)
+        mvc.perform(post("/api/computers/{computerId}/employees/{employeeId}", 3L,1L)
+        .contentType(MediaType.APPLICATION_JSON)
+        .accept(MediaType.APPLICATION_JSON))
+        .andDo(print())
+        .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void linkComputerOnInactiveEmployeeNOkTest() throws Exception {
+        mvc.perform(post("/api/computers/{computerId}/employees/{employeeId}", 1L,2L)
         .contentType(MediaType.APPLICATION_JSON)
         .accept(MediaType.APPLICATION_JSON))
         .andDo(print())
