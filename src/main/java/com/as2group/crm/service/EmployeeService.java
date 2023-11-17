@@ -2,8 +2,10 @@ package com.as2group.crm.service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,9 +16,10 @@ import org.springframework.web.server.ResponseStatusException;
 import com.as2group.crm.enumeration.EmployeeStatus;
 import com.as2group.crm.model.ComputerEmployee;
 import com.as2group.crm.model.Employee;
-
+import com.as2group.crm.model.Role;
 import com.as2group.crm.repository.ComputerEmployeeRepository;
 import com.as2group.crm.repository.EmployeeRepository;
+import com.as2group.crm.repository.RoleRepository;
 
 
 @Service
@@ -26,10 +29,13 @@ public class EmployeeService {
 	private PasswordEncoder encoder;
 	
 	@Autowired
-	EmployeeRepository employeeRepository;
+	private EmployeeRepository employeeRepository;
 	
 	@Autowired
-	ComputerEmployeeRepository computerEmployeeRepository;
+	private ComputerEmployeeRepository computerEmployeeRepository;
+
+	@Autowired
+	private RoleRepository roleRepository;
 
 	//Constructor
 	public EmployeeService(EmployeeRepository employeeRepository) {
@@ -77,22 +83,24 @@ public class EmployeeService {
 		}
 	}
 	
-	//Create
+	// Create
 	public Employee create(Employee employee) {
-	    Optional<Employee> existingEmployees = employeeRepository.findByEmail(employee.getEmail());
+		Optional<Employee> existingEmployees = employeeRepository.findByEmail(employee.getEmail());
 
-	    if (!existingEmployees.isEmpty()) {
-	        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email already exists.");
-	    }
-
-		if(employee.getEmail() == null || employee.getEmail().isEmpty()) {
-			throw new IllegalArgumentException("Email is not possible to be null");
+		if (!existingEmployees.isEmpty()) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email already exists.");
 		}
 
-	    employee.setStatus(EmployeeStatus.ATIVO);
-	    employee.setEntryDate(LocalDate.now());
+		employee.setStatus(EmployeeStatus.ATIVO);
+		employee.setEntryDate(LocalDate.now());
 		employee.setPassword(encoder.encode(employee.getPassword()));
-	    return employeeRepository.save(employee);
+
+		Role employeeRole = roleRepository.findByLevel("ROLE_EMPLOYEE");
+		Set<Role> roles = new HashSet<>();
+		roles.add(employeeRole);
+		employee.setRoles(roles);
+
+		return employeeRepository.save(employee);
 	}
 
 	//Delete

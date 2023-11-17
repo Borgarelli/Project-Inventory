@@ -25,8 +25,6 @@ import com.as2group.crm.security.JwtAuthenticationFilter;
 @Configuration
 public class SecurityConfig {
     
-
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.csrf(csrf -> csrf.disable().
@@ -48,13 +46,6 @@ public class SecurityConfig {
         authProvider.setPasswordEncoder(encoder);
         return authProvider;
     }
-
-
-    // @Bean
-    // public AuthenticationManager authManager(HttpSecurity http, BCryptPasswordEncoder bCryptPasswordEncoder, UserDetailsService userDetailService, AuthenticationManagerBuilder authBuilder) throws Exception {
-    //     authBuilder.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
-    //     return authBuilder.build();
-    // }
     
     @Bean
     public PasswordEncoder encoder() {

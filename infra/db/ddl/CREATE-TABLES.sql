@@ -1,43 +1,43 @@
 CREATE TABLE `employee` (
   `id_employee` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) DEFAULT NULL,
-  `email` varchar(100) DEFAULT NULL UNIQUE,
-  `password` varchar(100) DEFAULT NULL,
-  `telephone` varchar(100) DEFAULT NULL,
-  `gender` varchar(30) DEFAULT NULL,
-  `status` int(11) DEFAULT NULL,
-  `entry_date` datetime DEFAULT NULL,
+  `name` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL UNIQUE,
+  `password` varchar(100) NOT NULL,
+  `telephone` varchar(100) NOT NULL,
+  `gender` varchar(30) NOT NULL,
+  `status` int(11) NOT NULL,
+  `entry_date` datetime NOT NULL,
   `departure_date` datetime DEFAULT NULL,
   PRIMARY KEY (`id_employee`)
 );
 
 CREATE TABLE `role` (
   `id_role` int(11) NOT NULL AUTO_INCREMENT,
-  `level` varchar(100) DEFAULT NULL,
-  PRIMARY KEY(`id_role`)
+  `level` varchar(100) NOT NULL,
+  PRIMARY KEY (`id_role`)
 );
 
 CREATE TABLE `employee_role` (
   `id_employee_role` int(11) NOT NULL AUTO_INCREMENT,
   `id_employee` int(11) NOT NULL,
   `id_role` int(11) NOT NULL,
-  PRIMARY KEY(`id_employee_role`)
+  PRIMARY KEY (`id_employee_role`),
   CONSTRAINT `fk_id_employee_role` FOREIGN KEY (`id_employee`) REFERENCES `employee` (`id_employee`),
-  CONSTRAINT `fk_id_role` FOREIGN KEY (`id_role`) REFERENCES `role` (`id_role`)
+  CONSTRAINT `fk_id_role_employee` FOREIGN KEY (`id_role`) REFERENCES `role` (`id_role`)
 );
 
 CREATE TABLE `computer` (
   `id_computer` int(11) NOT NULL AUTO_INCREMENT,
-  `id_employee` int(11) DEFAULT NULL,
-  `sector` varchar(50) DEFAULT NULL,
-  `model` varchar(50) DEFAULT NULL,
-  `brand` varchar(50) DEFAULT NULL,
-  `so_current` varchar(50) DEFAULT NULL,
-  `so_original` varchar(50) DEFAULT NULL,
-  `status` int(11) DEFAULT NULL,
-  `patrimony` varchar(50) DEFAULT NULL UNIQUE,
-  `sn` varchar(50) DEFAULT NULL UNIQUE,
-  `entry_date` datetime DEFAULT NULL,
+  `id_employee` int(11) NOT NULL,
+  `sector` varchar(50) NOT NULL,
+  `model` varchar(50) NOT NULL,
+  `brand` varchar(50) NOT NULL,
+  `so_current` varchar(50) NOT NULL,
+  `so_original` varchar(50) NOT NULL,
+  `status` int(11) NOT NULL,
+  `patrimony` varchar(50) NOT NULL UNIQUE,
+  `sn` varchar(50) NOT NULL UNIQUE,
+  `entry_date` datetime NOT NULL,
   `departure_date` datetime DEFAULT NULL,
   `modification_date` datetime DEFAULT NULL,
   PRIMARY KEY (`id_computer`),
@@ -55,10 +55,10 @@ CREATE TABLE `components` (
   `id_component` int(11) NOT NULL AUTO_INCREMENT,
   `id_computer` int(11) DEFAULT NULL,
   `id_component_type` int(11) DEFAULT NULL,
-  `specifications` varchar(100),
-  `status` int(11) DEFAULT NULL,
-  `patrimony` varchar(50) DEFAULT NULL UNIQUE,
-  `sn` varchar(50) DEFAULT NULL UNIQUE,
+  `specifications` varchar(100) NOT NULL,
+  `status` int(11) NOT NULL,
+  `patrimony` varchar(50) NOT NULL UNIQUE,
+  `sn` varchar(50) NOT NULL UNIQUE,
   PRIMARY KEY (`id_component`),
   KEY `fk_computer` (`id_computer`),
   KEY `fk_component_type` (`id_component_type`),

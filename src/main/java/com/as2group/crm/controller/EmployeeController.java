@@ -33,30 +33,35 @@ public class EmployeeController {
 	EmployeeMapper employeeMapper;
 
 	//GetAll
+	@PreAuthorize("hasAnyRole('ADM', 'EMPLOYEE')")
 	@GetMapping("/employees")
 	public List<EmployeeResponse> list() {
 	    return employeeMapper.map(employeeService.listActivate());
 	}
 
 	//GetById
+	@PreAuthorize("hasRole('ADM')")
 	@GetMapping("/employees/{id}")
 	public EmployeeResponse display(@PathVariable("id") Long id) {
 		return employeeMapper.map(employeeService.show(id));
 	}
 	
 	//GetEmployeeInactivate
+	@PreAuthorize("hasRole('ADM')")
 	@GetMapping("/employees/inactive")
 	public List<EmployeeResponse> listInactivate(){
 		return employeeMapper.map(employeeService.listInactivate());
 	}
 
 	//GetAllByName
+	@PreAuthorize("hasAnyRole('ADM', 'EMPLOYEE')")
 	@GetMapping("/employees/name/{name}")
 	public List<EmployeeResponse> displayName(@PathVariable("name") String name) {
 		return employeeMapper.map(employeeService.showName(name));
 	}
 	
 	//GetByEmail
+	@PreAuthorize("hasAnyRole('ADM', 'EMPLOYEE')")
 	@GetMapping("/employees/email/{email}")
 	public EmployeeResponse displayEmail(@PathVariable("email") String email){
 		return employeeMapper.map(employeeService.showEmail(email));
@@ -72,6 +77,7 @@ public class EmployeeController {
 	}
 
 	//Delete
+	@PreAuthorize("hasRole('ADM')")
 	@DeleteMapping("/employees/{id}")
 	public String delete(@PathVariable("id") Long id) {
 		employeeService.delete(id);
@@ -79,6 +85,7 @@ public class EmployeeController {
 	}
 	
 	//Activate
+	@PreAuthorize("hasRole('ADM')")
 	@PutMapping("/employees/{id}/activate")
 	public String activateEmployee(@PathVariable("id") Long id) {
 	    	employeeService.activate(id);
@@ -86,6 +93,7 @@ public class EmployeeController {
 	}
 	
 	//Put
+	@PreAuthorize("hasAnyRole('ADM', 'EMPLOYEE')")
 	@PutMapping("/employees/{id}")
 	public Employee update(@PathVariable("id") Long id, @RequestBody Employee employee, String email, 
 			String name, String gender, String telephone) {
