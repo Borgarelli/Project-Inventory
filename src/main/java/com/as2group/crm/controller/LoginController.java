@@ -15,7 +15,7 @@ import com.as2group.crm.security.Login;
 import com.as2group.crm.util.JwtUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import jakarta.servlet.http.HttpServletResponse;
+
 
 @RestController
 @CrossOrigin
@@ -27,7 +27,7 @@ public class LoginController {
 
 
     @PostMapping
-    public Login autenticate (@RequestBody Login login, HttpServletResponse response) throws JsonProcessingException {
+    public Login autenticate (@RequestBody Login login) throws JsonProcessingException {
         Authentication auth = new UsernamePasswordAuthenticationToken(login.getLogin(), login.getPassword());
         auth = authenticationManager.authenticate(auth);
         login.setToken(JwtUtils.generateToken(auth));

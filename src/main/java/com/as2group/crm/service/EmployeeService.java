@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -20,6 +21,9 @@ import com.as2group.crm.repository.EmployeeRepository;
 
 @Service
 public class EmployeeService {
+
+	@Autowired
+	private PasswordEncoder encoder;
 	
 	@Autowired
 	EmployeeRepository employeeRepository;
@@ -87,6 +91,7 @@ public class EmployeeService {
 
 	    employee.setStatus(EmployeeStatus.ATIVO);
 	    employee.setEntryDate(LocalDate.now());
+		employee.setPassword(encoder.encode(employee.getPassword()));
 	    return employeeRepository.save(employee);
 	}
 
