@@ -29,7 +29,6 @@ public class SecurityService implements UserDetailsService{
         }
 
         Employee employee = employeeOp.get();
-
         if (employee.getStatus() == EmployeeStatus.INATIVO) {
         throw new DisabledException("Employee is inactive");
     }

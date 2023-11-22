@@ -33,7 +33,7 @@ public class EmployeeControllerTest {
     @Test 
     public void newEmployeeOkTest() throws Exception {
         mvc.perform(post("/api/employees")
-        .content("{\"name\":\"Kauã Borgarelli\",\"email\":\"kauatavares@as24group.com.br\",\"telephone\":\"1234567890\",\"gender\":\"Masculino\"}")
+        .content("{\"name\":\"Kauã Borgarelli\",\"email\":\"kauatavares@as24group.com.br\",\"telephone\":\"1234567890\",\"password\":\"123456\",\"gender\":\"Masculino\"}")
         .contentType(MediaType.APPLICATION_JSON)
         .accept(MediaType.APPLICATION_JSON))
         .andDo(print())
