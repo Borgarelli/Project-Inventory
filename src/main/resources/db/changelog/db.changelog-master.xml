@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.15.xsd">
+        <!-- Configurações do Banco de Dados -->
+    <property name="liquibase.driver" value="com.mysql.cj.jdbc.Driver"/>
+    <property name="liquibase.url" value="jdbc:mysql://localhost:3308/inventory-db"/>
+    <property name="liquibase.username" value="inventory-user"/>
+    <property name="liquibase.password" value="inventory-pass"/>  
+
+    <changeSet id="1" author="Borgarelli">
+        <insert tableName="role">
+            <column name="id_role" value="1"/>
+            <column name="level" value="ROLE_ADM"/>
+        </insert>
+    </changeSet>
+    <changeSet id="2" author="Borgarelli">
+        <insert tableName="role">
+            <column name="id_role" value="2"/>
+            <column name="level" value="ROLE_EMPLOYEE"/>
+        </insert>
+    </changeSet>
+    <changeSet id="3" author="Borgarelli">
+        <insert tableName="employee">
+            <column name="id_employee" value="1"/>
+            <column name="name" value="Kauã Borgarelli"/>
+            <column name="email" value="kaua1as74@group"/>
+            <column name="password" value="$2a$10$ROMCc4yLNj4.vxrmi.YqbeO1//2ZTkWnpeyr88Dfmb58j/Kydczxm"/>
+            <column name="telephone" value="12992002060"/>
+            <column name="gender" value="Masculino"/>
+            <column name="status" value="1"/> 
+            <column name="entry_date" value="2023-11-22"/>
+        </insert>
+    </changeSet>
+    <changeSet id="4" author="Borgarelli">
+        <insert tableName="employee_role">
+            <column name="id_employee_role" value="1"/>
+            <column name="id_employee" value="1"/>
+            <column name="id_role" value="1"/>
+        </insert>
+    </changeSet>
+    
+</databaseChangeLog>
