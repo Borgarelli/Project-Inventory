@@ -1,5 +1,5 @@
 package com.as2group.crm.dto;
 
-public record EmployeeRequest (String name, String email, String telephone, String gender){
+public record EmployeeRequest (String name, String email, String telephone, String gender, String password){
     
 }

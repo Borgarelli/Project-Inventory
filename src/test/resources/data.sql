@@ -1,16 +1,23 @@
 -- Employee
 
-INSERT INTO employee (name, email, telephone, gender, status, entry_date) 
-VALUES ('Kauã Borgarelli', 'kauaas2@group', '12992002060', 'Masculino', 1, '2023-10-26');
+INSERT INTO employee (name, email, telephone, password,  gender, status, entry_date) 
+VALUES ('Kauã Borgarelli', 'kauaas2@group', '12992002060', '123456', 'Masculino', 1, '2023-10-26');
 
-INSERT INTO employee (name, email, telephone, gender, status, entry_date, departure_date) 
-VALUES ('Kauã Borgarelli', 'kaua1as74@group', '12992002060', 'Masculino', 0, '2023-10-26', '2023-10-27');
+INSERT INTO employee (name, email, telephone, password, gender, status, entry_date, departure_date) 
+VALUES ('Kauã Borgarelli', 'kaua1as74@group', '12992002060', '123456', 'Masculino', 0, '2023-10-26', '2023-10-27');
 
-INSERT INTO employee (name, email, telephone, gender, status, entry_date) 
-VALUES ('Kauã Borgarelli', 'kauaas88@group', '12992002060', 'Masculino', 1, '2023-10-26');
+INSERT INTO employee (name, email, telephone, password,  gender, status, entry_date) 
+VALUES ('Kauã Borgarelli', 'kauaas88@group', '12992002060', '123456', 'Masculino', 1, '2023-10-26');
 
-INSERT INTO employee (name, email, telephone, gender, status, entry_date) 
-VALUES ('Kauã Borgarelli', 'kauaas90@group', '12992002060', 'Masculino', 1, '2023-10-26');
+INSERT INTO employee (name, email, telephone, password, gender, status, entry_date) 
+VALUES ('Kauã Borgarelli', 'kauaas90@group', '12992002060', '123456', 'Masculino', 1, '2023-10-26');
+
+-- Role
+INSERT INTO role (level)
+VALUES('ROLE_ADM');
+
+INSERT INTO role (level)
+VALUES('ROLE_EMPLOYEE');
 
 -- Computer
 
@@ -54,3 +61,11 @@ insert into computer_components(id_computer, id_component, received)
 
 insert into computer_components(id_computer, id_component, received)
 	values(4, 4, '2023-10-19 14:00:00');
+
+
+-- EmployeeRole
+insert into employee_role(id_employee, id_role)
+	values(1,1);
+
+insert into employee_role(id_employee, id_role)
+	values(3,2);

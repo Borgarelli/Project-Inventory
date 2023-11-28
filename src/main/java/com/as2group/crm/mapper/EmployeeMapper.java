@@ -17,6 +17,7 @@ public class EmployeeMapper {
         employee.setName(employeeRequest.name());
         employee.setEmail(employeeRequest.email());
         employee.setGender(employeeRequest.gender());
+        employee.setPassword(employeeRequest.password());
         return employee;
     }
 

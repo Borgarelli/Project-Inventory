@@ -2,6 +2,7 @@ package com.as2group.crm.model;
 
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.Set;
 
 import com.as2group.crm.enumeration.EmployeeStatus;
 
@@ -10,6 +11,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -20,15 +24,38 @@ public class Employee {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id_employee;
 	
-
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false)
 	private String name;
 	
 	@Column(nullable = false, unique = true)
 	private String email;
-	
 	private String telephone;
 	private String gender;
+	private String password;
+
+	@ManyToMany
+	@JoinTable(name = "Employee_Role",
+	joinColumns = @JoinColumn(name = "id_employee"),
+	inverseJoinColumns = @JoinColumn(name = "id_role"))
+	private Set<Role> roles;
+
+
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	private LocalDate entryDate;
 	private LocalDate departureDate;
 	private EmployeeStatus status;

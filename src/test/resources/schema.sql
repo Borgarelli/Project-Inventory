@@ -3,20 +3,37 @@ drop table if exists components;
 drop table if exists components_type;
 drop table if exists computer_employee;
 drop table if exists computer;
+drop table if exists employee_role;
 drop table if exists employee;
-
+drop table if exists role;
 
 CREATE TABLE employee (
   id_employee bigint NOT NULL auto_increment,
   name varchar(100) DEFAULT NULL,
   email varchar(100) DEFAULT NULL,
   telephone varchar(100) DEFAULT NULL,
+  password varchar(100) DEFAULT NULL,
   gender varchar(30) DEFAULT NULL,
   status tinyint DEFAULT NULL,
   entry_date date DEFAULT NULL,
   departure_date date DEFAULT NULL,
   PRIMARY KEY (id_employee),
   UNIQUE(email)
+);
+
+CREATE TABLE role (
+  id_role bigint NOT NULL auto_increment,
+  level varchar(100) DEFAULT NULL,
+  PRIMARY KEY (id_role)
+);
+
+CREATE TABLE employee_role (
+  id_employee_role bigint NOT NULL AUTO_INCREMENT,
+  id_employee bigint NOT NULL,
+  id_role bigint NOT NULL,
+  PRIMARY KEY (id_employee_role),
+  CONSTRAINT fk_id_employee_role FOREIGN KEY (id_employee) REFERENCES employee (id_employee),
+  CONSTRAINT fk_id_role_employee FOREIGN KEY (id_role) REFERENCES role (id_role)
 );
 
 

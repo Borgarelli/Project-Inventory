@@ -9,7 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 import org.springframework.http.MediaType;
-
+import org.springframework.security.test.context.support.WithMockUser;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -30,10 +30,11 @@ public class EmployeeControllerTest {
     @Autowired
     private MockMvc mvc;
 
-    @Test 
+    @Test
+    @WithMockUser(username = "kauaas@as2group", roles = {"ADM"}) 
     public void newEmployeeOkTest() throws Exception {
         mvc.perform(post("/api/employees")
-        .content("{\"name\":\"Kauã Borgarelli\",\"email\":\"kauatavares@as24group.com.br\",\"telephone\":\"1234567890\",\"gender\":\"Masculino\"}")
+        .content("{\"name\":\"Kauã Borgarelli\",\"email\":\"kauatavares@as24group.com.br\",\"telephone\":\"1234567890\",\"password\":\"123456\",\"gender\":\"Masculino\"}")
         .contentType(MediaType.APPLICATION_JSON)
         .accept(MediaType.APPLICATION_JSON))
         .andDo(print())
