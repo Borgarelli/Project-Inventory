@@ -7,8 +7,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import com.as2group.crm.model.Role;
 
-
-
 public class RoleUtil {
     
     public static ArrayList<SimpleGrantedAuthority> parseAuthority(Set<Role> r){

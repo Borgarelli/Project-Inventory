@@ -13,10 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import com.as2group.crm.dto.ComponentsRequest;
 import com.as2group.crm.dto.ComponentsResponse;
-
 
 import com.as2group.crm.enumeration.ComponentsStatus;
 import com.as2group.crm.mapper.ComponentsMapper;
