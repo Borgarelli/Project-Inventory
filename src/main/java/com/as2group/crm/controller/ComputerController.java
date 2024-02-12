@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.as2group.crm.dto.ComputerRequest;
 import com.as2group.crm.dto.ComputerResponse;
 import com.as2group.crm.dto.ComputerSimpleResponse;
-import com.as2group.crm.enumeration.ComputerStatus;
+import com.as2group.crm.enumeration.Status;
 import com.as2group.crm.mapper.ComputerMapper;
 
 
@@ -51,7 +51,7 @@ public class ComputerController {
 	}
 
 	@GetMapping("/computers/status/{status}")
-	public List<ComputerResponse> listByStatus(@PathVariable("status") ComputerStatus status) {
+	public List<ComputerResponse> listByStatus(@PathVariable("status") Status status) {
 		return computerMapper.map(computerService.listByStatus(status));
 	}
 	

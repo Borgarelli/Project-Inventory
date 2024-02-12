@@ -2,7 +2,7 @@ package com.as2group.crm.model;
 
 import java.util.Objects;
 
-import com.as2group.crm.enumeration.ComponentsStatus;
+import com.as2group.crm.enumeration.Status;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -21,7 +21,6 @@ import jakarta.persistence.Table;
 
 public class Components {
 
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_component")
@@ -35,12 +34,8 @@ public class Components {
 	@JoinColumn(name = "id_computer")
 	private Computer computer;
 
-	private ComponentsStatus status;
+	private Status status;
 	
-//	@Enumerated(EnumType.STRING)
-//    @Column(name = "component_type")
-//    private ComponentType type;
-////	
 	private String specifications;
 
 	public Long getId() {
