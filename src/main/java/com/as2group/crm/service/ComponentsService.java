@@ -22,7 +22,7 @@ public class ComponentsService {
 		this.componentsRepository = componentsRepository;
 	}
 
-	public void changeStatus(Components Components, ComponentsStatus status) {
+	public void changeStatus(Components Components, Status status) {
 		Components.setStatus(status);
 		this.componentsRepository.save(Components);
 	}
@@ -53,7 +53,7 @@ public class ComponentsService {
 	}
 
 	// GetByStatus
-	public List<Components> listByStatus(ComponentsStatus status) {
+	public List<Components> listByStatus(Status status) {
 		return componentsRepository.findAllByStatus(status);
 	}
 
@@ -77,7 +77,7 @@ public class ComponentsService {
 		if(components.getSn() == null || components.getSn().isEmpty()) {
 			throw new IllegalArgumentException("Serial number is not possible to be null");
 		}
-		components.setStatus(ComponentsStatus.PRA_USO);
+		components.setStatus(Status.PRA_USO);
 		return componentsRepository.save(components);
 	}
 
@@ -89,19 +89,19 @@ public class ComponentsService {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Components stills in computer");
 		}
 		
-		if(component.getStatus() == ComponentsStatus.INATIVO) {
+		if(component.getStatus() == Status.INATIVO) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Component is already inactive");
 		}
 		
-		changeStatus(component, ComponentsStatus.INATIVO);
+		changeStatus(component, Status.INATIVO);
 		componentsRepository.save(component);
 	}
 
 	//Activate
 	public void activate(Long id) {
 		Components component = show(id);
-		if(component.getStatus() == ComponentsStatus.INATIVO){
-			changeStatus(component, ComponentsStatus.PRA_USO);
+		if(component.getStatus() == Status.INATIVO){
+			changeStatus(component, Status.PRA_USO);
 		}
 		else {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Component is already active");

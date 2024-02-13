@@ -1,9 +1,6 @@
 package com.as2group.crm.model;
 
-import java.util.Objects;
-
 import com.as2group.crm.enumeration.Status;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,8 +12,18 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
+@Builder
 @Table(name = "components")
 
 public class Components {
@@ -34,80 +41,11 @@ public class Components {
 	@JoinColumn(name = "id_computer")
 	private Computer computer;
 
+	@Column(name = "status")
 	private Status status;
 	
+	@Column(name = "specifications")
 	private String specifications;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getPatrimony() {
-		return patrimony;
-	}
-
-	public void setPatrimony(String patrimony) {
-		this.patrimony = patrimony;
-	}
-
-	@JsonIgnore
-	public Computer getComputer() {
-		return computer;
-	}
-
-	public void setComputer(Computer computer) {
-		this.computer = computer;
-	}
-
-	public ComponentsStatus getStatus() {
-		return status;
-	}
-
-	public void setStatus(ComponentsStatus status) {
-		this.status = status;
-	}
-	
-	public String getSpecifications() {
-		return specifications;
-	}
-
-	public void setSpecifications(String specifications) {
-		this.specifications = specifications;
-	}
-
-	
-	public String getSn() {
-		return sn;
-	}
-
-	public void setSn(String sn) {
-		this.sn = sn;
-	}
-
-//	public ComponentType getComponentType() {
-//		return type;
-//	}
-//
-//	public void setComponentType(ComponentType componentType) {
-//		this.type = componentType;
-//	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Components other = (Components) obj;
-		return Objects.equals(id, other.id);
-	}
-
 
 
 }
