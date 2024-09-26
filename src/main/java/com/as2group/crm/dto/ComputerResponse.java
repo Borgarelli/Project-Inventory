@@ -3,13 +3,13 @@ package com.as2group.crm.dto;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.as2group.crm.enumeration.ComputerStatus;
+import com.as2group.crm.enums.Status;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 
 public record ComputerResponse(
 Long id,
-ComputerStatus status,
+Status status,
 String patrimony,
 String sn,
 @JsonInclude(JsonInclude.Include.NON_NULL)

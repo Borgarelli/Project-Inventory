@@ -19,8 +19,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.as2group.crm.enumeration.ComponentsStatus;
-import com.as2group.crm.enumeration.ComputerStatus;
+import com.as2group.crm.enums.Status;
 import com.as2group.crm.model.Components;
 import com.as2group.crm.model.Computer;
 import com.as2group.crm.repository.ComponentsRepository;
@@ -49,7 +48,7 @@ public class ComponentsTest {
 		computer.setBrand("Dell");
 		computer.setSoCurrent("Ubuntu 22.04.2 LTS");
 		computer.setSoOriginal("Windows 10");
-		computer.setStatus(ComputerStatus.PRA_USO);
+		computer.setStatus(Status.PRA_USO);
 		computer.setEntryDate(LocalDate.now());
 
         Components componentReadyToUse = new Components();
@@ -57,7 +56,7 @@ public class ComponentsTest {
         componentReadyToUse.setPatrimony("NTK191253");
         componentReadyToUse.setSn("14719733453");
         componentReadyToUse.setSpecifications("green");
-        componentReadyToUse.setStatus(ComponentsStatus.PRA_USO);
+        componentReadyToUse.setStatus(Status.PRA_USO);
 
         Components componentInUse = new Components();
         componentInUse.setId(2L);
@@ -65,14 +64,14 @@ public class ComponentsTest {
         componentInUse.setSn("14719733453");
         componentInUse.setSpecifications("green");
         componentInUse.setComputer(computer);
-        componentInUse.setStatus(ComponentsStatus.EM_USO);
+        componentInUse.setStatus(Status.EM_USO);
 
         Components componentInactive = new Components();
         componentInactive.setId(3L);
         componentInactive.setPatrimony("NTK191253");
         componentInactive.setSn("14719733453");
         componentInactive.setSpecifications("green");
-        componentInactive.setStatus(ComponentsStatus.INATIVO);
+        componentInactive.setStatus(Status.INATIVO);
 
         List<Components> components = new ArrayList<>();
         components.add(componentReadyToUse);
@@ -86,9 +85,9 @@ public class ComponentsTest {
         Mockito.when(componentsRepository.findByPatrimony("NTK191253")).thenReturn(Optional.of(componentReadyToUse));
         Mockito.when(componentsRepository.findBySn("14719733453")).thenReturn(Optional.of(componentReadyToUse));
 
-        Mockito.when(componentsRepository.findAllByStatus(ComponentsStatus.PRA_USO)).thenReturn(Collections.singletonList(componentReadyToUse));
-        Mockito.when(componentsRepository.findAllByStatus(ComponentsStatus.EM_USO)).thenReturn(Collections.singletonList(componentInUse));
-        Mockito.when(componentsRepository.findAllByStatus(ComponentsStatus.INATIVO)).thenReturn(Collections.singletonList(componentInactive));
+        Mockito.when(componentsRepository.findAllByStatus(Status.PRA_USO)).thenReturn(Collections.singletonList(componentReadyToUse));
+        Mockito.when(componentsRepository.findAllByStatus(Status.EM_USO)).thenReturn(Collections.singletonList(componentInUse));
+        Mockito.when(componentsRepository.findAllByStatus(Status.INATIVO)).thenReturn(Collections.singletonList(componentInactive));
         Mockito.when(componentsRepository.findByStatusActivate()).thenReturn(components);
 
         Mockito.when(componentsRepository.findAll()).thenReturn(Collections.singletonList(componentReadyToUse));
@@ -396,7 +395,7 @@ public class ComponentsTest {
 
     @Test
     public void findByStatusOkTest() {
-        assertEquals(1, componentsService.listByStatus(ComponentsStatus.PRA_USO).size());
+        assertEquals(1, componentsService.listByStatus(Status.PRA_USO).size());
     }
 
     @Test

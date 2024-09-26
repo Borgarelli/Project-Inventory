@@ -10,7 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.as2group.crm.enumeration.Status;
+import com.as2group.crm.enums.Status;
 import com.as2group.crm.model.Components;
 import com.as2group.crm.model.Computer;
 import com.as2group.crm.model.ComputerComponent;

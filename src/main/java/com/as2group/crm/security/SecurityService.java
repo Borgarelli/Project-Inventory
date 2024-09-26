@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.as2group.crm.enumeration.EmployeeStatus;
+import com.as2group.crm.enums.Status;
 import com.as2group.crm.model.Employee;
 import com.as2group.crm.repository.EmployeeRepository;
 import com.as2group.crm.util.RoleUtil;
@@ -29,7 +29,7 @@ public class SecurityService implements UserDetailsService{
         }
 
         Employee employee = employeeOp.get();
-        if (employee.getStatus() == EmployeeStatus.INATIVO) {
+        if (employee.getStatus() == Status.INATIVO) {
         throw new DisabledException("Employee is inactive");
     }
 

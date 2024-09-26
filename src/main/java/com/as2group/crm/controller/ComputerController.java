@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.as2group.crm.dto.ComputerRequest;
 import com.as2group.crm.dto.ComputerResponse;
 import com.as2group.crm.dto.ComputerSimpleResponse;
-import com.as2group.crm.enumeration.Status;
+import com.as2group.crm.enums.Status;
 import com.as2group.crm.mapper.ComputerMapper;
 
 

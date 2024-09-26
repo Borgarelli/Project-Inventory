@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.as2group.crm.enumeration.Status;
+import com.as2group.crm.enums.Status;
 import com.as2group.crm.model.Computer;
 
 public interface ComputerRepository extends JpaRepository<Computer, Long> {

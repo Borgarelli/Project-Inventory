@@ -21,8 +21,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.as2group.crm.enumeration.ComputerStatus;
-import com.as2group.crm.enumeration.EmployeeStatus;
+import com.as2group.crm.enums.Status;
 import com.as2group.crm.model.Computer;
 import com.as2group.crm.model.Employee;
 import com.as2group.crm.repository.ComputerRepository;
@@ -44,7 +43,7 @@ public class ComputerTest {
 		employee.setEmail("kaua1as74@group");
 		employee.setTelephone("12992002060");
 		employee.setGender("Masculino");
-		employee.setStatus(EmployeeStatus.ATIVO);
+		employee.setStatus(Status.ATIVO);
 		employee.setEntryDate(LocalDate.now());
 
 		Computer computerReadyToUse = new Computer();
@@ -56,7 +55,7 @@ public class ComputerTest {
 		computerReadyToUse.setBrand("Dell");
 		computerReadyToUse.setSoCurrent("Ubuntu 22.04.2 LTS");
 		computerReadyToUse.setSoOriginal("Windows 10");
-		computerReadyToUse.setStatus(ComputerStatus.PRA_USO);
+		computerReadyToUse.setStatus(Status.PRA_USO);
 		computerReadyToUse.setEntryDate(LocalDate.now());
 
 		Computer computerInUse = new Computer();
@@ -68,7 +67,7 @@ public class ComputerTest {
 		computerInUse.setBrand("Dell");
 		computerInUse.setSoCurrent("Ubuntu 22.04.2 LTS");
 		computerInUse.setSoOriginal("Windows 10");
-		computerInUse.setStatus(ComputerStatus.EM_USO);
+		computerInUse.setStatus(Status.EM_USO);
 		computerInUse.setEmployee(employee);
 		computerInUse.setEntryDate(LocalDate.now());
 
@@ -82,7 +81,7 @@ public class ComputerTest {
 		computerInactive.setBrand("Dell");
 		computerInactive.setSoCurrent("Ubuntu 22.04.2 LTS");
 		computerInactive.setSoOriginal("Windows 10");
-		computerInactive.setStatus(ComputerStatus.INATIVO);
+		computerInactive.setStatus(Status.INATIVO);
 		computerInactive.setEntryDate(LocalDate.now());
 
 		List<Computer> computers = new ArrayList<>();
@@ -98,8 +97,8 @@ public class ComputerTest {
 		Mockito.when(computerRepository.findById(2L)).thenReturn(Optional.of(computerInUse));
 		Mockito.when(computerRepository.findById(3L)).thenReturn(Optional.of(computerInactive));
 		
-		Mockito.when(computerRepository.findAllByStatus(ComputerStatus.PRA_USO)).thenReturn(Collections.singletonList(computerReadyToUse));
-		Mockito.when(computerRepository.findAllByStatus(ComputerStatus.EM_USO)).thenReturn(Collections.singletonList(computerInUse));
+		Mockito.when(computerRepository.findAllByStatus(Status.PRA_USO)).thenReturn(Collections.singletonList(computerReadyToUse));
+		Mockito.when(computerRepository.findAllByStatus(Status.EM_USO)).thenReturn(Collections.singletonList(computerInUse));
 
 		Mockito.when(computerRepository.findByStatusActivate()).thenReturn(Collections.singletonList(computerInUse));
 
@@ -467,7 +466,7 @@ public class ComputerTest {
 
 	@Test
 	public void findbyStatusOkTest() {
-		assertEquals(1, computerService.listByStatus(ComputerStatus.EM_USO).size());
+		assertEquals(1, computerService.listByStatus(Status.EM_USO).size());
 	}
 
 	@Test

@@ -20,8 +20,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.as2group.crm.enumeration.ComponentsStatus;
-import com.as2group.crm.enumeration.ComputerStatus;
+import com.as2group.crm.enums.Status;
 import com.as2group.crm.model.Components;
 import com.as2group.crm.model.Computer;
 import com.as2group.crm.model.ComputerComponent;
@@ -59,7 +58,7 @@ public class ComputerComponentsTest {
 		computer.setBrand("Dell");
 		computer.setSoCurrent("Ubuntu 22.04.2 LTS");
 		computer.setSoOriginal("Windows 10");
-		computer.setStatus(ComputerStatus.PRA_USO);
+		computer.setStatus(Status.PRA_USO);
 		computer.setEntryDate(LocalDate.now());
 
         Computer computerInactive = new Computer();
@@ -71,7 +70,7 @@ public class ComputerComponentsTest {
 		computerInactive.setBrand("Dell");
 		computerInactive.setSoCurrent("Ubuntu 22.04.2 LTS");
 		computerInactive.setSoOriginal("Windows 10");
-		computerInactive.setStatus(ComputerStatus.INATIVO);
+		computerInactive.setStatus(Status.INATIVO);
 		computerInactive.setEntryDate(LocalDate.now());
 
         Computer computer2 = new Computer();
@@ -83,7 +82,7 @@ public class ComputerComponentsTest {
 		computer2.setBrand("Dell");
 		computer2.setSoCurrent("Ubuntu 22.04.2 LTS");
 		computer2.setSoOriginal("Windows 10");
-		computer2.setStatus(ComputerStatus.PRA_USO);
+		computer2.setStatus(Status.PRA_USO);
 		computer2.setEntryDate(LocalDate.now());
 
         Components componentReadyToUse = new Components();
@@ -91,7 +90,7 @@ public class ComputerComponentsTest {
         componentReadyToUse.setPatrimony("NTK191253");
         componentReadyToUse.setSn("14719733453");
         componentReadyToUse.setSpecifications("green");
-        componentReadyToUse.setStatus(ComponentsStatus.PRA_USO);
+        componentReadyToUse.setStatus(Status.PRA_USO);
 
         Components componentInUse = new Components();
         componentInUse.setId(2L);
@@ -99,14 +98,14 @@ public class ComputerComponentsTest {
         componentInUse.setSn("14719733453");
         componentInUse.setSpecifications("green");
         componentInUse.setComputer(computer);
-        componentInUse.setStatus(ComponentsStatus.EM_USO);
+        componentInUse.setStatus(Status.EM_USO);
 
         Components componentInactive = new Components();
         componentInactive.setId(3L);
         componentInactive.setPatrimony("NTK191253");
         componentInactive.setSn("14719733453");
         componentInactive.setSpecifications("green");
-        componentInactive.setStatus(ComponentsStatus.INATIVO);
+        componentInactive.setStatus(Status.INATIVO);
 
         ComputerComponent computerComponent = new ComputerComponent();
         computerComponent.setId_comp_compo(1L);
@@ -146,7 +145,7 @@ public class ComputerComponentsTest {
         component.setPatrimony("NTK191253");
         component.setSn("14719733453");
         component.setSpecifications("green");
-        component.setStatus(ComponentsStatus.PRA_USO);
+        component.setStatus(Status.PRA_USO);
 
         Computer computer = new Computer();
 		computer.setId(1L);
@@ -157,7 +156,7 @@ public class ComputerComponentsTest {
 		computer.setBrand("Dell");
 		computer.setSoCurrent("Ubuntu 22.04.2 LTS");
 		computer.setSoOriginal("Windows 10");
-		computer.setStatus(ComputerStatus.PRA_USO);
+		computer.setStatus(Status.PRA_USO);
 		computer.setEntryDate(LocalDate.now());
 
         ComputerComponent computerComponent = new ComputerComponent();
@@ -190,7 +189,7 @@ public class ComputerComponentsTest {
         component.setPatrimony("NTK191253");
         component.setSn("14719733453");
         component.setSpecifications("green");
-        component.setStatus(ComponentsStatus.PRA_USO);
+        component.setStatus(Status.PRA_USO);
 
         Mockito.when(componentsRepository.findById(1L)).thenReturn(Optional.of(component));
 
@@ -266,7 +265,7 @@ public class ComputerComponentsTest {
         computer.setBrand("Dell");
         computer.setSoCurrent("Ubuntu 22.04.2 LTS");
         computer.setSoOriginal("Windows 10");
-        computer.setStatus(ComputerStatus.PRA_USO);
+        computer.setStatus(Status.PRA_USO);
         computer.setEntryDate(LocalDate.now());
 
         ComputerComponent computerComponent = new ComputerComponent();

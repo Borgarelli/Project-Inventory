@@ -22,8 +22,6 @@ public class Role {
     @ManyToMany(mappedBy = "roles")
     private Set<Employee> employees;
 
-    
-
     public String getLevel() {
         return level;
     }
@@ -47,4 +45,5 @@ public class Role {
 	public void setId(Long id) {
 		this.id_role = id;
     }
+
 }

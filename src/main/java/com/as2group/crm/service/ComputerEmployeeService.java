@@ -9,8 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.as2group.crm.enumeration.ComputerStatus;
-import com.as2group.crm.enumeration.EmployeeStatus;
+import com.as2group.crm.enums.Status;
 import com.as2group.crm.model.Computer;
 import com.as2group.crm.model.ComputerEmployee;
 import com.as2group.crm.model.Employee;
@@ -32,15 +31,15 @@ public class ComputerEmployeeService {
 	    Computer computer = computerService.show(computerId);
 	    Employee employee = employeeService.show(employeeId);
 
-	    if (employee.getStatus() == EmployeeStatus.INATIVO) {
+	    if (employee.getStatus() == Status.INATIVO) {
 	        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Employee is inactive");
 	    }
 
-	    if (computer.getStatus() == ComputerStatus.INATIVO) {
+	    if (computer.getStatus() == Status.INATIVO) {
 	        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Computer is inactive");
 	    }
 
-		if (computer.getStatus() == ComputerStatus.EM_USO) {
+		if (computer.getStatus() == Status.EM_USO) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Computer is already linked a employee");
 		}
 
@@ -49,7 +48,7 @@ public class ComputerEmployeeService {
 	    relationship.setEmployee(employee);
 	    relationship.setReceived(LocalDateTime.now());
 	    computer.setEmployee(employee);
-	    computerService.changeStatus(computer, ComputerStatus.EM_USO);
+	    computerService.changeStatus(computer, Status.EM_USO);
 
 	    return computerEmployeeRepository.save(relationship);
 	}
@@ -71,7 +70,7 @@ public class ComputerEmployeeService {
 				computer.setEmployee(null);
 				computerEmployee.setReturned(LocalDateTime.now());
 				computerEmployeeRepository.save(computerEmployee); 
-				computerService.changeStatus(computer, ComputerStatus.PRA_USO);
+				computerService.changeStatus(computer, Status.PRA_USO);
 			}
 			else {
 				throw new IllegalArgumentException("Computer already returned");

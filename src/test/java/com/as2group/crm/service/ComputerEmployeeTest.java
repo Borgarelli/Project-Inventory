@@ -20,8 +20,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.as2group.crm.enumeration.ComputerStatus;
-import com.as2group.crm.enumeration.EmployeeStatus;
+import com.as2group.crm.enums.Status;
 import com.as2group.crm.model.Computer;
 import com.as2group.crm.model.ComputerEmployee;
 import com.as2group.crm.model.Employee;
@@ -50,30 +49,30 @@ public class ComputerEmployeeTest {
 	@BeforeEach
 	public void setUp() {
 		Employee employee = new Employee();
-		employee.setId(1L);
+		employee.setId_employee(1L);
 		employee.setName("Kauã Borgarelli");
 		employee.setEmail("kaua1as74@group");
 		employee.setTelephone("12992002060");
 		employee.setGender("Masculino");
-		employee.setStatus(EmployeeStatus.ATIVO);
+		employee.setStatus(Status.ATIVO);
 		employee.setEntryDate(LocalDate.now());
 
 		Employee employeeInactive = new Employee();
-		employeeInactive.setId(2L);
+		employeeInactive.setId_employee(2L);
 		employeeInactive.setName("Kauã Borgarelli");
 		employeeInactive.setEmail("kaua1as74@group");
 		employeeInactive.setTelephone("12992002060");
 		employeeInactive.setGender("Masculino");
-		employeeInactive.setStatus(EmployeeStatus.INATIVO);
+		employeeInactive.setStatus(Status.INATIVO);
 		employeeInactive.setEntryDate(LocalDate.now());
 
 		Employee employee2 = new Employee();
-		employee2.setId(3L);
+		employee2.setId_employee(3L);
 		employee2.setName("Kauã Borgarelli");
 		employee2.setEmail("kaua1as74@group");
 		employee2.setTelephone("12992002060");
 		employee2.setGender("Masculino");
-		employee2.setStatus(EmployeeStatus.ATIVO);
+		employee2.setStatus(Status.ATIVO);
 		employee2.setEntryDate(LocalDate.now());
 		
 		Computer computerReadyToUse = new Computer();
@@ -85,7 +84,7 @@ public class ComputerEmployeeTest {
 		computerReadyToUse.setBrand("Dell");
 		computerReadyToUse.setSoCurrent("Ubuntu 22.04.2 LTS");
 		computerReadyToUse.setSoOriginal("Windows 10");
-		computerReadyToUse.setStatus(ComputerStatus.PRA_USO);
+		computerReadyToUse.setStatus(Status.PRA_USO);
 		computerReadyToUse.setEntryDate(LocalDate.now());
 
 		Computer computerInUse = new Computer();
@@ -97,7 +96,7 @@ public class ComputerEmployeeTest {
 		computerInUse.setBrand("Dell");
 		computerInUse.setSoCurrent("Ubuntu 22.04.2 LTS");
 		computerInUse.setSoOriginal("Windows 10");
-		computerInUse.setStatus(ComputerStatus.EM_USO);
+		computerInUse.setStatus(Status.EM_USO);
 		computerInUse.setEmployee(employee);
 		computerInUse.setEntryDate(LocalDate.now());
 
@@ -110,7 +109,7 @@ public class ComputerEmployeeTest {
 		computerInactive.setBrand("Dell");
 		computerInactive.setSoCurrent("Ubuntu 22.04.2 LTS");
 		computerInactive.setSoOriginal("Windows 10");
-		computerInactive.setStatus(ComputerStatus.INATIVO);
+		computerInactive.setStatus(Status.INATIVO);
 		computerInactive.setEntryDate(LocalDate.now());
 		
 		ComputerEmployee computerEmployee = new ComputerEmployee();
@@ -156,7 +155,7 @@ public class ComputerEmployeeTest {
 		employee.setEmail("kaua1as74@group");
 		employee.setTelephone("12992002060");
 		employee.setGender("Masculino");
-		employee.setStatus(EmployeeStatus.ATIVO);
+		employee.setStatus(Status.ATIVO);
 		employee.setEntryDate(LocalDate.now());
 		
 		Computer computer = new Computer();
@@ -167,7 +166,7 @@ public class ComputerEmployeeTest {
 		computer.setBrand("Dell");
 		computer.setSoCurrent("Ubuntu 22.04.2 LTS");
 		computer.setSoOriginal("Windows 10");
-		computer.setStatus(ComputerStatus.PRA_USO);
+		computer.setStatus(Status.PRA_USO);
 		computer.setEntryDate(LocalDate.now());
 		
 		ComputerEmployee computerEmployee = new ComputerEmployee();
@@ -203,12 +202,12 @@ public class ComputerEmployeeTest {
 	@Test
 	public void linkComputerLinkedNewEmployeeNokTest() {
 		Employee employee = new Employee();
-		employee.setId(1L);
+		employee.setId_employee(1L);
 		employee.setName("Kauã Borgarelli");
 		employee.setEmail("kaua1as74@group");
 		employee.setTelephone("12992002060");
 		employee.setGender("Masculino");
-		employee.setStatus(EmployeeStatus.ATIVO);
+		employee.setStatus(Status.ATIVO);
 		employee.setEntryDate(LocalDate.now());
 
 		Mockito.when(employeeRepository.findById(1L)).thenReturn(Optional.of(employee));
@@ -281,7 +280,7 @@ public class ComputerEmployeeTest {
 		employee.setEmail("kaua1as74@group");
 		employee.setTelephone("12992002060");
 		employee.setGender("Masculino");
-		employee.setStatus(EmployeeStatus.ATIVO);
+		employee.setStatus(Status.ATIVO);
 		employee.setEntryDate(LocalDate.now());
 		
 		Computer computer = new Computer();
@@ -292,7 +291,7 @@ public class ComputerEmployeeTest {
 		computer.setBrand("Dell");
 		computer.setSoCurrent("Ubuntu 22.04.2 LTS");
 		computer.setSoOriginal("Windows 10");
-		computer.setStatus(ComputerStatus.PRA_USO);
+		computer.setStatus(Status.PRA_USO);
 		computer.setEntryDate(LocalDate.now());
 		
 		ComputerEmployee computerEmployee = new ComputerEmployee();
@@ -336,13 +335,13 @@ public class ComputerEmployeeTest {
 	
 	@Test
 	public void findByEmployeeIdOkTest() {
-		assertEquals(1L, computerEmployeeService.findById(1L).getEmployee().getId());
+		assertEquals(1L, computerEmployeeService.findById(1L).getEmployee().getId_employee());
 	}
 	
 	@Test
 	public void findByEmployeeIdNokTest() {
 		assertThrows(ResponseStatusException.class, () -> {
-			computerEmployeeService.findById(3L).getEmployee().getId();
+			computerEmployeeService.findById(3L).getEmployee().getId_employee();
 		});
 	}
 

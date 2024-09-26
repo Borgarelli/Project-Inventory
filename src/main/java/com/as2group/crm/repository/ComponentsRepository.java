@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import com.as2group.crm.enumeration.Status;
+import com.as2group.crm.enums.Status;
 import com.as2group.crm.model.Components;
 
 import jakarta.transaction.Transactional;

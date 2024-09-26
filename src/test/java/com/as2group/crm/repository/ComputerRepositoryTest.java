@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 
-import com.as2group.crm.enumeration.ComputerStatus;
+import com.as2group.crm.enums.Status;
 import com.as2group.crm.model.Computer;
 
 @SpringBootTest
@@ -29,7 +29,7 @@ public class ComputerRepositoryTest {
 		computer.setBrand("Dell");
 		computer.setSoCurrent("Ubuntu 20.04.2 LTS");
 		computer.setSoOriginal("Windows 11");
-		computer.setStatus(ComputerStatus.PRA_USO);
+		computer.setStatus(Status.PRA_USO);
 		computer.setEntryDate(LocalDate.now());
 		computer.setDepartureDate(null);
 		computer = computerRepository.save(computer);
@@ -46,7 +46,7 @@ public class ComputerRepositoryTest {
 		computer.setBrand("Dell");
 		computer.setSoCurrent("Ubuntu 22.04.2 LTS");
 		computer.setSoOriginal("Windows 10");
-		computer.setStatus(ComputerStatus.PRA_USO);
+		computer.setStatus(Status.PRA_USO);
 		computer.setEntryDate(LocalDate.now());
 		computer.setDepartureDate(null);
         assertThrows(DataIntegrityViolationException.class, () -> {
@@ -64,7 +64,7 @@ public class ComputerRepositoryTest {
 		computer.setBrand("Dell");
 		computer.setSoCurrent("Ubuntu 22.04.2 LTS");
 		computer.setSoOriginal("Windows 10");
-		computer.setStatus(ComputerStatus.PRA_USO);
+		computer.setStatus(Status.PRA_USO);
 		computer.setEntryDate(LocalDate.now());
 		computer.setDepartureDate(null);
         assertThrows(DataIntegrityViolationException.class, () -> {

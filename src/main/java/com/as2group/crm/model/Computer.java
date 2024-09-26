@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.as2group.crm.enumeration.Status;
+import com.as2group.crm.enums.Status;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

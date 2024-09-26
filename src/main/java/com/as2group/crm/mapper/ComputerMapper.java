@@ -36,7 +36,7 @@ public class ComputerMapper {
 	}
 	
 	public ComputerResponse map(Computer computer) {
-		List<ComponentsResponse> component = this.componentMapper.map(computer.getComputerComponents());
+		List<ComponentsResponse> component = this.componentMapper.map(computer.getComputerWithComponents());
 		
 	    EmployeeResponse employee = null;
 	    if (computer.getEmployee() != null) {
@@ -63,7 +63,7 @@ public class ComputerMapper {
 	    List<ComputerResponse> response = new ArrayList<>();
 	    for (Computer computer : computers) {
 	        EmployeeResponse employee = null;
-	        List<ComponentsResponse> component = this.componentMapper.map(computer.getComputerComponents());
+	        List<ComponentsResponse> component = this.componentMapper.map(computer.getComputerWithComponents());
 
 	        if (computer.getEmployee() != null) {
 	            employee = this.employeeMapper.map(computer.getEmployee());

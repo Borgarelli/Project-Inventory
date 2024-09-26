@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.as2group.crm.dto.ComponentsRequest;
 import com.as2group.crm.dto.ComponentsResponse;
 
-import com.as2group.crm.enumeration.ComponentsStatus;
+import com.as2group.crm.enums.Status;
 import com.as2group.crm.mapper.ComponentsMapper;
 import com.as2group.crm.service.ComponentsService;
 import com.as2group.crm.service.ComputerComponentService;
@@ -40,7 +40,7 @@ public class ComponentsController {
 	}
 
 	@GetMapping("/components/status/{status}")
-	public List<ComponentsResponse> listByStatus(@PathVariable("status") ComponentsStatus status) {
+	public List<ComponentsResponse> listByStatus(@PathVariable("status") Status status) {
 		return componentMapper.map(componentsService.listByStatus(status));
 	}
 	

@@ -1,4 +1,4 @@
-package com.as2group.crm.enumeration;
+package com.as2group.crm.enums;
 
 import lombok.Getter;
 

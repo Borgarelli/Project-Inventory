@@ -13,7 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.as2group.crm.enumeration.EmployeeStatus;
+import com.as2group.crm.enums.Status;
 import com.as2group.crm.model.ComputerEmployee;
 import com.as2group.crm.model.Employee;
 import com.as2group.crm.model.Role;
@@ -42,7 +42,7 @@ public class EmployeeService {
 		this.employeeRepository = employeeRepository;
 	}
 
-	public void changeStatus(Employee employee, EmployeeStatus status) {
+	public void changeStatus(Employee employee, Status status) {
 		employee.setStatus(status);
 		this.employeeRepository.save(employee);
 	}
@@ -91,7 +91,7 @@ public class EmployeeService {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email already exists.");
 		}
 
-		employee.setStatus(EmployeeStatus.ATIVO);
+		employee.setStatus(Status.ATIVO);
 		employee.setEntryDate(LocalDate.now());
 		employee.setPassword(encoder.encode(employee.getPassword()));
 
@@ -128,11 +128,11 @@ public class EmployeeService {
 	        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, errorMessage);
 	    }
 	    
-	    if(employee.getStatus() == EmployeeStatus.INATIVO) {
+	    if(employee.getStatus() == Status.INATIVO) {
 	    	throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Employee is already inactivate");
 	    }
 
-	    changeStatus(employee, EmployeeStatus.INATIVO);
+	    changeStatus(employee, Status.INATIVO);
 	    employee.setDepartureDate(LocalDate.now());
 	    employeeRepository.save(employee);
 	}
@@ -141,10 +141,10 @@ public class EmployeeService {
 	public void activate(Long id) {
 		Employee employee = show(id);
 		
-		if(employee.getStatus() == EmployeeStatus.INATIVO) {
+		if(employee.getStatus() == Status.INATIVO) {
 			employee.setEntryDate(LocalDate.now());
 			employee.setDepartureDate(null);
-			changeStatus(employee, EmployeeStatus.ATIVO);
+			changeStatus(employee, Status.ATIVO);
 				
 		}
 		else {
