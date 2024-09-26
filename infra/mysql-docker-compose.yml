@@ -21,6 +21,7 @@ services:
     volumes:
       # Where our data will be persisted
       - inventory-db:/var/lib/mysql
+      - ./ddl.sql:/docker-entrypoint-initdb.d/ddl.sql
 
 # Names our volume
 volumes:
