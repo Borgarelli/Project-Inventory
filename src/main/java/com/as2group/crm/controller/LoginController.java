@@ -22,7 +22,6 @@ public class LoginController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-
     @PostMapping
     public Login autenticate (@RequestBody Login login) throws JsonProcessingException {
         Authentication auth = new UsernamePasswordAuthenticationToken(login.getLogin(), login.getPassword());

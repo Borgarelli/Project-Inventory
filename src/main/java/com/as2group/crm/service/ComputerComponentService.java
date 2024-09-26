@@ -10,8 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.as2group.crm.enumeration.ComponentsStatus;
-import com.as2group.crm.enumeration.ComputerStatus;
+import com.as2group.crm.enumeration.Status;
 import com.as2group.crm.model.Components;
 import com.as2group.crm.model.Computer;
 import com.as2group.crm.model.ComputerComponent;
@@ -35,11 +34,11 @@ public class ComputerComponentService {
         Components component = componentService.show(componentId);
 
 
-        if (computer.getStatus() == ComputerStatus.INATIVO) {
+        if (computer.getStatus() == Status.INATIVO) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Computer is not available");
         }
 
-        if (component.getStatus() != ComponentsStatus.PRA_USO) {
+        if (component.getStatus() != Status.PRA_USO) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Component is not available");
         }
 
@@ -48,9 +47,9 @@ public class ComputerComponentService {
         relationship.setComputer(computer);
         relationship.setReceived(LocalDateTime.now());
         component.setComputer(computer);
-        computer.getComputerComponents().add(component);
+        computer.getComputerWithComponents().add(component);
         computer.setModificationDate(LocalDate.now());
-        componentService.changeStatus(component, ComponentsStatus.EM_USO);
+        componentService.changeStatus(component, Status.EM_USO);
 
         return computerComponentRepository.save(relationship);
     }
@@ -68,12 +67,12 @@ public class ComputerComponentService {
 		    	
     	for(ComputerComponent computerComponent : link) {
     		if(computerComponent.getReturned() == null) {
-    			computer.getComputerComponents().remove(component);
+    			computer.getComputerWithComponents().remove(component);
     			computer.setModificationDate(LocalDate.now());
     			component.setComputer(null);
     			computerComponent.setReturned(LocalDateTime.now());
     			computerComponentRepository.save(computerComponent);
-    			componentService.changeStatus(component, ComponentsStatus.PRA_USO);
+    			componentService.changeStatus(component, Status.PRA_USO);
     		}
 			else {
 				throw new IllegalArgumentException("Component already returned");

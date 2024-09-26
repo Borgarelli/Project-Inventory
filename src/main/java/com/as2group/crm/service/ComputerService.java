@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.as2group.crm.enumeration.ComputerStatus;
+import com.as2group.crm.enumeration.Status;
 import com.as2group.crm.model.Computer;
 import com.as2group.crm.repository.ComputerEmployeeRepository;
 import com.as2group.crm.repository.ComputerRepository;
@@ -31,7 +31,7 @@ public class ComputerService {
 		this.computerRepository = computerRepository;
 	}
 
-	public void changeStatus(Computer computer, ComputerStatus status) {
+	public void changeStatus(Computer computer, Status status) {
 		computer.setStatus(status);
 		this.computerRepository.save(computer);
 	}
@@ -81,7 +81,7 @@ public class ComputerService {
 			throw new IllegalArgumentException("Serial number is not possible to be null");
 		}
 		
-		computer.setStatus(ComputerStatus.PRA_USO);
+		computer.setStatus(Status.PRA_USO);
 		computer.setEntryDate(LocalDate.now());
 		return computerRepository.save(computer);
 	}
@@ -132,12 +132,12 @@ public class ComputerService {
 		if(computer.getEmployee() != null) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Computer stills with employee");
 		}
-		if(computer.getStatus() == ComputerStatus.INATIVO) {
+		if(computer.getStatus() == Status.INATIVO) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Computer is already inactive");
 			
 		}
 		
-		changeStatus(computer, ComputerStatus.INATIVO);
+		changeStatus(computer, Status.INATIVO);
 		computer.setDepartureDate(LocalDate.now());
 		computerRepository.save(computer);
 
@@ -145,8 +145,8 @@ public class ComputerService {
 	
 	public void activate(Long id) {
 		Computer computer = show(id);
-		if(computer.getStatus() == ComputerStatus.INATIVO) {
-			changeStatus(computer, ComputerStatus.PRA_USO);
+		if(computer.getStatus() == Status.INATIVO) {
+			changeStatus(computer, Status.PRA_USO);
 			computer.setEntryDate(LocalDate.now());
 			computer.setDepartureDate(null);
 		}
@@ -156,7 +156,7 @@ public class ComputerService {
 	}
 
 	// GetStatus
-	public List<Computer> listByStatus(ComputerStatus status) {
+	public List<Computer> listByStatus(Status status) {
 		return computerRepository.findAllByStatus(status);
 	}
 
@@ -165,5 +165,4 @@ public class ComputerService {
 		return computerRepository.findByStatusActivate();
 	}
 	
-
 }
