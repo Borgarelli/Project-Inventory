@@ -47,5 +47,4 @@ public class Components {
 	@Column(name = "specifications")
 	private String specifications;
 
-
 }

@@ -9,7 +9,15 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table (name = "ComputerComponents")
 public class ComputerComponent {
@@ -27,43 +35,7 @@ public class ComputerComponent {
 	private Components component;
 	
 	private LocalDateTime received;
+
 	private LocalDateTime returned;
 	
-	public Long getId_comp_compo() {
-		return id_comp_compo;
-	}
-	
-	public void setId_comp_compo(Long id_comp_compo) {
-		this.id_comp_compo = id_comp_compo;
-	}
-	
-	public Computer getComputer() {
-		return computer;
-	}
-
-	public void setComputer(Computer computer) {
-		this.computer = computer;
-	}
-	
-	public Components getComponent() {
-		return component;
-	}
-
-	public void setComponent(Components component) {
-		this.component = component;
-	}
-
-
-	public LocalDateTime getReceived() {
-		return received;
-	}
-	public void setReceived(LocalDateTime received) {
-		this.received = received;
-	}
-	public LocalDateTime getReturned() {
-		return returned;
-	}
-	public void setReturned(LocalDateTime returned) {
-		this.returned = returned;
-	}
 }
