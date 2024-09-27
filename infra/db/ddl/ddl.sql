@@ -1,12 +1,12 @@
 drop schema if exists spring;
 
-drop user if exists 'user'@'localhost';
+drop user if exists 'inventory-user'@'localhost';
 
 create schema spring;
 
 create user 'user'@'localhost' identified by 'inventory-pass';
 
-grant select, insert, delete, update on spring.* to user@'localhost';
+grant select, insert, delete, update on spring.* to inventory-user@'localhost';
 
 CREATE TABLE `employee` (
   `id_employee` int(11) NOT NULL AUTO_INCREMENT,
