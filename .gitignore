@@ -28,4 +28,6 @@ target/*
 .metadata/
 .project
 .settings/
+.idea
+.vscode
 
