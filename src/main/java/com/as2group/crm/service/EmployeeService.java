@@ -37,7 +37,6 @@ public class EmployeeService {
 	@Autowired
 	private RoleRepository roleRepository;
 
-	//Constructor
 	public EmployeeService(EmployeeRepository employeeRepository) {
 		this.employeeRepository = employeeRepository;
 	}
@@ -47,12 +46,10 @@ public class EmployeeService {
 		this.employeeRepository.save(employee);
 	}
 	
-	//List
 	public List<Employee> list() {
 		return employeeRepository.findAll();
 	}
 
-	//FindById
 	public Employee show(Long id) {
 		Optional<Employee> found = employeeRepository.findById(id);
 		if (found.isPresent()) {
@@ -62,7 +59,6 @@ public class EmployeeService {
 		}
 	}
 
-	//FindByName
 	public List<Employee> showName(String name) {
 		List<Employee> found = employeeRepository.findByName(name);
 		if (found.isEmpty()) {
@@ -73,7 +69,6 @@ public class EmployeeService {
 
 	}
 	
-	//FindByEmail
 	public Employee showEmail(String email){
 		Optional<Employee> found = employeeRepository.findByEmail(email);
 		if(found.isPresent()) {
@@ -83,7 +78,6 @@ public class EmployeeService {
 		}
 	}
 	
-	// Create
 	public Employee create(Employee employee) {
 		Optional<Employee> existingEmployees = employeeRepository.findByEmail(employee.getEmail());
 
@@ -103,7 +97,6 @@ public class EmployeeService {
 		return employeeRepository.save(employee);
 	}
 
-	//Delete
 	public void delete(Long id) {
 	    Employee employee = show(id);
 	    List<ComputerEmployee> linkedComputers = computerEmployeeRepository.findByEmployee(employee);
@@ -137,7 +130,6 @@ public class EmployeeService {
 	    employeeRepository.save(employee);
 	}
 
-	//Activate
 	public void activate(Long id) {
 		Employee employee = show(id);
 		
@@ -152,7 +144,7 @@ public class EmployeeService {
 		}
 	}
 	
-	//Lists
+
 	public List<Employee> listActivate() {
 	    return employeeRepository.findByStatusActivate();
 	}
@@ -160,8 +152,7 @@ public class EmployeeService {
 	public List<Employee> listInactivate(){
 		return employeeRepository.findByStatusInactivate();
 	}
-	
-	//Put
+
 	public Employee edit(Employee employee, Long id) {
 		Employee found = show(id);
 		Optional<Employee> existingEmployee = employeeRepository.findByEmail(employee.getEmail());
