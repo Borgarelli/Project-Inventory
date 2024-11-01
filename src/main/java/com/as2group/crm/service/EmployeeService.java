@@ -21,7 +21,6 @@ import com.as2group.crm.repository.ComputerEmployeeRepository;
 import com.as2group.crm.repository.EmployeeRepository;
 import com.as2group.crm.repository.RoleRepository;
 
-
 @Service
 public class EmployeeService {
 
@@ -37,9 +36,6 @@ public class EmployeeService {
 	@Autowired
 	private RoleRepository roleRepository;
 
-	public EmployeeService(EmployeeRepository employeeRepository) {
-		this.employeeRepository = employeeRepository;
-	}
 
 	public void changeStatus(Employee employee, Status status) {
 		employee.setStatus(status);

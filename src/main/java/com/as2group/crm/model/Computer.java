@@ -70,7 +70,7 @@ public class Computer {
 	@Column(name = "departureDate")
 	private LocalDate departureDate;
 
-	@Column(name = "modifications")
+	@Column(name = "modification_date")
 	private LocalDate modificationDate;
 
 }
